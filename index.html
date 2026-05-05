@@ -1122,20 +1122,25 @@
 </script>
 
 <script>
-  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard) - ALWAYS shows last played song
+  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard) - RETAINS LAST PLAYED
+  let lastTrack = null;
+
   async function fetchSpotifyStatus() {
     const container = document.getElementById('discord-now-playing');
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
       
-      // If Spotify is currently playing, show it
+      // If Spotify is currently playing, show it and save as last track
       if (data.success && data.data.spotify) {
         const spotify = data.data.spotify;
         const isPlaying = spotify.timestamps ? true : false;
         const albumArt = spotify.album_art_url || '';
         const songTitle = spotify.song || '';
         const artistName = spotify.artist || '';
+        
+        // Save as last track
+        lastTrack = { songTitle, artistName, albumArt };
         
         const needsMarquee = songTitle.length > 20;
         
@@ -1152,24 +1157,59 @@
         return;
       }
       
-      // If no Spotify data, try to get last played from recently played endpoint
-      // Note: Lanyard doesn't provide recently played, so we'll use a fallback
-      // For now, show a default "last played" state with a placeholder
-      // In a real implementation, you'd need to use Spotify's API for recently played
-      
-      // If we have user data but no Spotify, show last played placeholder
+      // If no Spotify data but user is online, show last saved track
       if (data.success && data.data.discord_user) {
+        const discordStatus = data.data.discord_status || 'offline';
+        
+        // If user is online (but not playing music), show last track
+        if (discordStatus !== 'offline' && lastTrack) {
+          const needsMarquee = lastTrack.songTitle.length > 20;
+          container.innerHTML = `
+            <div class="flex-row">
+              <img src="${lastTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+              <div class="track-info">
+                <span class="status-badge paused">⏸ last played</span>
+                <div class="track ${needsMarquee ? 'marquee' : ''}">${lastTrack.songTitle}</div>
+                <span class="artist">${lastTrack.artistName}</span>
+              </div>
+            </div>
+          `;
+          return;
+        }
+        
+        // If user is offline, show offline state with last track if available
+        if (discordStatus === 'offline') {
+          if (lastTrack) {
+            const needsMarquee = lastTrack.songTitle.length > 20;
+            container.innerHTML = `
+              <div class="flex-row">
+                <img src="${lastTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+                <div class="track-info">
+                  <span class="status-badge paused">⚫ offline</span>
+                  <div class="track ${needsMarquee ? 'marquee' : ''}">${lastTrack.songTitle}</div>
+                  <span class="artist">${lastTrack.artistName}</span>
+                </div>
+              </div>
+            `;
+            return;
+          }
+        }
+      }
+      
+      // Fallback - show last track if available, otherwise show "last played" placeholder
+      if (lastTrack) {
+        const needsMarquee = lastTrack.songTitle.length > 20;
         container.innerHTML = `
-          <div style="color:var(--text-dim); font-size:0.7rem;">
-            🎵 last played<br>
-            <span style="font-size:0.6rem;">${data.data.discord_user.global_name || data.data.discord_user.username} is offline</span>
+          <div class="flex-row">
+            <img src="${lastTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+            <div class="track-info">
+              <span class="status-badge paused">⏸ last played</span>
+              <div class="track ${needsMarquee ? 'marquee' : ''}">${lastTrack.songTitle}</div>
+              <span class="artist">${lastTrack.artistName}</span>
+            </div>
           </div>
         `;
-        
-        // OPTIONAL: To actually get last played songs, you would need to use Spotify's API
-        // with a refresh token. For now, this shows a clean "last played" state.
       } else {
-        // Fallback - always show something
         container.innerHTML = `
           <div style="color:var(--text-dim); font-size:0.7rem;">
             🎵 last played<br>
@@ -1178,13 +1218,27 @@
         `;
       }
     } catch (e) {
-      // Fallback on error
-      container.innerHTML = `
-        <div style="color:var(--text-dim); font-size:0.7rem;">
-          🎵 last played<br>
-          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
-        </div>
-      `;
+      // On error, show last track if available
+      if (lastTrack) {
+        const needsMarquee = lastTrack.songTitle.length > 20;
+        container.innerHTML = `
+          <div class="flex-row">
+            <img src="${lastTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+            <div class="track-info">
+              <span class="status-badge paused">⏸ last played</span>
+              <div class="track ${needsMarquee ? 'marquee' : ''}">${lastTrack.songTitle}</div>
+              <span class="artist">${lastTrack.artistName}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div style="color:var(--text-dim); font-size:0.7rem;">
+            🎵 last played<br>
+            <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
+          </div>
+        `;
+      }
     }
   }
   
