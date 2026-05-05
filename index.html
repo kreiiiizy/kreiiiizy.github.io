@@ -61,6 +61,68 @@
       z-index: 999;
     }
 
+    /* ── PIXELATED MOON ── */
+    #pixel-moon {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      z-index: 2;
+      pointer-events: none;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 0 30px rgba(255, 255, 200, 0.3)) drop-shadow(0 0 60px rgba(255, 255, 200, 0.15));
+      animation: moon-glow 4s ease-in-out infinite alternate;
+    }
+    
+    @keyframes moon-glow {
+      0% { filter: drop-shadow(0 0 30px rgba(255, 255, 200, 0.3)) drop-shadow(0 0 60px rgba(255, 255, 200, 0.15)); }
+      100% { filter: drop-shadow(0 0 50px rgba(255, 255, 200, 0.5)) drop-shadow(0 0 80px rgba(255, 255, 200, 0.25)); }
+    }
+
+    /* ── PIXELATED CLOUDS ── */
+    .pixel-cloud {
+      position: fixed;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.08;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      animation: cloud-drift linear infinite;
+    }
+    
+    .pixel-cloud-1 {
+      top: 15%;
+      left: -150px;
+      width: 200px;
+      height: 60px;
+      animation-duration: 60s;
+    }
+    
+    .pixel-cloud-2 {
+      top: 45%;
+      left: -100px;
+      width: 140px;
+      height: 40px;
+      animation-duration: 80s;
+      animation-delay: 10s;
+    }
+    
+    .pixel-cloud-3 {
+      top: 75%;
+      left: -180px;
+      width: 160px;
+      height: 50px;
+      animation-duration: 70s;
+      animation-delay: 20s;
+    }
+    
+    @keyframes cloud-drift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(100vw + 300px)); }
+    }
+
     /* ── LAYOUT ── */
     .wrapper {
       max-width: 860px;
@@ -327,19 +389,19 @@
     }
     .blog-title a:hover { color: var(--accent2); }
 
-    /* ── CONTACT ── */
-    .contact-line {
+    /* ── SOCMED LINKS ── */
+    .socmed-line {
       display: flex;
       gap: 1rem;
       align-items: center;
       padding: 0.5rem 0;
       border-bottom: 1px solid var(--border);
     }
-    .contact-line:last-child { border-bottom: none; }
+    .socmed-line:last-child { border-bottom: none; }
 
-    .contact-icon { color: var(--accent); width: 80px; font-size: 0.78rem; flex-shrink: 0; }
-    .contact-link { color: var(--link); text-decoration: none; font-size: 0.82rem; }
-    .contact-link:hover { color: var(--accent2); }
+    .socmed-icon { color: var(--accent); width: 80px; font-size: 0.78rem; flex-shrink: 0; }
+    .socmed-link { color: var(--link); text-decoration: none; font-size: 0.82rem; }
+    .socmed-link:hover { color: var(--accent2); }
 
     /* ── FOOTER ── */
     footer {
@@ -398,13 +460,15 @@
       50% { opacity: 0; }
     }
 
-    /* ── RAIN CANVAS ── */
+    /* ── RAIN CANVAS – PIXELATED & ROUNDER ── */
     #rain-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 1;
       opacity: 0.65;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
     .controls {
@@ -606,6 +670,8 @@
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
       nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
+      #pixel-moon { width: 50px; height: 50px; top: 10px; right: 15px; }
+      .pixel-cloud { display: none; }
     }
     .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
     .wx-label { color: var(--text-dim); white-space:nowrap; }
@@ -617,8 +683,49 @@
 <canvas id="stars"></canvas>
 <canvas id="rain-canvas"></canvas>
 
-<!-- SHOOTING STAR CONTAINER -->
-<div id="shooting-star-container"></div>
+<!-- PIXELATED MOON (top right, lighting) -->
+<div id="pixel-moon">
+  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+    <!-- Moon body -->
+    <rect x="10" y="10" width="60" height="60" rx="0" fill="#ffffdd" opacity="0.9"/>
+    <!-- Craters for pixel look -->
+    <rect x="20" y="20" width="12" height="12" rx="0" fill="#e6e6cc" opacity="0.6"/>
+    <rect x="45" y="30" width="8" height="8" rx="0" fill="#e6e6cc" opacity="0.5"/>
+    <rect x="30" y="45" width="10" height="10" rx="0" fill="#e6e6cc" opacity="0.4"/>
+    <rect x="55" y="50" width="6" height="6" rx="0" fill="#e6e6cc" opacity="0.5"/>
+    <!-- Darker edges for pixel feel -->
+    <rect x="10" y="10" width="60" height="4" fill="#ccccaa" opacity="0.3"/>
+    <rect x="10" y="10" width="4" height="60" fill="#ccccaa" opacity="0.3"/>
+  </svg>
+</div>
+
+<!-- PIXELATED CLOUDS -->
+<div class="pixel-cloud pixel-cloud-1">
+  <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+    <rect x="20" y="30" width="40" height="20" fill="#c8c8e8" opacity="0.3"/>
+    <rect x="60" y="20" width="50" height="30" fill="#c8c8e8" opacity="0.3"/>
+    <rect x="110" y="30" width="40" height="20" fill="#c8c8e8" opacity="0.3"/>
+    <rect x="40" y="40" width="80" height="10" fill="#c8c8e8" opacity="0.2"/>
+  </svg>
+</div>
+
+<div class="pixel-cloud pixel-cloud-2">
+  <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+    <rect x="10" y="20" width="30" height="15" fill="#c8c8e8" opacity="0.25"/>
+    <rect x="40" y="12" width="40" height="23" fill="#c8c8e8" opacity="0.25"/>
+    <rect x="80" y="20" width="30" height="15" fill="#c8c8e8" opacity="0.25"/>
+    <rect x="30" y="28" width="50" height="8" fill="#c8c8e8" opacity="0.2"/>
+  </svg>
+</div>
+
+<div class="pixel-cloud pixel-cloud-3">
+  <svg viewBox="0 0 160 50" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+    <rect x="15" y="25" width="35" height="18" fill="#c8c8e8" opacity="0.2"/>
+    <rect x="50" y="15" width="45" height="28" fill="#c8c8e8" opacity="0.2"/>
+    <rect x="95" y="25" width="35" height="18" fill="#c8c8e8" opacity="0.2"/>
+    <rect x="35" y="35" width="60" height="10" fill="#c8c8e8" opacity="0.15"/>
+  </svg>
+</div>
 
 <div class="wrapper">
 
@@ -632,7 +739,7 @@
     <a href="#about">/ about</a>
     <a href="#projects">/ projects</a>
     <a href="#blog">/ blog</a>
-    <a href="#contact">/ contact</a>
+    <a href="#socmed">/ socmed</a>
   </nav>
 
   <div class="moon-div">☽ ✦ ☾</div>
@@ -658,7 +765,7 @@
           <ul class="facts">
             <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
             <li>huge fan of tower defense games — and i also play <em class="pixel">valorant</em>. add me! 🎮</li>
-            <li>still figuring out what i want to build — got an idea? <a href="#contact">let's talk!</a> <span class="cursor"></span></li>
+            <li>still figuring out what i want to build — got an idea? <a href="#socmed">let's talk!</a> <span class="cursor"></span></li>
           </ul>
         </div>
       </div>
@@ -690,6 +797,29 @@
         <div class="blog-entry">
           <span class="blog-date" id="today-date">2025-05-05</span>
           <span class="blog-title"><a href="#">i forgot about this lil project LOL made some changes</a></span>
+        </div>
+      </div>
+
+      <!-- SOCMED LINKS (directly below blog) -->
+      <div class="section-head" id="socmed">☾ socmed links</div>
+      <div class="panel" style="max-width:500px;">
+        <span class="panel-title">socmed.txt</span>
+
+        <div class="socmed-line">
+          <span class="socmed-icon">📧 email</span>
+          <a href="mailto:rianuelmacalinaofn@gmail.com" class="socmed-link">rianuelmacalinaofn@gmail.com</a>
+        </div>
+        <div class="socmed-line">
+          <span class="socmed-icon">📽️ lboxd</span>
+          <a href="https://letterboxd.com/kreiiii/" target="_blank" class="socmed-link">@kreiiii</a>
+        </div>
+        <div class="socmed-line">
+          <span class="socmed-icon">🐦 twitter</span>
+          <a href="https://twitter.com/riannn_r" target="_blank" class="socmed-link">@riannn_r</a>
+        </div>
+        <div class="socmed-line">
+          <span class="socmed-icon">💼 linkedin</span>
+          <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="socmed-link">@rianuel-macalinao</a>
         </div>
       </div>
 
@@ -730,7 +860,7 @@
           <li><a href="#about">about me</a></li>
           <li><a href="#projects">projects</a></li>
           <li><a href="#blog">blog</a></li>
-          <li><a href="#contact">contact</a></li>
+          <li><a href="#socmed">socmed</a></li>
           <li><a href="https://github.com" target="_blank">github</a></li>
           <li><a href="https://twitter.com/riannn_r" target="_blank">twitter / x</a></li>
           <li><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank">linkedin</a></li>
@@ -766,29 +896,6 @@
       </div>
 
     </aside>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="section-head" id="contact">☾ contact</div>
-  <div class="panel" style="max-width:500px;">
-    <span class="panel-title">contact.txt</span>
-
-    <div class="contact-line">
-      <span class="contact-icon">📧 email</span>
-      <a href="mailto:rianuelmacalinaofn@gmail.com" class="contact-link">rianuelmacalinaofn@gmail.com</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">📽️ lboxd</span>
-      <a href="https://letterboxd.com/kreiiii/" target="_blank" class="contact-link">@kreiiii</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">🐦 twitter</span>
-      <a href="https://twitter.com/riannn_r" target="_blank" class="contact-link">@riannn_r</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">💼 linkedin</span>
-      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">@rianuel-macalinao</a>
-    </div>
   </div>
 
   <div class="moon-div" style="margin:2rem 0 0;">★ ☽ ★</div>
@@ -848,7 +955,7 @@
     });
   }
 
-  // ── RAIN
+  // ── RAIN – PIXELATED & ROUNDER
   const rainCanvas = document.getElementById('rain-canvas');
   const rc = rainCanvas.getContext('2d');
   let rainOn = true;
@@ -876,11 +983,10 @@
     if (!rainOn) return;
     drops.forEach(d => {
       rc.beginPath();
-      rc.moveTo(d.x, d.y);
-      rc.lineTo(d.x - 1, d.y + d.len);
-      rc.strokeStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
-      rc.lineWidth = 1.2;
-      rc.stroke();
+      // Rounder, pixelated drops with rounded ends
+      rc.ellipse(d.x, d.y, 2.5, 5, 0, 0, Math.PI * 2);
+      rc.fillStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
+      rc.fill();
       d.y += d.speed;
       d.x -= 0.5;
       if (d.y > rainCanvas.height) {
@@ -942,7 +1048,6 @@
       const data = await res.json();
       applyStatus(data);
     } catch (e) {
-      // If status.json is not found, default to offline
       applyStatus({ status: 'offline', note: 'status.json not found' });
     }
   }
@@ -1015,7 +1120,6 @@
   async function fetchDiscordStatus() {
     const container = document.getElementById('discord-now-playing');
     try {
-      // Lanyard API - free, no auth needed
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
       
@@ -1026,7 +1130,6 @@
         const songTitle = spotify.song || '';
         const artistName = spotify.artist || '';
         
-        // Check if title is long enough to need marquee
         const needsMarquee = songTitle.length > 20;
         
         container.innerHTML = `
@@ -1040,7 +1143,6 @@
           </div>
         `;
       } else if (data.success && data.data.discord_user) {
-        // Online but not playing anything
         container.innerHTML = `
           <div style="color:var(--text-dim); font-size:0.7rem;">
             🎵 no music playing<br>
@@ -1065,7 +1167,6 @@
     }
   }
   
-  // Fetch immediately and every 15 seconds
   fetchDiscordStatus();
   setInterval(fetchDiscordStatus, 15000);
 </script>
@@ -1088,29 +1189,23 @@
     const star = document.createElement('div');
     star.className = 'shooting-star';
     
-    // Random position on the screen
     const startX = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.1;
     const startY = Math.random() * window.innerHeight * 0.3;
     
     star.style.left = startX + 'px';
     star.style.top = startY + 'px';
     
-    // Random animation duration
     const duration = 1.2 + Math.random() * 0.8;
     star.style.animationDuration = duration + 's';
     
     container.appendChild(star);
     
-    // Remove after animation
     setTimeout(() => {
       star.remove();
     }, duration * 1000 + 100);
   }
 
-  // Initial shooting star after 5 seconds
   setTimeout(createShootingStar, 5000);
-  
-  // Then every 45 seconds
   setInterval(createShootingStar, 45000);
 </script>
 
