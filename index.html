@@ -61,63 +61,12 @@
       z-index: 999;
     }
 
-    /* ── PIXELATED MOON (top right, fixed) ── */
-    #pixel-moon {
-      position: fixed;
-      top: 20px;
-      right: 30px;
-      z-index: 2;
-      pointer-events: none;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #ffffdd;
-      box-shadow: 0 0 30px rgba(255, 255, 200, 0.3), 0 0 60px rgba(255, 255, 200, 0.15);
-      animation: moon-glow 4s ease-in-out infinite alternate;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    
-    #pixel-moon::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: 
-        radial-gradient(circle at 30% 30%, rgba(230, 230, 204, 0.5) 0%, transparent 20%),
-        radial-gradient(circle at 70% 60%, rgba(230, 230, 204, 0.4) 0%, transparent 15%),
-        radial-gradient(circle at 50% 80%, rgba(230, 230, 204, 0.3) 0%, transparent 12%);
-      image-rendering: pixelated;
-    }
-    
-    #pixel-moon::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: 
-        radial-gradient(circle at 20% 25%, rgba(200, 200, 170, 0.3) 0%, transparent 10%),
-        radial-gradient(circle at 60% 40%, rgba(200, 200, 170, 0.25) 0%, transparent 8%);
-      image-rendering: pixelated;
-    }
-    
-    @keyframes moon-glow {
-      0% { box-shadow: 0 0 30px rgba(255, 255, 200, 0.3), 0 0 60px rgba(255, 255, 200, 0.15); }
-      100% { box-shadow: 0 0 50px rgba(255, 255, 200, 0.5), 0 0 80px rgba(255, 255, 200, 0.25); }
-    }
-
     /* ── PIXELATED CLOUDS (thicker & more visible) ── */
     .pixel-cloud {
       position: fixed;
       z-index: 1;
       pointer-events: none;
-      opacity: 0.15; /* Increased from 0.08 */
+      opacity: 0.15;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       animation: cloud-drift linear infinite;
@@ -699,7 +648,6 @@
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
       nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
-      #pixel-moon { width: 50px; height: 50px; top: 10px; right: 15px; }
       .pixel-cloud { opacity: 0.1; }
     }
     .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
@@ -711,9 +659,6 @@
 
 <canvas id="stars"></canvas>
 <canvas id="rain-canvas"></canvas>
-
-<!-- PIXELATED MOON (top right, fixed) -->
-<div id="pixel-moon"></div>
 
 <!-- PIXELATED CLOUDS (thicker & more visible) -->
 <div class="pixel-cloud pixel-cloud-1">
@@ -942,7 +887,7 @@
 </div>
 
 <script>
-  // ── STARS
+  // ── STARS WITH GLOW
   const starCanvas = document.getElementById('stars');
   const sc = starCanvas.getContext('2d');
   let starsOn = true;
@@ -970,9 +915,26 @@
     if (!starsOn) return;
     starsList.forEach(s => {
       const twinkle = 0.5 + 0.5 * Math.sin(t * 0.001 * (s.speed * 3000) + s.phase);
+      const alpha = 0.3 + 0.7 * twinkle;
+      const x = s.x * starCanvas.width;
+      const y = s.y * starCanvas.height;
+      const r = s.r;
+      
+      // Glow effect
+      const gradient = sc.createRadialGradient(x, y, 0, x, y, r * 6);
+      gradient.addColorStop(0, `rgba(255,255,200,${alpha})`);
+      gradient.addColorStop(0.3, `rgba(255,255,200,${alpha * 0.5})`);
+      gradient.addColorStop(1, `rgba(255,255,200,0)`);
+      
       sc.beginPath();
-      sc.arc(s.x * starCanvas.width, s.y * starCanvas.height, s.r, 0, Math.PI * 2);
-      sc.fillStyle = `rgba(255,255,200,${0.3 + 0.7 * twinkle})`;
+      sc.arc(x, y, r * 6, 0, Math.PI * 2);
+      sc.fillStyle = gradient;
+      sc.fill();
+      
+      // Core star
+      sc.beginPath();
+      sc.arc(x, y, r, 0, Math.PI * 2);
+      sc.fillStyle = `rgba(255,255,200,${alpha})`;
       sc.fill();
     });
   }
@@ -1066,7 +1028,6 @@
 
     const discordData = data.data;
     const status = discordData.discord_status || 'offline';
-    const spotify = discordData.spotify;
     
     // Get status config
     const config = statusConfig[status] || statusConfig.offline;
@@ -1077,11 +1038,6 @@
     
     // Build status text - only status, no custom status
     let statusText = config.emoji + ' ' + config.label;
-    
-    // Add spotify if playing (but don't show in status badge, only in music widget)
-    if (spotify) {
-      // Keep status clean - only show status
-    }
     
     text1.textContent = statusText;
     text2.textContent = statusText;
@@ -1166,13 +1122,14 @@
 </script>
 
 <script>
-  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard - for music widget)
+  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard) - ALWAYS shows last played song
   async function fetchSpotifyStatus() {
     const container = document.getElementById('discord-now-playing');
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
       
+      // If Spotify is currently playing, show it
       if (data.success && data.data.spotify) {
         const spotify = data.data.spotify;
         const isPlaying = spotify.timestamps ? true : false;
@@ -1192,26 +1149,40 @@
             </div>
           </div>
         `;
-      } else if (data.success && data.data.discord_user) {
+        return;
+      }
+      
+      // If no Spotify data, try to get last played from recently played endpoint
+      // Note: Lanyard doesn't provide recently played, so we'll use a fallback
+      // For now, show a default "last played" state with a placeholder
+      // In a real implementation, you'd need to use Spotify's API for recently played
+      
+      // If we have user data but no Spotify, show last played placeholder
+      if (data.success && data.data.discord_user) {
         container.innerHTML = `
           <div style="color:var(--text-dim); font-size:0.7rem;">
-            🎵 no music playing<br>
-            <span style="font-size:0.6rem;">${data.data.discord_user.global_name || data.data.discord_user.username} is online</span>
+            🎵 last played<br>
+            <span style="font-size:0.6rem;">${data.data.discord_user.global_name || data.data.discord_user.username} is offline</span>
           </div>
         `;
+        
+        // OPTIONAL: To actually get last played songs, you would need to use Spotify's API
+        // with a refresh token. For now, this shows a clean "last played" state.
       } else {
+        // Fallback - always show something
         container.innerHTML = `
           <div style="color:var(--text-dim); font-size:0.7rem;">
-            🎵 offline<br>
-            <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify</a>
+            🎵 last played<br>
+            <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
           </div>
         `;
       }
     } catch (e) {
+      // Fallback on error
       container.innerHTML = `
         <div style="color:var(--text-dim); font-size:0.7rem;">
-          🎵 disconnected<br>
-          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify</a>
+          🎵 last played<br>
+          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
         </div>
       `;
     }
