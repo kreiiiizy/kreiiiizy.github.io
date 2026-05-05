@@ -403,7 +403,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.65;  /* increased from 0.18 */
+      opacity: 0.65;
     }
 
     .controls {
@@ -427,6 +427,85 @@
       transition: color 0.2s, border-color 0.2s;
     }
     .ctrl-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── SPOTIFY WIDGET ── */
+    .spotify-widget {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 0.8rem;
+      text-align: center;
+      margin-top: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .spotify-label {
+      font-family: 'Silkscreen', monospace;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    #spotify-now-playing {
+      padding: 0.5rem;
+      color: var(--text);
+      font-size: 0.8rem;
+      background: #0d0d1a;
+      border: 1px solid var(--border);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      word-wrap: break-word;
+    }
+
+    #spotify-now-playing .track {
+      font-size: 0.85rem;
+      color: var(--accent3);
+    }
+    #spotify-now-playing .artist {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+    #spotify-now-playing .status-badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      background: rgba(136,255,136,0.15);
+      color: #88ff88;
+      border: 1px solid #88ff88;
+      margin-bottom: 0.2rem;
+      display: inline-block;
+    }
+    #spotify-now-playing .status-badge.paused {
+      color: #ffaa44;
+      border-color: #ffaa44;
+      background: rgba(255,170,68,0.15);
+    }
+    #spotify-now-playing .album-art {
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      margin-right: 0.8rem;
+      float: left;
+      object-fit: cover;
+    }
+    #spotify-now-playing .track-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #spotify-now-playing .flex-row {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
 
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
@@ -487,7 +566,7 @@
         </div>
       </div>
 
-      <!-- PROJECTS: only "this website" -->
+      <!-- PROJECTS -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
@@ -520,13 +599,24 @@
       <!-- PROFILE with GIF -->
       <div class="profile-box">
         <div class="avatar-box">
-          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdnZ2JsYnd1M2V2dWlnaDZ6eWw2b3R3cWp2M2xsb3R5eWZ5bGxsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7bu3X6gXvWlOYy6Q/giphy.gif" alt="spike gif" style="width:100%;height:100%;object-fit:cover;">
+          <img src="https://media.tenor.com/8dIqS9rC7zAAAAAC/spike-spiegel-cowboy-bebop.gif" alt="spike gif" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="profile-name">rianuel macalinao</div>
         <div class="profile-role">creator · explorer · 19</div>
         <div class="profile-loc">📍 philippines</div>
         <div style="margin-top:0.8rem; font-size:0.7rem; color:var(--text-dim);">
           <span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span>
+        </div>
+      </div>
+
+      <!-- ── SPOTIFY WIDGET ── -->
+      <div class="spotify-widget">
+        <span class="spotify-label">🎵 now playing</span>
+        <div id="spotify-now-playing">
+          <div style="color:var(--text-dim);">loading...</div>
+        </div>
+        <div style="margin-top:0.3rem; font-size:0.55rem; color:var(--text-dim);">
+          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent); text-decoration:none;">open in spotify →</a>
         </div>
       </div>
 
@@ -576,7 +666,7 @@
     </aside>
   </div>
 
-  <!-- CONTACT: updated labels + short handles -->
+  <!-- CONTACT -->
   <div class="section-head" id="contact">☾ contact</div>
   <div class="panel" style="max-width:500px;">
     <span class="panel-title">contact.txt</span>
@@ -656,7 +746,7 @@
     });
   }
 
-  // ── RAIN – FIXED: higher opacity + brighter strokes
+  // ── RAIN
   const rainCanvas = document.getElementById('rain-canvas');
   const rc = rainCanvas.getContext('2d');
   let rainOn = true;
@@ -672,7 +762,7 @@
         y: Math.random() * rainCanvas.height,
         len: Math.random() * 18 + 6,
         speed: Math.random() * 4 + 3,
-        opacity: Math.random() * 0.4 + 0.3  // increased base opacity
+        opacity: Math.random() * 0.4 + 0.3
       });
     }
   }
@@ -686,7 +776,6 @@
       rc.beginPath();
       rc.moveTo(d.x, d.y);
       rc.lineTo(d.x - 1, d.y + d.len);
-      // much brighter stroke
       rc.strokeStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
       rc.lineWidth = 1.2;
       rc.stroke();
@@ -815,5 +904,69 @@
   fetchWeather();
   setInterval(fetchWeather, 10 * 60 * 1000);
 </script>
+
+<script>
+  // ── SPOTIFY NOW PLAYING
+  // Uses a free public API: https://spotify-now-playing-psi.vercel.app
+  // Replace '22cvzqcswpdsx4yqojnjn64la' with your Spotify username
+
+  const SPOTIFY_USER = '22cvzqcswpdsx4yqojnjn64la';
+  const SPOTIFY_API = `https://spotify-now-playing-psi.vercel.app/api/now-playing?user=${SPOTIFY_USER}`;
+
+  async function fetchSpotifyNow() {
+    const container = document.getElementById('spotify-now-playing');
+    try {
+      const res = await fetch(SPOTIFY_API);
+      const data = await res.json();
+      
+      if (data.error) {
+        container.innerHTML = `
+          <div style="color:var(--text-dim); font-size:0.7rem;">
+            🎵 no track playing<br>
+            <a href="https://open.spotify.com/user/${SPOTIFY_USER}" target="_blank" style="color:var(--accent);">open spotify</a>
+          </div>
+        `;
+        return;
+      }
+
+      if (data.isPlaying) {
+        container.innerHTML = `
+          <div class="flex-row">
+            <img src="${data.albumArt}" class="album-art" alt="album art">
+            <div class="track-info">
+              <span class="status-badge">▶ playing</span>
+              <span class="track">${data.title}</span>
+              <span class="artist">${data.artist}</span>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="flex-row">
+            <img src="${data.albumArt}" class="album-art" alt="album art">
+            <div class="track-info">
+              <span class="status-badge paused">⏸ last played</span>
+              <span class="track">${data.title}</span>
+              <span class="artist">${data.artist}</span>
+            </div>
+          </div>
+        `;
+      }
+    } catch (e) {
+      container.innerHTML = `
+        <div style="color:var(--text-dim); font-size:0.7rem;">
+          🎵 offline<br>
+          <a href="https://open.spotify.com/user/${SPOTIFY_USER}" target="_blank" style="color:var(--accent);">open spotify</a>
+        </div>
+      `;
+    }
+  }
+
+  // Initial fetch
+  fetchSpotifyNow();
+  // Update every 30 seconds
+  setInterval(fetchSpotifyNow, 30000);
+</script>
+
 </body>
 </html>
