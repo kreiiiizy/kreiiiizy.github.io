@@ -615,10 +615,10 @@
         <div style="margin-top:0.8rem;font-size:0.7rem;"><span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span></div>
       </div>
 
-      <!-- SPOTIFY LAST PLAYED PERSISTENT WIDGET -->
+      <!-- SPOTIFY LAST PLAYED PERSISTENT WIDGET - ALWAYS SHOWS LAST SONG -->
       <div class="spotify-widget">
         <span class="spotify-label" id="spotify-header">🎵 last played</span>
-        <div id="discord-now-playing"><div style="color:var(--text-dim);">loading tracks...</div></div>
+        <div id="discord-now-playing"><div style="color:var(--text-dim);">✨ loading your last song...</div></div>
         <div style="margin-top:0.3rem; font-size:0.55rem;"><a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open in spotify →</a></div>
       </div>
 
@@ -717,82 +717,112 @@
 </script>
 
 <script>
-  // PERSISTENT "LAST PLAYED" LOGIC: retains last played song even after refresh + updates when new song plays
-  let storedLastSong = null;
-  // Load from localStorage (survives refresh)
-  try{
-    const saved = localStorage.getItem('kreiiii_last_song');
-    if(saved) storedLastSong = JSON.parse(saved);
-  }catch(e){}
+  // PERSISTENT "LAST PLAYED" - ALWAYS SHOWS THE LAST SONG YOU PLAYED, NEVER "NO TRACK YET"
+  // Initialize with a default friendly placeholder (waiting for real data)
+  let lastPlayedSong = null;
   
-  async function fetchSpotifyWithPersistence() {
+  // Try to load from localStorage on page load
+  try {
+    const saved = localStorage.getItem('kreiiii_last_song');
+    if (saved) {
+      lastPlayedSong = JSON.parse(saved);
+    }
+  } catch(e) {}
+  
+  // Helper to display the current last played song (always shows song if exists)
+  function displayLastPlayedSong(song, isPlayingNow = false, statusDesc = 'last played') {
     const container = document.getElementById('discord-now-playing');
     const headerEl = document.getElementById('spotify-header');
+    
+    if (!song || !song.songTitle) {
+      // Fallback - no song yet, but we'll show a waiting message (this will disappear once user plays something)
+      headerEl.textContent = '🎵 last played';
+      container.innerHTML = `<div style="color:var(--text-dim); font-size:0.7rem;">✨ play a song on Spotify — it'll show up here forever ✨</div>`;
+      return;
+    }
+    
+    // We HAVE a song to show
+    headerEl.textContent = isPlayingNow ? '🎵 now playing' : '🎵 last played';
+    const needsMarquee = song.songTitle.length > 20;
+    const badgeClass = isPlayingNow ? '' : 'paused';
+    const badgeText = isPlayingNow ? '▶ playing now' : '⏸ last played';
+    
+    container.innerHTML = `
+      <div class="flex-row">
+        <img src="${song.albumArt || ''}" class="album-art" onerror="this.style.display='none'" alt="album art">
+        <div class="track-info">
+          <span class="status-badge ${badgeClass}">${badgeText}</span>
+          <div class="track ${needsMarquee ? 'marquee' : ''}">${escapeHtml(song.songTitle)}</div>
+          <span class="artist">${escapeHtml(song.artistName)}</span>
+        </div>
+      </div>
+    `;
+  }
+  
+  function escapeHtml(str) { 
+    if(!str) return '✨ unknown ✨'; 
+    return str.replace(/[&<>]/g, function(m) {
+      if(m === '&') return '&amp;';
+      if(m === '<') return '&lt;';
+      if(m === '>') return '&gt;';
+      return m;
+    });
+  }
+  
+  // Main function: fetch from Lanyard, update lastPlayedSong if Spotify is active, then ALWAYS display last played
+  async function updateSpotifyWidget() {
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
-      const discordStatus = data.success ? (data.data.discord_status || 'offline') : 'offline';
-      if(data.success && data.data.spotify) {
+      
+      // Check if currently playing Spotify
+      if (data.success && data.data && data.data.spotify && data.data.spotify.song) {
         const sp = data.data.spotify;
-        const currentTrack = { songTitle: sp.song || '', artistName: sp.artist || '', albumArt: sp.album_art_url || '', timestamp: Date.now() };
-        // save to localStorage and memory
-        storedLastSong = currentTrack;
+        const currentTrack = {
+          songTitle: sp.song || 'Unknown Track',
+          artistName: sp.artist || 'Unknown Artist',
+          albumArt: sp.album_art_url || '',
+          timestamp: Date.now()
+        };
+        // Update stored last played song
+        lastPlayedSong = currentTrack;
+        // Save to localStorage so it survives refresh
         localStorage.setItem('kreiiii_last_song', JSON.stringify(currentTrack));
-        headerEl.textContent = '🎵 now playing';
-        const needsMarquee = currentTrack.songTitle.length > 20;
-        container.innerHTML = `
-          <div class="flex-row">
-            <img src="${currentTrack.albumArt}" class="album-art" onerror="this.style.display='none'">
-            <div class="track-info">
-              <span class="status-badge">▶ playing</span>
-              <div class="track ${needsMarquee ? 'marquee' : ''}">${escapeHtml(currentTrack.songTitle)}</div>
-              <span class="artist">${escapeHtml(currentTrack.artistName)}</span>
-            </div>
-          </div>
-        `;
-        return;
+        // Display as "now playing"
+        displayLastPlayedSong(lastPlayedSong, true, 'now playing');
+      } 
+      else {
+        // No active Spotify playing — but we still have lastPlayedSong from before!
+        if (lastPlayedSong && lastPlayedSong.songTitle) {
+          displayLastPlayedSong(lastPlayedSong, false, 'last played');
+        } else {
+          // Very first load, no song ever played yet — show friendly empty state
+          const container = document.getElementById('discord-now-playing');
+          const headerEl = document.getElementById('spotify-header');
+          headerEl.textContent = '🎵 last played';
+          container.innerHTML = `<div style="color:var(--text-dim); font-size:0.7rem;">✨ play a song on Spotify — it'll show up here forever ✨</div>`;
+        }
       }
-      // NO ACTIVE SPOTIFY: show last played track (if any)
-      if(storedLastSong && storedLastSong.songTitle) {
-        headerEl.textContent = '🎵 last played';
-        const isOffline = discordStatus === 'offline';
-        const needsMarquee = storedLastSong.songTitle.length > 20;
-        let badgeText = isOffline ? '⚫ offline · last played' : '⏸ last played';
-        let badgeClass = isOffline ? 'offline' : 'paused';
-        container.innerHTML = `
-          <div class="flex-row">
-            <img src="${storedLastSong.albumArt}" class="album-art" onerror="this.style.display='none'">
-            <div class="track-info">
-              <span class="status-badge ${badgeClass}">${badgeText}</span>
-              <div class="track ${needsMarquee ? 'marquee' : ''}">${escapeHtml(storedLastSong.songTitle)}</div>
-              <span class="artist">${escapeHtml(storedLastSong.artistName)}</span>
-            </div>
-          </div>
-        `;
+    } catch (error) {
+      // On network error: still show cached song if available
+      if (lastPlayedSong && lastPlayedSong.songTitle) {
+        displayLastPlayedSong(lastPlayedSong, false, 'last played (cached)');
       } else {
+        const container = document.getElementById('discord-now-playing');
+        const headerEl = document.getElementById('spotify-header');
         headerEl.textContent = '🎵 last played';
-        container.innerHTML = `<div style="color:var(--text-dim);">✨ no track yet — play something on Spotify</div>`;
-      }
-    } catch(e) {
-      if(storedLastSong && storedLastSong.songTitle){
-        headerEl.textContent = '🎵 last played';
-        container.innerHTML = `
-          <div class="flex-row">
-            <img src="${storedLastSong.albumArt}" class="album-art" onerror="this.style.display='none'">
-            <div class="track-info">
-              <span class="status-badge paused">⏸ last played (cached)</span>
-              <div class="track">${escapeHtml(storedLastSong.songTitle)}</div>
-              <span class="artist">${escapeHtml(storedLastSong.artistName)}</span>
-            </div>
-          </div>`;
-      } else {
-        container.innerHTML = `<div style="color:var(--text-dim);">⚡ error — reload maybe?</div>`;
+        container.innerHTML = `<div style="color:var(--text-dim); font-size:0.7rem;">✨ play a song on Spotify — it'll show up here forever ✨</div>`;
       }
     }
   }
-  function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g,function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;});}
-  fetchSpotifyWithPersistence();
-  setInterval(fetchSpotifyWithPersistence, 13000);
+  
+  // Also expose a manual refresh for debugging (optional)
+  window.refreshSpotify = updateSpotifyWidget;
+  
+  // Initial load
+  updateSpotifyWidget();
+  // Poll every 12 seconds to capture new songs as you play them
+  setInterval(updateSpotifyWidget, 12000);
 </script>
 
 <script>
