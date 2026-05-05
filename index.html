@@ -163,6 +163,18 @@
       align-items: start;
     }
 
+    .intro-container {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .intro-gif {
+      width: 200px;
+      border: 1px solid var(--border-bright);
+      flex-shrink: 0;
+    }
+
     .mood-badge {
       display: inline-block;
       font-size: 0.75rem;
@@ -298,30 +310,6 @@
 
     .project-desc { color: var(--text-dim); font-size: 0.82rem; }
 
-    /* ── BLOG ── */
-    .blog-entry {
-      display: flex;
-      gap: 1.2rem;
-      align-items: baseline;
-      border-bottom: 1px solid var(--border);
-      padding: 0.6rem 0;
-    }
-    .blog-entry:last-child { border-bottom: none; }
-
-    .blog-date {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      white-space: nowrap;
-      min-width: 110px;
-    }
-
-    .blog-title a {
-      color: var(--link);
-      text-decoration: none;
-      font-size: 0.85rem;
-    }
-    .blog-title a:hover { color: var(--accent2); }
-
     /* ── CONTACT ── */
     .contact-line {
       display: flex;
@@ -425,13 +413,13 @@
 
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
+      .intro-container { flex-direction: column; align-items: center; text-align: center; }
+      .intro-gif { width: 100%; max-width: 250px; }
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
       nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
+      .facts { text-align: left; }
     }
-    .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
-    .wx-label { color: var(--text-dim); white-space:nowrap; }
-    .wx-val { color: var(--accent); text-align:right; }
   </style>
 </head>
 <body>
@@ -470,20 +458,23 @@
 
         <div class="mood-badge" id="status-badge"><span class="status-dot" id="status-dot"></span><span id="status-text">loading...</span> · philippines · 19</div>
 
-        <div class="intro-text">
-          <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
+        <div class="intro-container">
+          <img src="9tnM8lx.gif" alt="Intro Gif" class="intro-gif">
+          <div class="intro-text">
+            <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
 
-          <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old web — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
+            <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old web — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
 
-          <ul class="facts">
-            <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
-            <li>huge fan of tower defense games — and yes, i also play <em class="pixel">valorant</em>. add me! 🎮</li>
-            <li>still figuring out what i want to build — got an idea? <a href="#contact">let's talk!</a> <span class="cursor"></span></li>
-          </ul>
+            <ul class="facts">
+              <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
+              <li>huge fan of tower defense games — and yes, i also play <em class="pixel">valorant</em>. add me! 🎮</li>
+              <li>still figuring out what i want to build — got an idea? <a href="#contact">let's talk!</a> <span class="cursor"></span></li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <!-- PROJECTS (Retained only this website) -->
+      <!-- PROJECTS -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
@@ -494,18 +485,6 @@
             <span class="project-tag">html</span>
           </div>
           <div class="project-desc">this very site! built with plain html + css. no frameworks, no build steps. just a file and a dream.</div>
-        </div>
-
-      </div>
-
-      <!-- BLOG -->
-      <div class="section-head" id="blog">☾ blog</div>
-      <div class="panel">
-        <span class="panel-title">posts/</span>
-
-        <div class="blog-entry">
-          <span class="blog-date">2025-05-05</span>
-          <span class="blog-title"><a href="#">hello world — my first post</a></span>
         </div>
       </div>
 
@@ -532,33 +511,11 @@
           <li><a href="#home">home</a></li>
           <li><a href="#about">about me</a></li>
           <li><a href="#projects">projects</a></li>
-          <li><a href="#blog">blog</a></li>
-          <li><a href="#contact">contact</a></li>
-          <li><a href="https://github.com/kreiiiizy" target="_blank">github</a></li>
           <li><a href="https://twitter.com/riannn_r" target="_blank">x</a></li>
           <li><a href="https://www.instagram.com/riangotchills" target="_blank">instagram</a></li>
           <li><a href="https://letterboxd.com/kreiiii/" target="_blank">letterboxd</a></li>
           <li><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank">linkedin</a></li>
         </ul>
-      </div>
-
-      <!-- WEATHER WIDGET -->
-      <div class="panel" id="weather-widget" style="padding: 0.7rem 0.9rem; font-family:'Share Tech Mono',monospace;">
-        <span class="panel-title">weather.exe</span>
-        <div id="wx-rows" style="display:flex; flex-direction:column; gap:0.25rem; font-size:0.75rem; line-height:1.6;">
-          <div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">loading...</span></div>
-          <div class="wx-row"><span class="wx-label">Temp:</span><span class="wx-val" id="wx-temp">--</span></div>
-          <div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val" style="color:var(--accent3);">Malabon, PH 🇵🇭</span></div>
-          <div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time" style="color:var(--text-dim);">--</span></div>
-        </div>
-      </div>
-
-      <!-- ABOUT MINI -->
-      <div class="panel" id="about">
-        <span class="panel-title">about.txt</span>
-        <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.8;">
-          hey im rianuel! 19 y/o from the philippines. i build things, break things, and learn from both.
-        </p>
       </div>
 
     </aside>
@@ -572,10 +529,6 @@
     <div class="contact-line">
       <span class="contact-icon">📧 email</span>
       <a href="mailto:rianuelmacalinaofn@gmail.com" class="contact-link">rianuelmacalinaofn@gmail.com</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">🐙 github</span>
-      <a href="https://github.com/kreiiiizy" target="_blank" class="contact-link">github.com/kreiiiizy</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">🐦 x</span>
@@ -603,7 +556,7 @@
     <div class="footer-buttons">
       <a class="pixel-button" href="#">KREIIIII</a>
       <a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a>
-      <a class="pixel-button" href="https://github.com/kreiiiizy" target="_blank">GITHUB</a>
+      <a class="pixel-button" href="https://www.instagram.com/riangotchills" target="_blank">INSTAGRAM</a>
     </div>
     <p>© 2026 rianuel macalinao · all rights reserved · philippines</p>
   </footer>
@@ -710,63 +663,22 @@
     starsOn = !starsOn;
     this.textContent = '✦ stars: ' + (starsOn ? 'on' : 'off');
   });
-</script>
 
-<script>
-  // ── STATUS SYSTEM
-  const GITHUB_USER = 'kreiiiizy'; 
-  const REPO_NAME   = 'kreiiiizy.github.io'; 
-  const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
-
+  // ── STATUS SYSTEM (Simulated)
   const states = {
-    online:  { label: 'online',  color: '#44ff88', cls: '',        emoji: '🟢' },
-    offline: { label: 'offline', color: '#888888', cls: 'offline', emoji: '⚫' },
-    busy:    { label: 'busy',    color: '#ffaa44', cls: 'busy',    emoji: '🟡' },
-    dnd:     { label: 'do not disturb', color: '#ff4444', cls: 'dnd', emoji: '🔴' },
-    afk:     { label: 'away',    color: '#ffaa44', cls: 'busy',    emoji: '🌙' },
+    online:  { label: 'online',  emoji: '🟢' },
+    offline: { label: 'offline', emoji: '⚫' }
   };
 
   function applyStatus(s) {
-    const state = states[s.status] || states.offline;
-    document.querySelectorAll('.status-dot').forEach(dot => { dot.className = 'status-dot ' + state.cls; });
+    const state = states[s.status] || states.online;
     const t1 = document.getElementById('status-text');
     const t2 = document.getElementById('status-text-2');
-    if (t1) t1.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
-    if (t2) t2.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
+    if (t1) t1.textContent = state.emoji + ' ' + state.label;
+    if (t2) t2.textContent = state.emoji + ' ' + state.label;
   }
-
-  async function fetchStatus() {
-    try {
-      const res = await fetch(STATUS_URL + '?t=' + Date.now());
-      if (!res.ok) throw new Error('not found');
-      const data = await res.json();
-      applyStatus(data);
-    } catch (e) {
-      applyStatus({ status: 'offline', note: '' });
-    }
-  }
-  fetchStatus();
-  setInterval(fetchStatus, 60000);
+  applyStatus({ status: 'online' });
 </script>
 
-<script>
-  // ── WEATHER WIDGET
-  const WX_LAT = 14.6628, WX_LON = 120.9569;
-  const WMO = { 0: ['☀️', 'Clear sky'], 1: ['🌤️', 'Mostly clear'], 2: ['⛅', 'Partly cloudy'], 3: ['☁️', 'Overcast'], 45: ['🌫️', 'Foggy'], 61: ['🌧️', 'Light rain'], 63: ['🌧️', 'Rain'], 80: ['🌦️', 'Rain showers'], 95: ['⛈️', 'Thunderstorm'] };
-
-  async function fetchWeather() {
-    try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LON}&current=temperature_2m,weather_code&timezone=Asia%2FManila`;
-      const res = await fetch(url);
-      const d = await res.json();
-      const [icon, label] = WMO[d.current.weather_code] || ['🌡️', 'Unknown'];
-      document.getElementById('wx-cond').textContent  = label;
-      document.getElementById('wx-temp').textContent  = d.current.temperature_2m + '°C';
-      document.getElementById('wx-time').textContent = new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', hour12:true });
-    } catch(e) { }
-  }
-  fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000);
-</script>
 </body>
 </html>
