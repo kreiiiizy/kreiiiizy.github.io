@@ -86,7 +86,7 @@
     }
 
     .site-sub {
-      display: none; /* removed as requested */
+      display: none;
     }
 
     /* ── NAV ── */
@@ -160,28 +160,6 @@
       align-items: start;
     }
 
-    .intro-gif {
-      float: left;
-      margin: 0 1rem 0.5rem 0;
-      image-rendering: pixelated;
-    }
-
-    /* pixel avatar replaced by gif */
-    .pixel-avatar {
-      width: 64px;
-      height: 64px;
-      float: left;
-      margin: 0 1rem 0.5rem 0;
-      image-rendering: pixelated;
-      background: #1a1a3a;
-      border: 2px solid var(--border-bright);
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
     .mood-badge {
       display: inline-block;
       font-size: 0.75rem;
@@ -221,7 +199,6 @@
       text-align: center;
     }
 
-    /* avatar gif container */
     .avatar-box {
       width: 80px; height: 80px;
       background: #0d0d1a;
@@ -239,7 +216,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      image-rendering: auto; /* keep gif smooth */
+      image-rendering: auto;
     }
 
     .profile-name {
@@ -420,12 +397,13 @@
       50% { opacity: 0; }
     }
 
+    /* ── RAIN CANVAS – FIXED OPACITY ── */
     #rain-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.18;
+      opacity: 0.65;  /* increased from 0.18 */
     }
 
     .controls {
@@ -468,7 +446,7 @@
 
 <div class="wrapper">
 
-  <!-- HEADER: changed to kreiiii, sub removed -->
+  <!-- HEADER -->
   <header>
     <div class="site-title">kreiiii</div>
   </header>
@@ -509,7 +487,7 @@
         </div>
       </div>
 
-      <!-- PROJECTS: only "this website" remains -->
+      <!-- PROJECTS: only "this website" -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
@@ -598,7 +576,7 @@
     </aside>
   </div>
 
-  <!-- CONTACT: updated with email, letterboxd, twitter, linkedin -->
+  <!-- CONTACT: updated labels + short handles -->
   <div class="section-head" id="contact">☾ contact</div>
   <div class="panel" style="max-width:500px;">
     <span class="panel-title">contact.txt</span>
@@ -608,8 +586,8 @@
       <a href="mailto:rianuelmacalinaofn@gmail.com" class="contact-link">rianuelmacalinaofn@gmail.com</a>
     </div>
     <div class="contact-line">
-      <span class="contact-icon">📽️ letterboxd</span>
-      <a href="https://letterboxd.com/kreiiii/" target="_blank" class="contact-link">letterboxd.com/kreiiii</a>
+      <span class="contact-icon">📽️ lboxd</span>
+      <a href="https://letterboxd.com/kreiiii/" target="_blank" class="contact-link">@kreiiii</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">🐦 twitter</span>
@@ -617,7 +595,7 @@
     </div>
     <div class="contact-line">
       <span class="contact-icon">💼 linkedin</span>
-      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">linkedin.com/in/rianuel-macalinao</a>
+      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">@rianuel-macalinao</a>
     </div>
   </div>
 
@@ -678,7 +656,7 @@
     });
   }
 
-  // ── RAIN
+  // ── RAIN – FIXED: higher opacity + brighter strokes
   const rainCanvas = document.getElementById('rain-canvas');
   const rc = rainCanvas.getContext('2d');
   let rainOn = true;
@@ -694,7 +672,7 @@
         y: Math.random() * rainCanvas.height,
         len: Math.random() * 18 + 6,
         speed: Math.random() * 4 + 3,
-        opacity: Math.random() * 0.5 + 0.2
+        opacity: Math.random() * 0.4 + 0.3  // increased base opacity
       });
     }
   }
@@ -708,8 +686,9 @@
       rc.beginPath();
       rc.moveTo(d.x, d.y);
       rc.lineTo(d.x - 1, d.y + d.len);
-      rc.strokeStyle = `rgba(136,180,255,${d.opacity})`;
-      rc.lineWidth = 0.8;
+      // much brighter stroke
+      rc.strokeStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
+      rc.lineWidth = 1.2;
       rc.stroke();
       d.y += d.speed;
       d.x -= 0.5;
@@ -741,8 +720,8 @@
 </script>
 
 <script>
-  // ── STATUS SYSTEM (same as before)
-  const GITHUB_USER = 'yourusername'; // replace with actual if needed
+  // ── STATUS SYSTEM
+  const GITHUB_USER = 'yourusername';
   const REPO_NAME   = 'yourusername.github.io';
   const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
 
@@ -780,7 +759,7 @@
 </script>
 
 <script>
-  // ── WEATHER WIDGET (same as before)
+  // ── WEATHER WIDGET
   const WX_LAT = 14.6628, WX_LON = 120.9569;
   const WMO = {
     0:  ['☀️',  'Clear sky'],
