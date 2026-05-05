@@ -600,9 +600,9 @@
           <li><a href="#projects">projects</a></li>
           <li><a href="#blog">blog</a></li>
           <li><a href="#contact">contact</a></li>
-          <li><a href="https://github.com" target="_blank">github</a></li>
-          <li><a href="https://twitter.com" target="_blank">twitter / x</a></li>
-          <li><a href="https://linkedin.com" target="_blank">linkedin</a></li>
+          <li><a href="https://github.com/kreiiiizy" target="_blank">github</a></li>
+          <li><a href="https://twitter.com/riannn_r" target="_blank">twitter / x</a></li>
+          <li><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank">linkedin[cite: 1]</a></li>
         </ul>
       </div>
 
@@ -644,19 +644,19 @@
 
     <div class="contact-line">
       <span class="contact-icon">📧 email</span>
-      <a href="mailto:your@email.com" class="contact-link">your@email.com</a>
+      <a href="mailto:rianuelmacalinaofn@gmail.com" class="contact-link">rianuelmacalinaofn@gmail.com</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">🐙 github</span>
-      <a href="https://github.com/yourusername" target="_blank" class="contact-link">github.com/yourusername</a>
+      <a href="https://github.com/kreiiiizy" target="_blank" class="contact-link">github.com/kreiiiizy</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">🐦 twitter</span>
-      <a href="https://twitter.com/yourhandle" target="_blank" class="contact-link">@yourhandle</a>
+      <a href="https://twitter.com/riannn_r" target="_blank" class="contact-link">@riannn_r</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">💼 linkedin</span>
-      <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">linkedin.com/in/yourprofile</a>
+      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">rianuel-macalinao[cite: 1]</a>
     </div>
   </div>
 
@@ -667,10 +667,10 @@
     <div class="footer-buttons">
       <a class="pixel-button" href="#">RIANUEL.DEV</a>
       <a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a>
-      <a class="pixel-button" href="https://github.com" target="_blank">GITHUB</a>
+      <a class="pixel-button" href="https://github.com/kreiiiizy" target="_blank">GITHUB</a>
     </div>
     <p>© 2025 rianuel macalinao · all rights reserved · philippines</p>
-    <p style="margin-top:0.4rem;"><a href="mailto:your@email.com">your@email.com</a></p>
+    <p style="margin-top:0.4rem;"><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></p>
   </footer>
 
 </div>
@@ -781,14 +781,8 @@
 
 <script>
   // ── STATUS SYSTEM
-  // This fetches status.json from your GitHub repo.
-  // To update your status, just edit status.json on GitHub.
-  //
-  // SETUP: replace 'yourusername' below with your actual GitHub username.
-  // The file status.json must be in the root of your repo (same folder as index.html).
-
-  const GITHUB_USER = 'yourusername'; // <-- CHANGE THIS
-  const REPO_NAME   = 'yourusername.github.io'; // <-- CHANGE THIS if different
+  const GITHUB_USER = 'kreiiiizy';
+  const REPO_NAME   = 'kreiiiizy.github.io'; 
 
   const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
 
@@ -803,12 +797,10 @@
   function applyStatus(s) {
     const state = states[s.status] || states.offline;
 
-    // update all dots
     document.querySelectorAll('.status-dot').forEach(dot => {
       dot.className = 'status-dot ' + state.cls;
     });
 
-    // update text nodes
     const t1 = document.getElementById('status-text');
     const t2 = document.getElementById('status-text-2');
     if (t1) t1.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
@@ -817,26 +809,21 @@
 
   async function fetchStatus() {
     try {
-      // cache-bust so GitHub serves fresh content
       const res = await fetch(STATUS_URL + '?t=' + Date.now());
       if (!res.ok) throw new Error('not found');
       const data = await res.json();
       applyStatus(data);
     } catch (e) {
-      // If no status.json yet, just show offline
       applyStatus({ status: 'offline', note: '' });
     }
   }
 
   fetchStatus();
-  // re-check every 60 seconds while the tab is open
   setInterval(fetchStatus, 60000);
 </script>
 
 <script>
   // ── WEATHER WIDGET
-  // Uses Open-Meteo (free, no API key needed) + WMO weather codes
-  // Coordinates: Malabon, Metro Manila, Philippines
   const WX_LAT = 14.6628, WX_LON = 120.9569;
 
   const WMO = {
@@ -892,7 +879,7 @@
   }
 
   fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000); // refresh every 10 mins
+  setInterval(fetchWeather, 10 * 60 * 1000);
 </script>
 </body>
 </html>
