@@ -34,6 +34,7 @@
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
+      cursor: default;
     }
 
     /* ── STARS CANVAS ── */
@@ -397,7 +398,7 @@
       50% { opacity: 0; }
     }
 
-    /* ── RAIN CANVAS – FIXED OPACITY ── */
+    /* ── RAIN CANVAS ── */
     #rain-canvas {
       position: fixed;
       inset: 0;
@@ -460,6 +461,7 @@
       justify-content: center;
       flex-direction: column;
       word-wrap: break-word;
+      overflow: hidden;
     }
 
     #discord-now-playing .track {
@@ -469,7 +471,23 @@
       margin: 0;
       padding: 0;
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
     }
+    
+    #discord-now-playing .track.marquee {
+      animation: marquee-scroll 12s linear infinite;
+      display: inline-block;
+      padding-left: 100%;
+      white-space: nowrap;
+    }
+    
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
     #discord-now-playing .artist {
       font-size: 0.7rem;
       color: var(--text-dim);
@@ -510,24 +528,77 @@
       flex: 1;
       min-width: 0;
       overflow: hidden;
+      width: 100%;
     }
     #discord-now-playing .flex-row {
       display: flex;
       align-items: center;
       width: 100%;
       gap: 0.5rem;
+      overflow: hidden;
     }
     #discord-now-playing .track-info .track {
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
       width: 100%;
+      position: relative;
+    }
+    #discord-now-playing .track-info .track.marquee {
+      display: block;
+      width: auto;
+      padding-left: 100%;
+      animation: marquee-scroll 15s linear infinite;
     }
     #discord-now-playing .track-info .artist {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: 100%;
+    }
+
+    /* ── SHOOTING STAR ── */
+    #shooting-star-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .shooting-star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 2px rgba(255,255,255,0.6), 0 0 20px 4px rgba(255,255,200,0.3);
+      animation: shoot 1.5s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .shooting-star::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+      right: 4px;
+    }
+    
+    @keyframes shoot {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-300px, 300px) scale(0.5);
+      }
     }
 
     @media (max-width: 680px) {
@@ -545,6 +616,9 @@
 
 <canvas id="stars"></canvas>
 <canvas id="rain-canvas"></canvas>
+
+<!-- SHOOTING STAR CONTAINER -->
+<div id="shooting-star-container"></div>
 
 <div class="wrapper">
 
@@ -579,7 +653,7 @@
         <div class="intro-text">
           <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
 
-          <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the era back then, when websites felt <em class="pixel">personal</em> and weird and alive.</p>
+          <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old web — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
 
           <ul class="facts">
             <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
@@ -599,7 +673,7 @@
             <a href="#">[this website]</a>
             <span class="project-tag">html</span>
           </div>
-          <div class="project-desc">this very site! built with plain html + css. no frameworks, no build steps. just like god intended</div>
+          <div class="project-desc">this very site! built with plain html + css. no frameworks, no build steps. just a file and a dream.</div>
         </div>
       </div>
 
@@ -609,8 +683,13 @@
         <span class="panel-title">posts/</span>
 
         <div class="blog-entry">
-          <span class="blog-date">2024-08-10</span>
-          <span class="blog-title"><a href="#">hello world !!!!! we're live LFFGGGG</a></span>
+          <span class="blog-date">2025-05-05</span>
+          <span class="blog-title"><a href="#">hello world — my first post</a></span>
+        </div>
+        
+        <div class="blog-entry">
+          <span class="blog-date" id="today-date">2025-05-05</span>
+          <span class="blog-title"><a href="#">i forgot about this lil project LOL made some changes</a></span>
         </div>
       </div>
 
@@ -619,10 +698,10 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
-      <!-- PROFILE with GIF -->
+      <!-- PROFILE with Spike Spiegel image -->
       <div class="profile-box">
         <div class="avatar-box">
-          <img src="https://media.tenor.com/8dIqS9rC7zAAAAAC/spike-spiegel-cowboy-bebop.gif" alt="spike gif" style="width:100%;height:100%;object-fit:cover;">
+          <img src="https://pbs.twimg.com/media/Eh4KuwwWsAUd2O-.jpg" alt="spike spiegel" style="width:100%;height:100%;object-fit:cover;">
         </div>
         <div class="profile-name">rianuel macalinao</div>
         <div class="profile-role">creator · explorer · 19</div>
@@ -943,14 +1022,19 @@
         const spotify = data.data.spotify;
         const isPlaying = spotify.timestamps ? true : false;
         const albumArt = spotify.album_art_url || '';
+        const songTitle = spotify.song || '';
+        const artistName = spotify.artist || '';
+        
+        // Check if title is long enough to need marquee
+        const needsMarquee = songTitle.length > 20;
         
         container.innerHTML = `
           <div class="flex-row">
             <img src="${albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
             <div class="track-info">
               <span class="status-badge">${isPlaying ? '▶ playing' : '⏸ paused'}</span>
-              <span class="track">${spotify.song}</span>
-              <span class="artist">${spotify.artist}</span>
+              <div class="track ${needsMarquee ? 'marquee' : ''}">${songTitle}</div>
+              <span class="artist">${artistName}</span>
             </div>
           </div>
         `;
@@ -983,6 +1067,50 @@
   // Fetch immediately and every 15 seconds
   fetchDiscordStatus();
   setInterval(fetchDiscordStatus, 15000);
+</script>
+
+<script>
+  // ── AUTO-UPDATE TODAY'S DATE
+  document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    document.getElementById('today-date').textContent = `${year}-${month}-${day}`;
+  });
+</script>
+
+<script>
+  // ── SHOOTING STAR (every 45 seconds)
+  function createShootingStar() {
+    const container = document.getElementById('shooting-star-container');
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    
+    // Random position on the screen
+    const startX = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.1;
+    const startY = Math.random() * window.innerHeight * 0.3;
+    
+    star.style.left = startX + 'px';
+    star.style.top = startY + 'px';
+    
+    // Random animation duration
+    const duration = 1.2 + Math.random() * 0.8;
+    star.style.animationDuration = duration + 's';
+    
+    container.appendChild(star);
+    
+    // Remove after animation
+    setTimeout(() => {
+      star.remove();
+    }, duration * 1000 + 100);
+  }
+
+  // Initial shooting star after 5 seconds
+  setTimeout(createShootingStar, 5000);
+  
+  // Then every 45 seconds (changed from 3 minutes)
+  setInterval(createShootingStar, 45000);
 </script>
 
 </body>
