@@ -61,24 +61,56 @@
       z-index: 999;
     }
 
-    /* ── PIXELATED MOON ── */
+    /* ── PIXELATED MOON (top center, circle, fixed) ── */
     #pixel-moon {
       position: fixed;
       top: 20px;
-      right: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       z-index: 2;
       pointer-events: none;
       image-rendering: pixelated;
       image-rendering: crisp-edges;
-      width: 80px;
-      height: 80px;
-      filter: drop-shadow(0 0 30px rgba(255, 255, 200, 0.3)) drop-shadow(0 0 60px rgba(255, 255, 200, 0.15));
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #ffffdd;
+      box-shadow: 0 0 30px rgba(255, 255, 200, 0.3), 0 0 60px rgba(255, 255, 200, 0.15);
       animation: moon-glow 4s ease-in-out infinite alternate;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    #pixel-moon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(230, 230, 204, 0.5) 0%, transparent 20%),
+        radial-gradient(circle at 70% 60%, rgba(230, 230, 204, 0.4) 0%, transparent 15%),
+        radial-gradient(circle at 50% 80%, rgba(230, 230, 204, 0.3) 0%, transparent 12%);
+      image-rendering: pixelated;
+    }
+    
+    #pixel-moon::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 20% 25%, rgba(200, 200, 170, 0.3) 0%, transparent 10%),
+        radial-gradient(circle at 60% 40%, rgba(200, 200, 170, 0.25) 0%, transparent 8%);
+      image-rendering: pixelated;
     }
     
     @keyframes moon-glow {
-      0% { filter: drop-shadow(0 0 30px rgba(255, 255, 200, 0.3)) drop-shadow(0 0 60px rgba(255, 255, 200, 0.15)); }
-      100% { filter: drop-shadow(0 0 50px rgba(255, 255, 200, 0.5)) drop-shadow(0 0 80px rgba(255, 255, 200, 0.25)); }
+      0% { box-shadow: 0 0 30px rgba(255, 255, 200, 0.3), 0 0 60px rgba(255, 255, 200, 0.15); }
+      100% { box-shadow: 0 0 50px rgba(255, 255, 200, 0.5), 0 0 80px rgba(255, 255, 200, 0.25); }
     }
 
     /* ── PIXELATED CLOUDS ── */
@@ -146,10 +178,6 @@
       text-shadow: 0 0 20px rgba(136,136,255,0.5), 0 0 40px rgba(136,136,255,0.2);
       letter-spacing: 3px;
       margin-bottom: 0.2rem;
-    }
-
-    .site-sub {
-      display: none;
     }
 
     /* ── NAV ── */
@@ -223,13 +251,14 @@
       align-items: start;
     }
 
-    .mood-badge {
+    .mood-badge#status-badge {
       display: inline-block;
       font-size: 0.75rem;
       color: var(--accent3);
       border: 1px solid var(--accent3);
       padding: 0.1rem 0.6rem;
       margin-bottom: 0.8rem;
+      transition: all 0.3s ease;
     }
 
     .intro-text p { margin-bottom: 0.6rem; color: var(--text); }
@@ -303,14 +332,15 @@
     .status-dot {
       display: inline-block;
       width: 7px; height: 7px;
-      background: #44ff88;
       border-radius: 50%;
       margin-right: 5px;
       animation: blink 2s infinite;
+      transition: background 0.3s ease;
     }
-    .status-dot.offline { background: #888; animation: none; }
-    .status-dot.busy { background: #ffaa44; }
+    .status-dot.online { background: #44ff88; }
+    .status-dot.idle { background: #ffaa44; }
     .status-dot.dnd { background: #ff4444; }
+    .status-dot.offline { background: #888888; animation: none; }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
@@ -670,7 +700,7 @@
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
       nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
-      #pixel-moon { width: 50px; height: 50px; top: 10px; right: 15px; }
+      #pixel-moon { width: 50px; height: 50px; top: 10px; }
       .pixel-cloud { display: none; }
     }
     .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
@@ -683,21 +713,8 @@
 <canvas id="stars"></canvas>
 <canvas id="rain-canvas"></canvas>
 
-<!-- PIXELATED MOON (top right, lighting) -->
-<div id="pixel-moon">
-  <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
-    <!-- Moon body -->
-    <rect x="10" y="10" width="60" height="60" rx="0" fill="#ffffdd" opacity="0.9"/>
-    <!-- Craters for pixel look -->
-    <rect x="20" y="20" width="12" height="12" rx="0" fill="#e6e6cc" opacity="0.6"/>
-    <rect x="45" y="30" width="8" height="8" rx="0" fill="#e6e6cc" opacity="0.5"/>
-    <rect x="30" y="45" width="10" height="10" rx="0" fill="#e6e6cc" opacity="0.4"/>
-    <rect x="55" y="50" width="6" height="6" rx="0" fill="#e6e6cc" opacity="0.5"/>
-    <!-- Darker edges for pixel feel -->
-    <rect x="10" y="10" width="60" height="4" fill="#ccccaa" opacity="0.3"/>
-    <rect x="10" y="10" width="4" height="60" fill="#ccccaa" opacity="0.3"/>
-  </svg>
-</div>
+<!-- PIXELATED MOON (top center, circle, fixed) -->
+<div id="pixel-moon"></div>
 
 <!-- PIXELATED CLOUDS -->
 <div class="pixel-cloud pixel-cloud-1">
@@ -983,7 +1000,6 @@
     if (!rainOn) return;
     drops.forEach(d => {
       rc.beginPath();
-      // Rounder, pixelated drops with rounded ends
       rc.ellipse(d.x, d.y, 2.5, 5, 0, 0, Math.PI * 2);
       rc.fillStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
       rc.fill();
@@ -1017,42 +1033,80 @@
 </script>
 
 <script>
-  // ── STATUS SYSTEM (UPDATED with your GitHub username: kreiiiizy)
-  const GITHUB_USER = 'kreiiiizy';
-  const REPO_NAME   = 'kreiiiizy.github.io';
-  const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
-
-  const states = {
-    online:  { label: 'online',  color: '#44ff88', cls: '',        emoji: '🟢' },
-    offline: { label: 'offline', color: '#888888', cls: 'offline', emoji: '⚫' },
-    busy:    { label: 'busy',    color: '#ffaa44', cls: 'busy',    emoji: '🟡' },
-    dnd:     { label: 'do not disturb', color: '#ff4444', cls: 'dnd', emoji: '🔴' },
-    afk:     { label: 'away',    color: '#ffaa44', cls: 'busy',    emoji: '🌙' },
+  // ── DISCORD STATUS + SPOTIFY (via Lanyard)
+  const DISCORD_ID = '563789556957052929'; // Your Discord ID
+  
+  const statusConfig = {
+    online: { label: 'online', emoji: '🟢', cls: 'online', color: '#44ff88' },
+    idle: { label: 'idle / afk', emoji: '🌙', cls: 'idle', color: '#ffaa44' },
+    dnd: { label: 'do not disturb', emoji: '🔴', cls: 'dnd', color: '#ff4444' },
+    offline: { label: 'offline', emoji: '⚫', cls: 'offline', color: '#888888' }
   };
 
-  function applyStatus(s) {
-    const state = states[s.status] || states.offline;
-    document.querySelectorAll('.status-dot').forEach(dot => {
-      dot.className = 'status-dot ' + state.cls;
-    });
-    const t1 = document.getElementById('status-text');
-    const t2 = document.getElementById('status-text-2');
-    if (t1) t1.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
-    if (t2) t2.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
+  function applyDiscordStatus(data) {
+    const dot1 = document.getElementById('status-dot');
+    const dot2 = document.getElementById('status-dot-2');
+    const text1 = document.getElementById('status-text');
+    const text2 = document.getElementById('status-text-2');
+    
+    if (!data.success) {
+      // Default to offline if API fails
+      const offline = statusConfig.offline;
+      dot1.className = 'status-dot ' + offline.cls;
+      dot2.className = 'status-dot ' + offline.cls;
+      text1.textContent = offline.emoji + ' ' + offline.label;
+      text2.textContent = offline.emoji + ' ' + offline.label;
+      return;
+    }
+
+    const discordData = data.data;
+    const user = discordData.discord_user;
+    const status = discordData.discord_status || 'offline';
+    const customStatus = discordData.activities?.find(a => a.type === 4);
+    const spotify = discordData.spotify;
+    
+    // Get status config
+    const config = statusConfig[status] || statusConfig.offline;
+    
+    // Update dots
+    dot1.className = 'status-dot ' + config.cls;
+    dot2.className = 'status-dot ' + config.cls;
+    
+    // Build status text
+    let statusText = config.emoji + ' ' + config.label;
+    
+    // Add custom status if present
+    if (customStatus && customStatus.state) {
+      statusText += ' — ' + customStatus.state;
+    }
+    
+    // Add spotify if playing
+    if (spotify) {
+      statusText += ' 🎵 ' + spotify.song + ' — ' + spotify.artist;
+    }
+    
+    text1.textContent = statusText;
+    text2.textContent = statusText;
   }
 
-  async function fetchStatus() {
+  async function fetchDiscordStatus() {
     try {
-      const res = await fetch(STATUS_URL + '?t=' + Date.now());
-      if (!res.ok) throw new Error('not found');
+      const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
-      applyStatus(data);
+      applyDiscordStatus(data);
     } catch (e) {
-      applyStatus({ status: 'offline', note: 'status.json not found' });
+      // If fetch fails, show offline
+      const offline = statusConfig.offline;
+      document.getElementById('status-dot').className = 'status-dot ' + offline.cls;
+      document.getElementById('status-dot-2').className = 'status-dot ' + offline.cls;
+      document.getElementById('status-text').textContent = offline.emoji + ' ' + offline.label;
+      document.getElementById('status-text-2').textContent = offline.emoji + ' ' + offline.label;
     }
   }
-  fetchStatus();
-  setInterval(fetchStatus, 60000);
+  
+  // Fetch immediately and every 15 seconds
+  fetchDiscordStatus();
+  setInterval(fetchDiscordStatus, 15000);
 </script>
 
 <script>
@@ -1114,10 +1168,8 @@
 </script>
 
 <script>
-  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard)
-  const DISCORD_ID = '563789556957052929'; // Your Discord ID
-  
-  async function fetchDiscordStatus() {
+  // ── DISCORD / SPOTIFY NOW PLAYING (via Lanyard - for music widget)
+  async function fetchSpotifyStatus() {
     const container = document.getElementById('discord-now-playing');
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
@@ -1167,8 +1219,8 @@
     }
   }
   
-  fetchDiscordStatus();
-  setInterval(fetchDiscordStatus, 15000);
+  fetchSpotifyStatus();
+  setInterval(fetchSpotifyStatus, 15000);
 </script>
 
 <script>
