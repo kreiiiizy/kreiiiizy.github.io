@@ -489,6 +489,7 @@
       letter-spacing: 0.1em;
       margin-bottom: 0.4rem;
       display: block;
+      transition: all 0.3s ease;
     }
 
     #discord-now-playing {
@@ -814,7 +815,7 @@
 
       <!-- ── DISCORD / SPOTIFY WIDGET ── -->
       <div class="spotify-widget">
-        <span class="spotify-label">🎵 now playing</span>
+        <span class="spotify-label" id="spotify-header">🎵 now playing</span>
         <div id="discord-now-playing">
           <div style="color:var(--text-dim);">loading...</div>
         </div>
@@ -1123,11 +1124,12 @@
 </script>
 
 <script>
-  // ── DISCORD / SPOTIFY NOW PLAYING - RETAINS LAST PLAYED SONG
+  // ── DISCORD / SPOTIFY NOW PLAYING - RETAINS LAST PLAYED SONG & UPDATES HEADER
   let lastPlayedTrack = null;
 
   async function fetchSpotifyStatus() {
     const container = document.getElementById('discord-now-playing');
+    const header = document.getElementById('spotify-header');
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
@@ -1153,6 +1155,9 @@
         
         const needsMarquee = songTitle.length > 20;
         
+        // Update header to "now playing"
+        header.textContent = '🎵 now playing';
+        
         container.innerHTML = `
           <div class="flex-row">
             <img src="${albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
@@ -1171,11 +1176,14 @@
         const needsMarquee = lastPlayedTrack.songTitle.length > 20;
         const isOffline = discordStatus === 'offline';
         
+        // Update header to "last played"
+        header.textContent = isOffline ? '🎵 last played (offline)' : '🎵 last played';
+        
         container.innerHTML = `
           <div class="flex-row">
             <img src="${lastPlayedTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
             <div class="track-info">
-              <span class="status-badge ${isOffline ? 'paused' : ''}">${isOffline ? '⚫ offline' : '⏸ last played'}</span>
+              <span class="status-badge ${isOffline ? 'offline' : 'paused'}">${isOffline ? '⚫ offline' : '⏸ last played'}</span>
               <div class="track ${needsMarquee ? 'marquee' : ''}">${lastPlayedTrack.songTitle}</div>
               <span class="artist">${lastPlayedTrack.artistName}</span>
             </div>
@@ -1185,6 +1193,7 @@
       }
       
       // Fallback - no track history yet
+      header.textContent = '🎵 last played';
       container.innerHTML = `
         <div style="color:var(--text-dim); font-size:0.7rem;">
           🎵 last played<br>
@@ -1195,6 +1204,7 @@
       // On error, show last played if available
       if (lastPlayedTrack) {
         const needsMarquee = lastPlayedTrack.songTitle.length > 20;
+        header.textContent = '🎵 last played';
         container.innerHTML = `
           <div class="flex-row">
             <img src="${lastPlayedTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
@@ -1206,6 +1216,7 @@
           </div>
         `;
       } else {
+        header.textContent = '🎵 last played';
         container.innerHTML = `
           <div style="color:var(--text-dim); font-size:0.7rem;">
             🎵 last played<br>
