@@ -37,7 +37,6 @@
       cursor: default;
     }
 
-    /* ── STARS CANVAS ── */
     #stars {
       position: fixed;
       inset: 0;
@@ -45,7 +44,7 @@
       z-index: 0;
     }
 
-    /* ── SCANLINE OVERLAY ── */
+    /* scanline overlay */
     body::after {
       content: '';
       position: fixed;
@@ -61,14 +60,13 @@
       z-index: 999;
     }
 
-    /* ── PIXELATED CLOUDS (thicker & more visible) ── */
+    /* pixel clouds */
     .pixel-cloud {
       position: fixed;
       z-index: 1;
       pointer-events: none;
       opacity: 0.15;
       image-rendering: pixelated;
-      image-rendering: crisp-edges;
       animation: cloud-drift linear infinite;
     }
     
@@ -103,20 +101,17 @@
       100% { transform: translateX(calc(100vw + 300px)); }
     }
 
-    /* ── LAYOUT ── */
     .wrapper {
       max-width: 860px;
       margin: 0 auto;
       padding: 2rem 1.5rem 4rem;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
-    /* ── HEADER ── */
     header {
       text-align: center;
       padding: 2.5rem 0 1.5rem;
-      position: relative;
     }
 
     .site-title {
@@ -125,10 +120,8 @@
       color: var(--accent);
       text-shadow: 0 0 20px rgba(136,136,255,0.5), 0 0 40px rgba(136,136,255,0.2);
       letter-spacing: 3px;
-      margin-bottom: 0.2rem;
     }
 
-    /* ── NAV ── */
     nav {
       display: flex;
       justify-content: center;
@@ -152,7 +145,6 @@
     nav a:last-child { border-right: none; }
     nav a:hover { background: var(--border); color: var(--accent); }
 
-    /* ── SECTION HEADING ── */
     .section-head {
       font-family: 'VT323', monospace;
       font-size: 1.6rem;
@@ -169,7 +161,6 @@
       background: var(--border);
     }
 
-    /* ── PANEL ── */
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -191,7 +182,6 @@
       padding: 0 0.5rem;
     }
 
-    /* ── MAIN GRID ── */
     .main-grid {
       display: grid;
       grid-template-columns: 1fr 240px;
@@ -206,30 +196,23 @@
       border: 1px solid var(--accent3);
       padding: 0.1rem 0.6rem;
       margin-bottom: 0.8rem;
-      transition: all 0.3s ease;
     }
 
-    .intro-text p { margin-bottom: 0.6rem; color: var(--text); }
+    .intro-text p { margin-bottom: 0.6rem; }
     .intro-text a { color: var(--link); text-decoration: underline; }
-    .intro-text a:hover { color: var(--accent2); }
-
     em.pixel {
       background: var(--accent);
       color: var(--bg);
       font-style: normal;
       padding: 0 3px;
-      font-size: 0.9em;
     }
-
     .facts {
-      margin: 0.8rem 0 0 0;
+      margin: 0.8rem 0 0;
       padding-left: 1.2rem;
       list-style: none;
     }
     .facts li::before { content: '✦ '; color: var(--accent); }
-    .facts li { margin-bottom: 0.3rem; }
 
-    /* ── SIDEBAR ── */
     .sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
 
     .profile-box {
@@ -238,7 +221,6 @@
       padding: 1rem;
       text-align: center;
     }
-
     .avatar-box {
       width: 80px; height: 80px;
       background: #0d0d1a;
@@ -248,34 +230,19 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      position: relative;
     }
-
     .avatar-box img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      image-rendering: auto;
     }
-
     .profile-name {
       font-family: 'Silkscreen', monospace;
       font-size: 0.7rem;
       color: var(--accent);
-      margin-bottom: 0.3rem;
     }
-
-    .profile-role {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-bottom: 0.8rem;
-    }
-
-    .profile-loc {
-      font-size: 0.72rem;
-      color: var(--accent3);
-    }
+    .profile-role { font-size: 0.72rem; color: var(--text-dim); }
+    .profile-loc { font-size: 0.72rem; color: var(--accent3); }
 
     .status-dot {
       display: inline-block;
@@ -283,56 +250,40 @@
       border-radius: 50%;
       margin-right: 5px;
       animation: blink 2s infinite;
-      transition: background 0.3s ease;
     }
     .status-dot.online { background: #44ff88; }
     .status-dot.idle { background: #ffaa44; }
     .status-dot.dnd { background: #ff4444; }
     .status-dot.offline { background: #888888; animation: none; }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
 
-    .star-links {
-      list-style: none;
-    }
+    .star-links { list-style: none; }
     .star-links li { border-bottom: 1px solid var(--border); }
-    .star-links li:last-child { border-bottom: none; }
     .star-links a {
       display: block;
       padding: 0.4rem 0.5rem;
       color: var(--link);
       text-decoration: none;
       font-size: 0.8rem;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.15s;
     }
-    .star-links a:hover { background: var(--border); color: var(--accent); padding-left: 1rem; }
-    .star-links a::before { content: '✩ '; color: var(--accent); font-size: 0.7rem; }
+    .star-links a:hover { background: var(--border); padding-left: 1rem; }
+    .star-links a::before { content: '✩ '; color: var(--accent); }
 
-    /* ── PROJECTS ── */
     .project-entry {
       border-bottom: 1px solid var(--border);
       padding: 0.9rem 0;
     }
     .project-entry:last-child { border-bottom: none; }
-
     .project-title {
       font-family: 'Silkscreen', monospace;
       font-size: 0.7rem;
       color: var(--accent2);
-      margin-bottom: 0.3rem;
       display: flex;
-      align-items: center;
       gap: 0.5rem;
+      align-items: center;
     }
-    .project-title a {
-      color: var(--accent2);
-      text-decoration: none;
-    }
-    .project-title a:hover { color: var(--accent); }
-
     .project-tag {
       font-size: 0.6rem;
       background: rgba(136,136,255,0.15);
@@ -340,48 +291,28 @@
       color: var(--accent);
       padding: 0 0.4rem;
     }
-
-    .project-desc { color: var(--text-dim); font-size: 0.82rem; }
-
-    /* ── BLOG ── */
     .blog-entry {
       display: flex;
       gap: 1.2rem;
-      align-items: baseline;
       border-bottom: 1px solid var(--border);
       padding: 0.6rem 0;
+      align-items: baseline;
     }
-    .blog-entry:last-child { border-bottom: none; }
-
-    .blog-date {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      white-space: nowrap;
-      min-width: 110px;
-    }
-
-    .blog-title a {
-      color: var(--link);
-      text-decoration: none;
-      font-size: 0.85rem;
-    }
+    .blog-date { font-size: 0.7rem; color: var(--text-dim); min-width: 110px; }
+    .blog-title a { color: var(--link); text-decoration: none; font-size: 0.85rem; }
     .blog-title a:hover { color: var(--accent2); }
 
-    /* ── SOCMED LINKS ── */
     .socmed-line {
       display: flex;
       gap: 1rem;
-      align-items: center;
       padding: 0.5rem 0;
       border-bottom: 1px solid var(--border);
+      align-items: center;
     }
-    .socmed-line:last-child { border-bottom: none; }
-
-    .socmed-icon { color: var(--accent); width: 80px; font-size: 0.78rem; flex-shrink: 0; }
+    .socmed-icon { color: var(--accent); width: 80px; font-size: 0.78rem; }
     .socmed-link { color: var(--link); text-decoration: none; font-size: 0.82rem; }
     .socmed-link:hover { color: var(--accent2); }
-
-    /* ── FOOTER ── */
+    
     footer {
       text-align: center;
       padding: 2rem 0 1rem;
@@ -390,17 +321,13 @@
       border-top: 1px solid var(--border);
       margin-top: 2rem;
     }
-
-    footer a { color: var(--link); text-decoration: none; }
-
     .footer-buttons {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 6px;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
-
     .pixel-button {
       display: inline-block;
       width: 88px; height: 31px;
@@ -409,22 +336,16 @@
       font-family: 'Silkscreen', monospace;
       font-size: 0.45rem;
       color: var(--accent);
-      text-align: center;
       line-height: 31px;
-      letter-spacing: 0.1em;
       text-decoration: none;
-      image-rendering: pixelated;
     }
-
     .moon-div {
       text-align: center;
       font-size: 1.5rem;
       margin: 1rem 0;
       color: var(--star);
       letter-spacing: 1rem;
-      text-shadow: 0 0 10px rgba(255,255,170,0.4);
     }
-
     .cursor {
       display: inline-block;
       width: 8px; height: 14px;
@@ -432,23 +353,16 @@
       vertical-align: middle;
       animation: cursor-blink 1s step-end infinite;
     }
+    @keyframes cursor-blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
 
-    @keyframes cursor-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* ── RAIN CANVAS – PIXELATED & ROUNDER ── */
     #rain-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 1;
+      z-index: 0;
       opacity: 0.65;
       image-rendering: pixelated;
-      image-rendering: crisp-edges;
     }
-
     .controls {
       position: fixed;
       bottom: 1rem;
@@ -458,30 +372,25 @@
       flex-direction: column;
       gap: 0.4rem;
     }
-
     .ctrl-btn {
       background: var(--panel);
       border: 1px solid var(--border);
       color: var(--text-dim);
-      font-family: 'Share Tech Mono', monospace;
+      font-family: monospace;
       font-size: 0.65rem;
       padding: 0.3rem 0.7rem;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
     }
     .ctrl-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* ── DISCORD / SPOTIFY WIDGET ── */
+    /* SPOTIFY / LAST PLAYED WIDGET */
     .spotify-widget {
       background: var(--panel);
       border: 1px solid var(--border);
       padding: 0.8rem;
       text-align: center;
       margin-top: 0.5rem;
-      position: relative;
-      overflow: hidden;
     }
-    
     .spotify-label {
       font-family: 'Silkscreen', monospace;
       font-size: 0.55rem;
@@ -489,171 +398,140 @@
       letter-spacing: 0.1em;
       margin-bottom: 0.4rem;
       display: block;
-      transition: all 0.3s ease;
+      transition: all 0.2s;
     }
-
     #discord-now-playing {
       padding: 0.5rem;
       color: var(--text);
       font-size: 0.8rem;
       background: #0d0d1a;
       border: 1px solid var(--border);
-      min-height: 60px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      word-wrap: break-word;
-      overflow: hidden;
     }
-
-    #discord-now-playing .track {
-      font-size: 0.85rem;
-      color: var(--accent3);
-      font-weight: bold;
-      margin: 0;
-      padding: 0;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
+    .flex-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       width: 100%;
+      text-align: left;
     }
-    
-    #discord-now-playing .track.marquee {
-      animation: marquee-scroll 12s linear infinite;
-      display: inline-block;
-      padding-left: 100%;
-      white-space: nowrap;
-    }
-    
-    @keyframes marquee-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    
-    #discord-now-playing .artist {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      margin: 0;
-      padding: 0;
-      line-height: 1.2;
-    }
-    #discord-now-playing .status-badge {
-      font-size: 0.5rem;
-      padding: 0.1rem 0.4rem;
-      border-radius: 10px;
-      background: rgba(136,255,136,0.15);
-      color: #88ff88;
-      border: 1px solid #88ff88;
-      margin-bottom: 0.2rem;
-      display: inline-block;
-    }
-    #discord-now-playing .status-badge.paused {
-      color: #ffaa44;
-      border-color: #ffaa44;
-      background: rgba(255,170,68,0.15);
-    }
-    #discord-now-playing .album-art {
+    .album-art {
       width: 40px;
       height: 40px;
       border-radius: 4px;
       border: 1px solid var(--border);
-      margin-right: 0.8rem;
       object-fit: cover;
       flex-shrink: 0;
     }
-    #discord-now-playing .track-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      text-align: left;
+    .track-info {
       flex: 1;
       min-width: 0;
-      overflow: hidden;
-      width: 100%;
-    }
-    #discord-now-playing .flex-row {
       display: flex;
-      align-items: center;
-      width: 100%;
-      gap: 0.5rem;
-      overflow: hidden;
+      flex-direction: column;
     }
-    #discord-now-playing .track-info .track {
+    .track {
+      font-size: 0.85rem;
+      color: var(--accent3);
+      font-weight: bold;
       white-space: nowrap;
       overflow: hidden;
-      width: 100%;
-      position: relative;
     }
-    #discord-now-playing .track-info .track.marquee {
-      display: block;
-      width: auto;
+    .track.marquee {
+      display: inline-block;
       padding-left: 100%;
-      animation: marquee-scroll 15s linear infinite;
+      animation: marquee-scroll 12s linear infinite;
     }
-    #discord-now-playing .track-info .artist {
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    .artist {
+      font-size: 0.7rem;
+      color: var(--text-dim);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: 100%;
     }
+    .status-badge {
+      font-size: 0.5rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 10px;
+      display: inline-block;
+      width: fit-content;
+      margin-bottom: 0.2rem;
+      background: rgba(136,255,136,0.15);
+      color: #88ff88;
+      border: 1px solid #88ff88;
+    }
+    .status-badge.paused { color: #ffaa44; border-color: #ffaa44; background: rgba(255,170,68,0.15); }
+    .status-badge.offline { color: #888888; border-color: #888888; }
 
-    /* ── SHOOTING STAR ── */
+    /* WEATHER */
+    .wx-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(42,42,90,0.6);
+      padding-bottom: 0.15rem;
+    }
+    .wx-label { color: var(--text-dim); }
+    .wx-val { color: var(--accent); text-align: right; }
+
+    /* ENHANCED SHOOTING STAR - bigger, brighter, longer trail */
     #shooting-star-container {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
+      z-index: 5;
       overflow: hidden;
     }
-    
     .shooting-star {
       position: absolute;
-      width: 4px;
-      height: 4px;
-      background: white;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #fff, #ffffaa);
       border-radius: 50%;
-      box-shadow: 0 0 10px 2px rgba(255,255,255,0.6), 0 0 20px 4px rgba(255,255,200,0.3);
-      animation: shoot 1.5s ease-out forwards;
+      box-shadow: 0 0 24px 6px rgba(255,255,200,0.9), 0 0 40px 12px rgba(255,220,100,0.7);
       opacity: 0;
+      filter: blur(1px);
     }
-    
     .shooting-star::after {
       content: '';
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 80px;
-      height: 2px;
-      background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+      width: 150px;
+      height: 4px;
+      background: linear-gradient(to left, rgba(255,255,200,0.9), rgba(255,200,80,0.7), transparent);
       right: 4px;
+      border-radius: 4px;
+      box-shadow: 0 0 12px 2px rgba(255,220,100,0.8);
     }
-    
     @keyframes shoot {
       0% {
-        opacity: 1;
+        opacity: 0.95;
         transform: translate(0, 0) scale(1);
       }
-      70% {
+      20% {
         opacity: 1;
+      }
+      80% {
+        opacity: 0.8;
       }
       100% {
         opacity: 0;
-        transform: translate(-300px, 300px) scale(0.5);
+        transform: translate(-400px, 400px) scale(0.6);
       }
     }
-
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
-      nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
-      .pixel-cloud { opacity: 0.1; }
     }
-    .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
-    .wx-label { color: var(--text-dim); white-space:nowrap; }
-    .wx-val { color: var(--accent); text-align:right; }
   </style>
 </head>
 <body>
@@ -661,613 +539,305 @@
 <canvas id="stars"></canvas>
 <canvas id="rain-canvas"></canvas>
 
-<!-- PIXELATED CLOUDS (thicker & more visible) -->
 <div class="pixel-cloud pixel-cloud-1">
-  <svg viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+  <svg viewBox="0 0 280 80" style="width:100%;height:100%;">
     <rect x="30" y="40" width="60" height="30" fill="#c8c8e8" opacity="0.4"/>
     <rect x="90" y="25" width="70" height="45" fill="#c8c8e8" opacity="0.4"/>
     <rect x="160" y="40" width="60" height="30" fill="#c8c8e8" opacity="0.4"/>
-    <rect x="60" y="55" width="120" height="15" fill="#c8c8e8" opacity="0.3"/>
-    <rect x="20" y="50" width="240" height="8" fill="#c8c8e8" opacity="0.2"/>
-    <rect x="80" y="20" width="50" height="15" fill="#c8c8e8" opacity="0.3"/>
-    <rect x="140" y="30" width="40" height="20" fill="#c8c8e8" opacity="0.25"/>
   </svg>
 </div>
-
 <div class="pixel-cloud pixel-cloud-2">
-  <svg viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+  <svg viewBox="0 0 220 60" style="width:100%;height:100%;">
     <rect x="20" y="30" width="50" height="22" fill="#c8c8e8" opacity="0.35"/>
     <rect x="70" y="18" width="60" height="34" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="130" y="30" width="50" height="22" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="40" y="42" width="100" height="10" fill="#c8c8e8" opacity="0.25"/>
-    <rect x="50" y="14" width="40" height="12" fill="#c8c8e8" opacity="0.25"/>
   </svg>
 </div>
-
 <div class="pixel-cloud pixel-cloud-3">
-  <svg viewBox="0 0 260 70" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:100%;">
+  <svg viewBox="0 0 260 70" style="width:100%;height:100%;">
     <rect x="25" y="35" width="55" height="28" fill="#c8c8e8" opacity="0.35"/>
     <rect x="80" y="20" width="65" height="42" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="145" y="35" width="55" height="28" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="50" y="52" width="120" height="12" fill="#c8c8e8" opacity="0.25"/>
-    <rect x="70" y="15" width="45" height="12" fill="#c8c8e8" opacity="0.25"/>
-    <rect x="120" y="25" width="35" height="18" fill="#c8c8e8" opacity="0.2"/>
   </svg>
 </div>
 
 <div class="wrapper">
-
-  <!-- HEADER -->
-  <header>
-    <div class="site-title">kreiiii</div>
-  </header>
-
+  <header><div class="site-title">kreiiii</div></header>
   <nav>
-    <a href="#home">/ home</a>
-    <a href="#about">/ about</a>
-    <a href="#projects">/ projects</a>
-    <a href="#blog">/ blog</a>
-    <a href="#socmed">/ socmed</a>
+    <a href="#home">/ home</a> <a href="#about">/ about</a>
+    <a href="#projects">/ projects</a> <a href="#blog">/ blog</a> <a href="#socmed">/ socmed</a>
   </nav>
-
   <div class="moon-div">☽ ✦ ☾</div>
 
-  <!-- MAIN GRID -->
   <div class="main-grid" id="home">
-
-    <!-- LEFT COLUMN -->
     <div>
-
-      <!-- INTRO -->
       <div class="section-head">☾ welcome</div>
       <div class="panel">
         <span class="panel-title">home.txt</span>
-
         <div class="mood-badge" id="status-badge"><span class="status-dot" id="status-dot"></span><span id="status-text">loading...</span> · philippines · 19</div>
-
         <div class="intro-text">
-          <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
-
-          <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old internet — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
-
-          <ul class="facts">
-            <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
-            <li>huge fan of tower defense games — and i also play <em class="pixel">valorant</em>. add me! 🎮</li>
-            <li>still figuring out what i want to build — got an idea? <a href="#socmed">let's talk!</a> <span class="cursor"></span></li>
-          </ul>
+          <p>hey!! welcome to my little corner. i'm <em class="pixel">rianuel</em>, 19 from philippines.</p>
+          <ul class="facts"><li>2nd year IT student at PUP Sta. Mesa 🎓 DOST scholar</li><li>tower defense + valorant player 🎮</li><li>still figuring out what to build — got an idea? <a href="#socmed">let's talk!</a> <span class="cursor"></span></li></ul>
         </div>
       </div>
 
-      <!-- PROJECTS -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
-
         <div class="project-entry">
-          <div class="project-title">
-            <a href="#">[this website]</a>
-            <span class="project-tag">html</span>
-          </div>
-          <div class="project-desc">this very site! built with plain html + css. no frameworks, no build steps. just like god intended.</div>
+          <div class="project-title"><a href="#">[this website]</a><span class="project-tag">html</span></div>
+          <div class="project-desc">handcrafted with plain html/css, no frameworks — old internet vibes.</div>
         </div>
       </div>
 
-      <!-- BLOG -->
       <div class="section-head" id="blog">☾ blog</div>
       <div class="panel">
         <span class="panel-title">posts/</span>
-
-        <div class="blog-entry">
-          <span class="blog-date">2024-08-28</span>
-          <span class="blog-title"><a href="#">hello world! we're live LFGGGGG</a></span>
-        </div>
-        
-        <div class="blog-entry">
-          <span class="blog-date" id="today-date">2025-05-05</span>
-          <span class="blog-title"><a href="#">i forgot about this lil project LOL made some changes</a></span>
-        </div>
+        <div class="blog-entry"><span class="blog-date">2024-08-28</span><span class="blog-title"><a href="#">hello world! we're live LFGGGGG</a></span></div>
+        <div class="blog-entry"><span class="blog-date" id="today-date">2025-05-06</span><span class="blog-title"><a href="#">i forgot about this lil project LOL made some changes</a></span></div>
       </div>
 
-      <!-- SOCMED LINKS (directly below blog) -->
       <div class="section-head" id="socmed">☾ socmed links</div>
-      <div class="panel" style="max-width:500px;">
+      <div class="panel">
         <span class="panel-title">socmed.txt</span>
-
-        <div class="socmed-line">
-          <span class="socmed-icon">📧 email</span>
-          <a href="mailto:rianuelmacalinaofn@gmail.com" class="socmed-link">rianuelmacalinaofn@gmail.com</a>
-        </div>
-        <div class="socmed-line">
-          <span class="socmed-icon">📽️ lboxd</span>
-          <a href="https://letterboxd.com/kreiiii/" target="_blank" class="socmed-link">@kreiiii</a>
-        </div>
-        <div class="socmed-line">
-          <span class="socmed-icon">📸 ig</span>
-          <a href="https://www.instagram.com/riangotchills/" target="_blank" class="socmed-link">@riangotchills</a>
-        </div>
-        <div class="socmed-line">
-          <span class="socmed-icon">🐦 twitter</span>
-          <a href="https://twitter.com/riannn_r" target="_blank" class="socmed-link">@riannn_r</a>
-        </div>
-        <div class="socmed-line">
-          <span class="socmed-icon">💼 linkedin</span>
-          <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="socmed-link">@rianuel-macalinao</a>
-        </div>
+        <div class="socmed-line"><span class="socmed-icon">📧 email</span><a href="mailto:rianuelmacalinaofn@gmail.com" class="socmed-link">rianuelmacalinaofn@gmail.com</a></div>
+        <div class="socmed-line"><span class="socmed-icon">📽️ lboxd</span><a href="https://letterboxd.com/kreiiii/" target="_blank" class="socmed-link">@kreiiii</a></div>
+        <div class="socmed-line"><span class="socmed-icon">📸 ig</span><a href="https://www.instagram.com/riangotchills/" target="_blank" class="socmed-link">@riangotchills</a></div>
+        <div class="socmed-line"><span class="socmed-icon">🐦 twitter</span><a href="https://twitter.com/riannn_r" target="_blank" class="socmed-link">@riannn_r</a></div>
+        <div class="socmed-line"><span class="socmed-icon">💼 linkedin</span><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="socmed-link">@rianuel-macalinao</a></div>
       </div>
-
     </div>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
-
-      <!-- PROFILE with Spike Spiegel image -->
       <div class="profile-box">
-        <div class="avatar-box">
-          <img src="https://pbs.twimg.com/media/Eh4KuwwWsAUd2O-.jpg" alt="spike spiegel" style="width:100%;height:100%;object-fit:cover;">
-        </div>
+        <div class="avatar-box"><img src="https://pbs.twimg.com/media/Eh4KuwwWsAUd2O-.jpg" alt="spike spiegel"></div>
         <div class="profile-name">rianuel macalinao</div>
         <div class="profile-role">creator · explorer · 19</div>
         <div class="profile-loc">📍 philippines</div>
-        <div style="margin-top:0.8rem; font-size:0.7rem; color:var(--text-dim);">
-          <span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span>
-        </div>
+        <div style="margin-top:0.8rem;font-size:0.7rem;"><span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span></div>
       </div>
 
-      <!-- ── DISCORD / SPOTIFY WIDGET ── -->
+      <!-- SPOTIFY LAST PLAYED PERSISTENT WIDGET -->
       <div class="spotify-widget">
-        <span class="spotify-label" id="spotify-header">🎵 now playing</span>
-        <div id="discord-now-playing">
-          <div style="color:var(--text-dim);">loading...</div>
-        </div>
-        <div style="margin-top:0.3rem; font-size:0.55rem; color:var(--text-dim);">
-          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent); text-decoration:none;">open in spotify →</a>
-        </div>
+        <span class="spotify-label" id="spotify-header">🎵 last played</span>
+        <div id="discord-now-playing"><div style="color:var(--text-dim);">loading tracks...</div></div>
+        <div style="margin-top:0.3rem; font-size:0.55rem;"><a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open in spotify →</a></div>
       </div>
 
-      <!-- LINKS (GitHub, Twitter, LinkedIn removed) -->
       <div class="panel" style="padding:0.5rem 0;">
         <span class="panel-title">links</span>
-        <ul class="star-links">
-          <li><a href="#home">home</a></li>
-          <li><a href="#about">about me</a></li>
-          <li><a href="#projects">projects</a></li>
-          <li><a href="#blog">blog</a></li>
-          <li><a href="#socmed">socmed</a></li>
-        </ul>
+        <ul class="star-links"><li><a href="#home">home</a></li><li><a href="#about">about me</a></li><li><a href="#projects">projects</a></li><li><a href="#blog">blog</a></li></ul>
       </div>
 
-      <!-- WEATHER WIDGET -->
-      <div class="panel" id="weather-widget" style="padding: 0.7rem 0.9rem; font-family:'Share Tech Mono',monospace;">
+      <div class="panel" id="weather-widget">
         <span class="panel-title">weather.exe</span>
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.6rem;">
-          <span style="font-size:0.6rem; color:var(--text-dim); cursor:pointer;" id="wx-plus" title="refresh" onclick="fetchWeather()">+</span>
-          <div id="wx-icon" style="font-size:2.2rem; line-height:1; text-align:center; filter: drop-shadow(0 0 6px rgba(136,136,255,0.4));">⋯</div>
-          <span style="font-size:0.6rem; color:var(--text-dim);">?</span>
-        </div>
-        <div id="wx-rows" style="display:flex; flex-direction:column; gap:0.25rem; font-size:0.75rem; line-height:1.6;">
-          <div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">loading...</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="font-size:0.6rem;cursor:pointer;" id="wx-plus" onclick="fetchWeather()">+</span><div id="wx-icon" style="font-size:2rem;">⋯</div><span style="font-size:0.6rem;">?</span></div>
+        <div id="wx-rows" style="font-size:0.75rem;">
+          <div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">--</span></div>
           <div class="wx-row"><span class="wx-label">Temp:</span><span class="wx-val" id="wx-temp">--</span></div>
           <div class="wx-row"><span class="wx-label">Feels like:</span><span class="wx-val" id="wx-feels">--</span></div>
           <div class="wx-row"><span class="wx-label">Humidity:</span><span class="wx-val" id="wx-hum">--</span></div>
           <div class="wx-row"><span class="wx-label">Wind:</span><span class="wx-val" id="wx-wind">--</span></div>
-          <div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val" style="color:var(--accent3);">Malabon, PH 🇵🇭</span></div>
-          <div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time" style="color:var(--text-dim);">--</span></div>
+          <div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val">Malabon, PH</span></div>
+          <div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time">--</span></div>
         </div>
       </div>
 
-      <!-- ABOUT MINI -->
       <div class="panel" id="about">
         <span class="panel-title">about.txt</span>
-        <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.8;">
-          hey im rianuel! 19 y/o from the philippines. i build things, break things (mostly break), and learn from both!<br><br>
-          this site is my little home, my little mark in the internet — my first creation so far!
-        </p>
+        <p style="font-size:0.8rem; color:var(--text-dim);">hey im rianuel! 19 y/o from philippines. i build things, break things, and learn. this site is my little home on the internet.</p>
       </div>
-
     </aside>
   </div>
-
   <div class="moon-div" style="margin:2rem 0 0;">★ ☽ ★</div>
-
-  <!-- FOOTER -->
   <footer>
-    <div class="footer-buttons">
-      <a class="pixel-button" href="#">KREIIII</a>
-      <a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a>
-      <a class="pixel-button" href="https://github.com" target="_blank">GITHUB</a>
-    </div>
-    <p>© 2025 rianuel macalinao · all rights reserved · philippines</p>
-    <p style="margin-top:0.4rem;"><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></p>
+    <div class="footer-buttons"><a class="pixel-button" href="#">KREIIII</a><a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a><a class="pixel-button" href="https://github.com" target="_blank">GITHUB</a></div>
+    <p>© 2025 rianuel macalinao · philippines</p>
   </footer>
-
 </div>
 
-<!-- CONTROLS -->
 <div class="controls">
   <button class="ctrl-btn" id="rain-toggle">💧 rain: on</button>
   <button class="ctrl-btn" id="stars-toggle">✦ stars: on</button>
 </div>
+<div id="shooting-star-container"></div>
 
 <script>
-  // ── STARS WITH GLOW
+  // STARS (glowing)
   const starCanvas = document.getElementById('stars');
   const sc = starCanvas.getContext('2d');
   let starsOn = true;
   let starsList = [];
-
-  function resizeStars() {
-    starCanvas.width = window.innerWidth;
-    starCanvas.height = window.innerHeight;
-  }
-  resizeStars();
-  window.addEventListener('resize', resizeStars);
-
-  for (let i = 0; i < 180; i++) {
-    starsList.push({
-      x: Math.random(),
-      y: Math.random(),
-      r: Math.random() * 1.4 + 0.3,
-      speed: Math.random() * 0.0003 + 0.0001,
-      phase: Math.random() * Math.PI * 2
-    });
-  }
-
+  function resizeStars() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
+  resizeStars(); window.addEventListener('resize', resizeStars);
+  for(let i=0;i<200;i++) starsList.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.4+0.3, speed: Math.random()*0.0003+0.0001, phase: Math.random()*Math.PI*2 });
   function drawStars(t) {
-    sc.clearRect(0, 0, starCanvas.width, starCanvas.height);
-    if (!starsOn) return;
-    starsList.forEach(s => {
-      const twinkle = 0.5 + 0.5 * Math.sin(t * 0.001 * (s.speed * 3000) + s.phase);
-      const alpha = 0.3 + 0.7 * twinkle;
-      const x = s.x * starCanvas.width;
-      const y = s.y * starCanvas.height;
-      const r = s.r;
-      
-      // Glow effect
-      const gradient = sc.createRadialGradient(x, y, 0, x, y, r * 6);
-      gradient.addColorStop(0, `rgba(255,255,200,${alpha})`);
-      gradient.addColorStop(0.3, `rgba(255,255,200,${alpha * 0.5})`);
-      gradient.addColorStop(1, `rgba(255,255,200,0)`);
-      
-      sc.beginPath();
-      sc.arc(x, y, r * 6, 0, Math.PI * 2);
-      sc.fillStyle = gradient;
-      sc.fill();
-      
-      // Core star
-      sc.beginPath();
-      sc.arc(x, y, r, 0, Math.PI * 2);
-      sc.fillStyle = `rgba(255,255,200,${alpha})`;
-      sc.fill();
+    sc.clearRect(0,0,starCanvas.width,starCanvas.height);
+    if(!starsOn) return;
+    starsList.forEach(s=>{
+      const twinkle = 0.5+0.5*Math.sin(t*0.001*(s.speed*3000)+s.phase);
+      const alpha = 0.3+0.7*twinkle;
+      const x=s.x*starCanvas.width, y=s.y*starCanvas.height;
+      const grad=sc.createRadialGradient(x,y,0,x,y,s.r*6);
+      grad.addColorStop(0,`rgba(255,255,200,${alpha})`);
+      grad.addColorStop(1,`rgba(255,255,200,0)`);
+      sc.beginPath(); sc.arc(x,y,s.r*6,0,Math.PI*2); sc.fillStyle=grad; sc.fill();
+      sc.beginPath(); sc.arc(x,y,s.r,0,Math.PI*2); sc.fillStyle=`rgba(255,255,200,${alpha})`; sc.fill();
     });
   }
-
-  // ── RAIN – PIXELATED & ROUNDER
+  // RAIN
   const rainCanvas = document.getElementById('rain-canvas');
   const rc = rainCanvas.getContext('2d');
   let rainOn = true;
   let drops = [];
-
-  function resizeRain() {
-    rainCanvas.width = window.innerWidth;
-    rainCanvas.height = window.innerHeight;
-    drops = [];
-    for (let i = 0; i < 120; i++) {
-      drops.push({
-        x: Math.random() * rainCanvas.width,
-        y: Math.random() * rainCanvas.height,
-        len: Math.random() * 18 + 6,
-        speed: Math.random() * 4 + 3,
-        opacity: Math.random() * 0.4 + 0.3
-      });
-    }
+  function resizeRain(){ rainCanvas.width=window.innerWidth; rainCanvas.height=window.innerHeight; drops=[]; for(let i=0;i<120;i++) drops.push({ x:Math.random()*rainCanvas.width, y:Math.random()*rainCanvas.height, len:Math.random()*18+6, speed:Math.random()*4+3, opacity:Math.random()*0.4+0.3 }); }
+  resizeRain(); window.addEventListener('resize',resizeRain);
+  function drawRain(){
+    rc.clearRect(0,0,rainCanvas.width,rainCanvas.height);
+    if(!rainOn) return;
+    drops.forEach(d=>{ rc.beginPath(); rc.ellipse(d.x,d.y,2.5,5,0,0,Math.PI*2); rc.fillStyle=`rgba(180,220,255,${d.opacity+0.3})`; rc.fill(); d.y+=d.speed; d.x-=0.5; if(d.y>rainCanvas.height){ d.y=-d.len; d.x=Math.random()*rainCanvas.width; } });
   }
-  resizeRain();
-  window.addEventListener('resize', resizeRain);
-
-  function drawRain() {
-    rc.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
-    if (!rainOn) return;
-    drops.forEach(d => {
-      rc.beginPath();
-      rc.ellipse(d.x, d.y, 2.5, 5, 0, 0, Math.PI * 2);
-      rc.fillStyle = `rgba(180,220,255,${d.opacity + 0.3})`;
-      rc.fill();
-      d.y += d.speed;
-      d.x -= 0.5;
-      if (d.y > rainCanvas.height) {
-        d.y = -d.len;
-        d.x = Math.random() * rainCanvas.width;
-      }
-    });
-  }
-
-  // ── LOOP
-  function loop(t) {
-    drawStars(t);
-    drawRain();
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-
-  // ── CONTROLS
-  document.getElementById('rain-toggle').addEventListener('click', function() {
-    rainOn = !rainOn;
-    this.textContent = '💧 rain: ' + (rainOn ? 'on' : 'off');
-  });
-
-  document.getElementById('stars-toggle').addEventListener('click', function() {
-    starsOn = !starsOn;
-    this.textContent = '✦ stars: ' + (starsOn ? 'on' : 'off');
-  });
+  function animate(t){ drawStars(t); drawRain(); requestAnimationFrame(animate); }
+  requestAnimationFrame(animate);
+  document.getElementById('rain-toggle').onclick=()=>{ rainOn=!rainOn; document.getElementById('rain-toggle').textContent=`💧 rain: ${rainOn?'on':'off'}`; };
+  document.getElementById('stars-toggle').onclick=()=>{ starsOn=!starsOn; document.getElementById('stars-toggle').textContent=`✦ stars: ${starsOn?'on':'off'}`; };
 </script>
 
 <script>
-  // ── DISCORD STATUS (via Lanyard) - custom status removed, only shows status
-  const DISCORD_ID = '563789556957052929'; // Your Discord ID
+  // DISCORD STATUS
+  const DISCORD_ID = '563789556957052929';
+  const statusConfig = { online:{label:'online',emoji:'🟢',cls:'online'}, idle:{label:'idle / afk',emoji:'🌙',cls:'idle'}, dnd:{label:'do not disturb',emoji:'🔴',cls:'dnd'}, offline:{label:'offline',emoji:'⚫',cls:'offline'} };
+  function applyDiscordStatus(data){
+    const dot1=document.getElementById('status-dot'), dot2=document.getElementById('status-dot-2'), txt1=document.getElementById('status-text'), txt2=document.getElementById('status-text-2');
+    const status=data.success?data.data.discord_status||'offline':'offline';
+    const cfg=statusConfig[status]||statusConfig.offline;
+    dot1.className='status-dot '+cfg.cls; dot2.className='status-dot '+cfg.cls;
+    txt1.textContent=cfg.emoji+' '+cfg.label; txt2.textContent=cfg.emoji+' '+cfg.label;
+  }
+  async function fetchDiscordStatus(){ try{ const res=await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`); const data=await res.json(); applyDiscordStatus(data); }catch(e){ applyDiscordStatus({success:false}); } }
+  fetchDiscordStatus(); setInterval(fetchDiscordStatus,15000);
+</script>
+
+<script>
+  // PERSISTENT "LAST PLAYED" LOGIC: retains last played song even after refresh + updates when new song plays
+  let storedLastSong = null;
+  // Load from localStorage (survives refresh)
+  try{
+    const saved = localStorage.getItem('kreiiii_last_song');
+    if(saved) storedLastSong = JSON.parse(saved);
+  }catch(e){}
   
-  const statusConfig = {
-    online: { label: 'online', emoji: '🟢', cls: 'online', color: '#44ff88' },
-    idle: { label: 'idle / afk', emoji: '🌙', cls: 'idle', color: '#ffaa44' },
-    dnd: { label: 'do not disturb', emoji: '🔴', cls: 'dnd', color: '#ff4444' },
-    offline: { label: 'offline', emoji: '⚫', cls: 'offline', color: '#888888' }
-  };
-
-  function applyDiscordStatus(data) {
-    const dot1 = document.getElementById('status-dot');
-    const dot2 = document.getElementById('status-dot-2');
-    const text1 = document.getElementById('status-text');
-    const text2 = document.getElementById('status-text-2');
-    
-    if (!data.success) {
-      // Default to offline if API fails
-      const offline = statusConfig.offline;
-      dot1.className = 'status-dot ' + offline.cls;
-      dot2.className = 'status-dot ' + offline.cls;
-      text1.textContent = offline.emoji + ' ' + offline.label;
-      text2.textContent = offline.emoji + ' ' + offline.label;
-      return;
-    }
-
-    const discordData = data.data;
-    const status = discordData.discord_status || 'offline';
-    
-    // Get status config
-    const config = statusConfig[status] || statusConfig.offline;
-    
-    // Update dots
-    dot1.className = 'status-dot ' + config.cls;
-    dot2.className = 'status-dot ' + config.cls;
-    
-    // Build status text - only status, no custom status
-    let statusText = config.emoji + ' ' + config.label;
-    
-    text1.textContent = statusText;
-    text2.textContent = statusText;
-  }
-
-  async function fetchDiscordStatus() {
-    try {
-      const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
-      const data = await res.json();
-      applyDiscordStatus(data);
-    } catch (e) {
-      // If fetch fails, show offline
-      const offline = statusConfig.offline;
-      document.getElementById('status-dot').className = 'status-dot ' + offline.cls;
-      document.getElementById('status-dot-2').className = 'status-dot ' + offline.cls;
-      document.getElementById('status-text').textContent = offline.emoji + ' ' + offline.label;
-      document.getElementById('status-text-2').textContent = offline.emoji + ' ' + offline.label;
-    }
-  }
-  
-  // Fetch immediately and every 15 seconds
-  fetchDiscordStatus();
-  setInterval(fetchDiscordStatus, 15000);
-</script>
-
-<script>
-  // ── WEATHER WIDGET
-  const WX_LAT = 14.6628, WX_LON = 120.9569;
-  const WMO = {
-    0:  ['☀️',  'Clear sky'],
-    1:  ['🌤️', 'Mostly clear'],
-    2:  ['⛅',  'Partly cloudy'],
-    3:  ['☁️',  'Overcast'],
-    45: ['🌫️', 'Foggy'],
-    48: ['🌫️', 'Icy fog'],
-    51: ['🌦️', 'Light drizzle'],
-    53: ['🌦️', 'Drizzle'],
-    55: ['🌧️', 'Heavy drizzle'],
-    61: ['🌧️', 'Light rain'],
-    63: ['🌧️', 'Rain'],
-    65: ['🌧️', 'Heavy rain'],
-    71: ['🌨️', 'Light snow'],
-    73: ['🌨️', 'Snow'],
-    75: ['❄️',  'Heavy snow'],
-    80: ['🌦️', 'Rain showers'],
-    81: ['🌧️', 'Heavy showers'],
-    82: ['⛈️',  'Violent showers'],
-    95: ['⛈️',  'Thunderstorm'],
-    96: ['⛈️',  'Thunderstorm + hail'],
-    99: ['⛈️',  'Heavy thunderstorm'],
-  };
-
-  async function fetchWeather() {
-    document.getElementById('wx-cond').textContent = 'loading...';
-    document.getElementById('wx-icon').textContent = '⋯';
-    try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LON}`
-        + `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code`
-        + `&wind_speed_unit=kmh&temperature_unit=celsius&timezone=Asia%2FManila`;
-      const res = await fetch(url);
-      const d = await res.json();
-      const c = d.current;
-      const [icon, label] = WMO[c.weather_code] || ['🌡️', 'Unknown'];
-
-      document.getElementById('wx-icon').textContent  = icon;
-      document.getElementById('wx-cond').textContent  = label;
-      document.getElementById('wx-temp').textContent  = c.temperature_2m + '°C';
-      document.getElementById('wx-feels').textContent = c.apparent_temperature + '°C';
-      document.getElementById('wx-hum').textContent   = c.relative_humidity_2m + '%';
-      document.getElementById('wx-wind').textContent  = c.wind_speed_10m + ' km/h';
-
-      const now = new Date();
-      document.getElementById('wx-time').textContent =
-        now.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', hour12:true });
-    } catch(e) {
-      document.getElementById('wx-cond').textContent = 'unavailable';
-      document.getElementById('wx-icon').textContent = '✖';
-    }
-  }
-  fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000);
-</script>
-
-<script>
-  // ── DISCORD / SPOTIFY NOW PLAYING - RETAINS LAST PLAYED SONG & UPDATES HEADER
-  let lastPlayedTrack = null;
-
-  async function fetchSpotifyStatus() {
+  async function fetchSpotifyWithPersistence() {
     const container = document.getElementById('discord-now-playing');
-    const header = document.getElementById('spotify-header');
+    const headerEl = document.getElementById('spotify-header');
     try {
       const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
       const data = await res.json();
-      
-      // Get Discord status
-      const discordStatus = data.success ? data.data.discord_status || 'offline' : 'offline';
-      
-      // If Spotify is currently playing, show it and save as last played
-      if (data.success && data.data.spotify) {
-        const spotify = data.data.spotify;
-        const isPlaying = spotify.timestamps ? true : false;
-        const albumArt = spotify.album_art_url || '';
-        const songTitle = spotify.song || '';
-        const artistName = spotify.artist || '';
-        
-        // Save this as the last played track
-        lastPlayedTrack = { 
-          songTitle: songTitle, 
-          artistName: artistName, 
-          albumArt: albumArt,
-          timestamp: Date.now()
-        };
-        
-        const needsMarquee = songTitle.length > 20;
-        
-        // Update header to "now playing"
-        header.textContent = '🎵 now playing';
-        
+      const discordStatus = data.success ? (data.data.discord_status || 'offline') : 'offline';
+      if(data.success && data.data.spotify) {
+        const sp = data.data.spotify;
+        const currentTrack = { songTitle: sp.song || '', artistName: sp.artist || '', albumArt: sp.album_art_url || '', timestamp: Date.now() };
+        // save to localStorage and memory
+        storedLastSong = currentTrack;
+        localStorage.setItem('kreiiii_last_song', JSON.stringify(currentTrack));
+        headerEl.textContent = '🎵 now playing';
+        const needsMarquee = currentTrack.songTitle.length > 20;
         container.innerHTML = `
           <div class="flex-row">
-            <img src="${albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+            <img src="${currentTrack.albumArt}" class="album-art" onerror="this.style.display='none'">
             <div class="track-info">
-              <span class="status-badge">${isPlaying ? '▶ playing' : '⏸ paused'}</span>
-              <div class="track ${needsMarquee ? 'marquee' : ''}">${songTitle}</div>
-              <span class="artist">${artistName}</span>
+              <span class="status-badge">▶ playing</span>
+              <div class="track ${needsMarquee ? 'marquee' : ''}">${escapeHtml(currentTrack.songTitle)}</div>
+              <span class="artist">${escapeHtml(currentTrack.artistName)}</span>
             </div>
           </div>
         `;
         return;
       }
-      
-      // If no Spotify data but we have a last played track, show it
-      if (lastPlayedTrack) {
-        const needsMarquee = lastPlayedTrack.songTitle.length > 20;
+      // NO ACTIVE SPOTIFY: show last played track (if any)
+      if(storedLastSong && storedLastSong.songTitle) {
+        headerEl.textContent = '🎵 last played';
         const isOffline = discordStatus === 'offline';
-        
-        // Update header to "last played"
-        header.textContent = isOffline ? '🎵 last played (offline)' : '🎵 last played';
-        
+        const needsMarquee = storedLastSong.songTitle.length > 20;
+        let badgeText = isOffline ? '⚫ offline · last played' : '⏸ last played';
+        let badgeClass = isOffline ? 'offline' : 'paused';
         container.innerHTML = `
           <div class="flex-row">
-            <img src="${lastPlayedTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
+            <img src="${storedLastSong.albumArt}" class="album-art" onerror="this.style.display='none'">
             <div class="track-info">
-              <span class="status-badge ${isOffline ? 'offline' : 'paused'}">${isOffline ? '⚫ offline' : '⏸ last played'}</span>
-              <div class="track ${needsMarquee ? 'marquee' : ''}">${lastPlayedTrack.songTitle}</div>
-              <span class="artist">${lastPlayedTrack.artistName}</span>
-            </div>
-          </div>
-        `;
-        return;
-      }
-      
-      // Fallback - no track history yet
-      header.textContent = '🎵 last played';
-      container.innerHTML = `
-        <div style="color:var(--text-dim); font-size:0.7rem;">
-          🎵 last played<br>
-          <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
-        </div>
-      `;
-    } catch (e) {
-      // On error, show last played if available
-      if (lastPlayedTrack) {
-        const needsMarquee = lastPlayedTrack.songTitle.length > 20;
-        header.textContent = '🎵 last played';
-        container.innerHTML = `
-          <div class="flex-row">
-            <img src="${lastPlayedTrack.albumArt}" class="album-art" alt="album art" onerror="this.style.display='none'">
-            <div class="track-info">
-              <span class="status-badge paused">⏸ last played</span>
-              <div class="track ${needsMarquee ? 'marquee' : ''}">${lastPlayedTrack.songTitle}</div>
-              <span class="artist">${lastPlayedTrack.artistName}</span>
+              <span class="status-badge ${badgeClass}">${badgeText}</span>
+              <div class="track ${needsMarquee ? 'marquee' : ''}">${escapeHtml(storedLastSong.songTitle)}</div>
+              <span class="artist">${escapeHtml(storedLastSong.artistName)}</span>
             </div>
           </div>
         `;
       } else {
-        header.textContent = '🎵 last played';
+        headerEl.textContent = '🎵 last played';
+        container.innerHTML = `<div style="color:var(--text-dim);">✨ no track yet — play something on Spotify</div>`;
+      }
+    } catch(e) {
+      if(storedLastSong && storedLastSong.songTitle){
+        headerEl.textContent = '🎵 last played';
         container.innerHTML = `
-          <div style="color:var(--text-dim); font-size:0.7rem;">
-            🎵 last played<br>
-            <a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open spotify →</a>
-          </div>
-        `;
+          <div class="flex-row">
+            <img src="${storedLastSong.albumArt}" class="album-art" onerror="this.style.display='none'">
+            <div class="track-info">
+              <span class="status-badge paused">⏸ last played (cached)</span>
+              <div class="track">${escapeHtml(storedLastSong.songTitle)}</div>
+              <span class="artist">${escapeHtml(storedLastSong.artistName)}</span>
+            </div>
+          </div>`;
+      } else {
+        container.innerHTML = `<div style="color:var(--text-dim);">⚡ error — reload maybe?</div>`;
       }
     }
   }
-  
-  fetchSpotifyStatus();
-  setInterval(fetchSpotifyStatus, 15000);
+  function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g,function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;});}
+  fetchSpotifyWithPersistence();
+  setInterval(fetchSpotifyWithPersistence, 13000);
 </script>
 
 <script>
-  // ── AUTO-UPDATE TODAY'S DATE
-  document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    document.getElementById('today-date').textContent = `${year}-${month}-${day}`;
-  });
+  // WEATHER
+  async function fetchWeather() {
+    try{
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=14.6628&longitude=120.9569&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Asia%2FManila`;
+      const res = await fetch(url); const d = await res.json();
+      const wmo = {0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Overcast'],45:['🌫️','Fog'],61:['🌧️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],80:['🌦️','Showers'],95:['⛈️','T-storm']};
+      const code = d.current.weather_code;
+      const [icon,label] = wmo[code] || ['🌡️','Unknown'];
+      document.getElementById('wx-icon').textContent = icon;
+      document.getElementById('wx-cond').textContent = label;
+      document.getElementById('wx-temp').textContent = d.current.temperature_2m+'°C';
+      document.getElementById('wx-feels').textContent = d.current.apparent_temperature+'°C';
+      document.getElementById('wx-hum').textContent = d.current.relative_humidity_2m+'%';
+      document.getElementById('wx-wind').textContent = d.current.wind_speed_10m+' km/h';
+      document.getElementById('wx-time').textContent = new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
+    }catch(e){}
+  }
+  fetchWeather(); setInterval(fetchWeather,10*60*1000);
+  document.getElementById('today-date').textContent = new Date().toISOString().slice(0,10);
 </script>
 
 <script>
-  // ── SHOOTING STAR (every 45 seconds)
-  function createShootingStar() {
+  // ENHANCED SHOOTING STAR: bigger, brighter, lingering trail
+  function createEnhancedShootingStar() {
     const container = document.getElementById('shooting-star-container');
     const star = document.createElement('div');
     star.className = 'shooting-star';
-    
-    const startX = Math.random() * window.innerWidth * 0.8 + window.innerWidth * 0.1;
-    const startY = Math.random() * window.innerHeight * 0.3;
-    
+    const startX = Math.random() * window.innerWidth * 0.7 + window.innerWidth * 0.15;
+    const startY = Math.random() * window.innerHeight * 0.2;
     star.style.left = startX + 'px';
     star.style.top = startY + 'px';
-    
-    const duration = 1.2 + Math.random() * 0.8;
+    const duration = 1.4 + Math.random() * 1.0;
     star.style.animationDuration = duration + 's';
-    
+    star.style.width = '10px';
+    star.style.height = '10px';
+    star.style.background = 'radial-gradient(circle, #fff, #ffffcc, #ffdd88)';
+    star.style.boxShadow = '0 0 30px 12px rgba(255,230,100,0.9), 0 0 50px 18px rgba(255,200,80,0.6)';
     container.appendChild(star);
-    
-    setTimeout(() => {
-      star.remove();
-    }, duration * 1000 + 100);
+    setTimeout(() => { if(star && star.remove) star.remove(); }, duration * 1000 + 200);
   }
-
-  setTimeout(createShootingStar, 5000);
-  setInterval(createShootingStar, 45000);
+  setTimeout(createEnhancedShootingStar, 3000);
+  setInterval(createEnhancedShootingStar, 38000);
 </script>
-
 </body>
 </html>
