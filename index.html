@@ -163,29 +163,6 @@
       align-items: start;
     }
 
-    /* ── INTRO ── */
-    .intro-gif {
-      float: left;
-      margin: 0 1rem 0.5rem 0;
-      image-rendering: pixelated;
-    }
-
-    /* pixel avatar made with CSS */
-    .pixel-avatar {
-      width: 64px;
-      height: 64px;
-      float: left;
-      margin: 0 1rem 0.5rem 0;
-      image-rendering: pixelated;
-      background: #1a1a3a;
-      border: 2px solid var(--border-bright);
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      grid-template-rows: repeat(8, 1fr);
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
     .mood-badge {
       display: inline-block;
       font-size: 0.75rem;
@@ -240,18 +217,6 @@
       overflow: hidden;
     }
 
-    .avatar-box::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(136,136,255,0.15) 0%,
-        transparent 50%,
-        rgba(255,136,204,0.1) 100%
-      );
-    }
-
     .profile-name {
       font-family: 'Silkscreen', monospace;
       font-size: 0.7rem;
@@ -279,15 +244,12 @@
       animation: blink 2s infinite;
     }
     .status-dot.offline { background: #888; animation: none; }
-    .status-dot.busy { background: #ffaa44; }
-    .status-dot.dnd { background: #ff4444; }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.2; }
     }
 
-    /* sidebar links */
     .star-links {
       list-style: none;
     }
@@ -409,7 +371,6 @@
       image-rendering: pixelated;
     }
 
-    /* ── MOON DIVIDER ── */
     .moon-div {
       text-align: center;
       font-size: 1.5rem;
@@ -419,7 +380,6 @@
       text-shadow: 0 0 10px rgba(255,255,170,0.4);
     }
 
-    /* ── TYPING CURSOR ── */
     .cursor {
       display: inline-block;
       width: 8px; height: 14px;
@@ -433,13 +393,12 @@
       50% { opacity: 0; }
     }
 
-    /* ── RAIN TOGGLE ── */
     #rain-canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.35; /* Heavier rain opacity[cite: 1] */
+      opacity: 0.35;
     }
 
     .controls {
@@ -464,7 +423,6 @@
     }
     .ctrl-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* responsive */
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
@@ -483,7 +441,7 @@
 
 <div class="wrapper">
 
-  <!-- HEADER[cite: 1] -->
+  <!-- HEADER -->
   <header>
     <div class="site-title">KREIIIII</div>
     <div class="site-sub">personal corner of the internet ✦ philippines</div>
@@ -525,34 +483,10 @@
         </div>
       </div>
 
-      <!-- PROJECTS -->
+      <!-- PROJECTS (Retained only this website) -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
-
-        <div class="project-entry">
-          <div class="project-title">
-            <a href="#">[project name here]</a>
-            <span class="project-tag">web</span>
-          </div>
-          <div class="project-desc">replace this with a real project of yours. what did you make? what problem did it solve? link it if it's online!</div>
-        </div>
-
-        <div class="project-entry">
-          <div class="project-title">
-            <a href="#">[another project]</a>
-            <span class="project-tag">tool</span>
-          </div>
-          <div class="project-desc">a second project. could be something small — a script, a drawing, a game, anything you've made counts.</div>
-        </div>
-
-        <div class="project-entry">
-          <div class="project-title">
-            <a href="#">[work in progress]</a>
-            <span class="project-tag">wip</span>
-          </div>
-          <div class="project-desc">what are you currently building? it doesn't have to be done — in-progress stuff is interesting too.</div>
-        </div>
 
         <div class="project-entry">
           <div class="project-title">
@@ -591,7 +525,7 @@
         </div>
       </div>
 
-      <!-- LINKS[cite: 1] -->
+      <!-- LINKS -->
       <div class="panel" style="padding:0.5rem 0;">
         <span class="panel-title">links</span>
         <ul class="star-links">
@@ -601,7 +535,7 @@
           <li><a href="#blog">blog</a></li>
           <li><a href="#contact">contact</a></li>
           <li><a href="https://github.com/kreiiiizy" target="_blank">github</a></li>
-          <li><a href="https://twitter.com/riannn_r" target="_blank">twitter / x</a></li>
+          <li><a href="https://twitter.com/riannn_r" target="_blank">x</a></li>
           <li><a href="https://www.instagram.com/riangotchills" target="_blank">instagram</a></li>
           <li><a href="https://letterboxd.com/kreiiii/" target="_blank">letterboxd</a></li>
           <li><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank">linkedin</a></li>
@@ -611,17 +545,9 @@
       <!-- WEATHER WIDGET -->
       <div class="panel" id="weather-widget" style="padding: 0.7rem 0.9rem; font-family:'Share Tech Mono',monospace;">
         <span class="panel-title">weather.exe</span>
-        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.6rem;">
-          <span style="font-size:0.6rem; color:var(--text-dim); cursor:pointer;" id="wx-plus" title="refresh" onclick="fetchWeather()">+</span>
-          <div id="wx-icon" style="font-size:2.2rem; line-height:1; text-align:center; filter: drop-shadow(0 0 6px rgba(136,136,255,0.4));">⋯</div>
-          <span style="font-size:0.6rem; color:var(--text-dim);">?</span>
-        </div>
         <div id="wx-rows" style="display:flex; flex-direction:column; gap:0.25rem; font-size:0.75rem; line-height:1.6;">
           <div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">loading...</span></div>
           <div class="wx-row"><span class="wx-label">Temp:</span><span class="wx-val" id="wx-temp">--</span></div>
-          <div class="wx-row"><span class="wx-label">Feels like:</span><span class="wx-val" id="wx-feels">--</span></div>
-          <div class="wx-row"><span class="wx-label">Humidity:</span><span class="wx-val" id="wx-hum">--</span></div>
-          <div class="wx-row"><span class="wx-label">Wind:</span><span class="wx-val" id="wx-wind">--</span></div>
           <div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val" style="color:var(--accent3);">Malabon, PH 🇵🇭</span></div>
           <div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time" style="color:var(--text-dim);">--</span></div>
         </div>
@@ -631,15 +557,14 @@
       <div class="panel" id="about">
         <span class="panel-title">about.txt</span>
         <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.8;">
-          hey im rianuel! 19 y/o from the philippines. i build things, break things, and learn from both.<br><br>
-          this site is my little home, my little mark in the internet — my first creation so far!
+          hey im rianuel! 19 y/o from the philippines. i build things, break things, and learn from both.
         </p>
       </div>
 
     </aside>
   </div>
 
-  <!-- CONTACT[cite: 1] -->
+  <!-- CONTACT -->
   <div class="section-head" id="contact">☾ contact</div>
   <div class="panel" style="max-width:500px;">
     <span class="panel-title">contact.txt</span>
@@ -651,6 +576,10 @@
     <div class="contact-line">
       <span class="contact-icon">🐙 github</span>
       <a href="https://github.com/kreiiiizy" target="_blank" class="contact-link">github.com/kreiiiizy</a>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon">🐦 x</span>
+      <a href="https://twitter.com/riannn_r" target="_blank" class="contact-link">@riannn_r</a>
     </div>
     <div class="contact-line">
       <span class="contact-icon">📸 ig</span>
@@ -670,9 +599,6 @@
     </div>
   </div>
 
-  <div class="moon-div" style="margin:2rem 0 0;">★ ☽ ★</div>
-
-  <!-- FOOTER[cite: 1] -->
   <footer>
     <div class="footer-buttons">
       <a class="pixel-button" href="#">KREIIIII</a>
@@ -680,7 +606,6 @@
       <a class="pixel-button" href="https://github.com/kreiiiizy" target="_blank">GITHUB</a>
     </div>
     <p>© 2026 rianuel macalinao · all rights reserved · philippines</p>
-    <p style="margin-top:0.4rem;"><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></p>
   </footer>
 
 </div>
@@ -727,7 +652,7 @@
     });
   }
 
-  // ── RAIN[cite: 1]
+  // ── RAIN
   const rainCanvas = document.getElementById('rain-canvas');
   const rc = rainCanvas.getContext('2d');
   let rainOn = true;
@@ -737,7 +662,6 @@
     rainCanvas.width = window.innerWidth;
     rainCanvas.height = window.innerHeight;
     drops = [];
-    // Increased drop count for heavier rain[cite: 1]
     for (let i = 0; i < 250; i++) {
       drops.push({
         x: Math.random() * rainCanvas.width,
@@ -757,7 +681,7 @@
     drops.forEach(d => {
       rc.beginPath();
       rc.moveTo(d.x, d.y);
-      rc.lineTo(d.x - 1.5, d.y + d.len); // Slightly slanted/heavier[cite: 1]
+      rc.lineTo(d.x - 1.5, d.y + d.len);
       rc.strokeStyle = `rgba(136,180,255,${d.opacity})`;
       rc.lineWidth = 1.2;
       rc.stroke();
@@ -770,7 +694,6 @@
     });
   }
 
-  // ── LOOP
   function loop(t) {
     drawStars(t);
     drawRain();
@@ -778,7 +701,6 @@
   }
   requestAnimationFrame(loop);
 
-  // ── CONTROLS
   document.getElementById('rain-toggle').addEventListener('click', function() {
     rainOn = !rainOn;
     this.textContent = '💧 rain: ' + (rainOn ? 'on' : 'off');
@@ -791,10 +713,9 @@
 </script>
 
 <script>
-  // ── STATUS SYSTEM[cite: 1]
+  // ── STATUS SYSTEM
   const GITHUB_USER = 'kreiiiizy'; 
   const REPO_NAME   = 'kreiiiizy.github.io'; 
-
   const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
 
   const states = {
@@ -807,13 +728,7 @@
 
   function applyStatus(s) {
     const state = states[s.status] || states.offline;
-
-    // update all dots
-    document.querySelectorAll('.status-dot').forEach(dot => {
-      dot.className = 'status-dot ' + state.cls;
-    });
-
-    // update text nodes
+    document.querySelectorAll('.status-dot').forEach(dot => { dot.className = 'status-dot ' + state.cls; });
     const t1 = document.getElementById('status-text');
     const t2 = document.getElementById('status-text-2');
     if (t1) t1.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
@@ -822,82 +737,36 @@
 
   async function fetchStatus() {
     try {
-      // cache-bust so GitHub serves fresh content
       const res = await fetch(STATUS_URL + '?t=' + Date.now());
       if (!res.ok) throw new Error('not found');
       const data = await res.json();
       applyStatus(data);
     } catch (e) {
-      // If no status.json yet, just show offline
       applyStatus({ status: 'offline', note: '' });
     }
   }
-
   fetchStatus();
-  // re-check every 60 seconds while the tab is open
   setInterval(fetchStatus, 60000);
 </script>
 
 <script>
   // ── WEATHER WIDGET
-  // Uses Open-Meteo (free, no API key needed) + WMO weather codes
-  // Coordinates: Malabon, Metro Manila, Philippines
   const WX_LAT = 14.6628, WX_LON = 120.9569;
-
-  const WMO = {
-    0:  ['☀️',  'Clear sky'],
-    1:  ['🌤️', 'Mostly clear'],
-    2:  ['⛅',  'Partly cloudy'],
-    3:  ['☁️',  'Overcast'],
-    45: ['🌫️', 'Foggy'],
-    48: ['🌫️', 'Icy fog'],
-    51: ['🌦️', 'Light drizzle'],
-    53: ['🌦️', 'Drizzle'],
-    55: ['🌧️', 'Heavy drizzle'],
-    61: ['🌧️', 'Light rain'],
-    63: ['🌧️', 'Rain'],
-    65: ['🌧️', 'Heavy rain'],
-    71: ['🌨️', 'Light snow'],
-    73: ['🌨️', 'Snow'],
-    75: ['❄️',  'Heavy snow'],
-    80: ['🌦️', 'Rain showers'],
-    81: ['🌧️', 'Heavy showers'],
-    82: ['⛈️',  'Violent showers'],
-    95: ['⛈️',  'Thunderstorm'],
-    96: ['⛈️',  'Thunderstorm + hail'],
-    99: ['⛈️',  'Heavy thunderstorm'],
-  };
+  const WMO = { 0: ['☀️', 'Clear sky'], 1: ['🌤️', 'Mostly clear'], 2: ['⛅', 'Partly cloudy'], 3: ['☁️', 'Overcast'], 45: ['🌫️', 'Foggy'], 61: ['🌧️', 'Light rain'], 63: ['🌧️', 'Rain'], 80: ['🌦️', 'Rain showers'], 95: ['⛈️', 'Thunderstorm'] };
 
   async function fetchWeather() {
-    document.getElementById('wx-cond').textContent = 'loading...';
-    document.getElementById('wx-icon').textContent = '⋯';
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LON}`
-        + `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code`
-        + `&wind_speed_unit=kmh&temperature_unit=celsius&timezone=Asia%2FManila`;
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LON}&current=temperature_2m,weather_code&timezone=Asia%2FManila`;
       const res = await fetch(url);
       const d = await res.json();
-      const c = d.current;
-      const [icon, label] = WMO[c.weather_code] || ['🌡️', 'Unknown'];
-
-      document.getElementById('wx-icon').textContent  = icon;
+      const [icon, label] = WMO[d.current.weather_code] || ['🌡️', 'Unknown'];
       document.getElementById('wx-cond').textContent  = label;
-      document.getElementById('wx-temp').textContent  = c.temperature_2m + '°C';
-      document.getElementById('wx-feels').textContent = c.apparent_temperature + '°C';
-      document.getElementById('wx-hum').textContent   = c.relative_humidity_2m + '%';
-      document.getElementById('wx-wind').textContent  = c.wind_speed_10m + ' km/h';
-
-      const now = new Date();
-      document.getElementById('wx-time').textContent =
-        now.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', hour12:true });
-    } catch(e) {
-      document.getElementById('wx-cond').textContent = 'unavailable';
-      document.getElementById('wx-icon').textContent = '✖';
-    }
+      document.getElementById('wx-temp').textContent  = d.current.temperature_2m + '°C';
+      document.getElementById('wx-time').textContent = new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', hour12:true });
+    } catch(e) { }
   }
-
   fetchWeather();
-  setInterval(fetchWeather, 10 * 60 * 1000); // refresh every 10 mins
+  setInterval(fetchWeather, 10 * 60 * 1000);
 </script>
 </body>
 </html>
