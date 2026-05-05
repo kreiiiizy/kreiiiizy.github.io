@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>rianuel's place</title>
+  <title>kreiiii · personal place</title>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -86,10 +86,7 @@
     }
 
     .site-sub {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
+      display: none; /* removed as requested */
     }
 
     /* ── NAV ── */
@@ -163,16 +160,26 @@
       align-items: start;
     }
 
-    .intro-container {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
+    .intro-gif {
+      float: left;
+      margin: 0 1rem 0.5rem 0;
+      image-rendering: pixelated;
     }
 
-    .intro-gif {
-      width: 200px;
-      border: 1px solid var(--border-bright);
+    /* pixel avatar replaced by gif */
+    .pixel-avatar {
+      width: 64px;
+      height: 64px;
+      float: left;
+      margin: 0 1rem 0.5rem 0;
+      image-rendering: pixelated;
+      background: #1a1a3a;
+      border: 2px solid var(--border-bright);
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
       flex-shrink: 0;
+      overflow: hidden;
     }
 
     .mood-badge {
@@ -214,19 +221,25 @@
       text-align: center;
     }
 
+    /* avatar gif container */
     .avatar-box {
       width: 80px; height: 80px;
-      background: linear-gradient(135deg, #2a2a6a 0%, #1a1a4a 100%);
+      background: #0d0d1a;
       border: 2px solid var(--border-bright);
       margin: 0 auto 0.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'VT323', monospace;
-      font-size: 2rem;
-      color: var(--accent);
-      position: relative;
       overflow: hidden;
+      position: relative;
+    }
+
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      image-rendering: auto; /* keep gif smooth */
     }
 
     .profile-name {
@@ -256,6 +269,8 @@
       animation: blink 2s infinite;
     }
     .status-dot.offline { background: #888; animation: none; }
+    .status-dot.busy { background: #ffaa44; }
+    .status-dot.dnd { background: #ff4444; }
 
     @keyframes blink {
       0%, 100% { opacity: 1; }
@@ -309,6 +324,30 @@
     }
 
     .project-desc { color: var(--text-dim); font-size: 0.82rem; }
+
+    /* ── BLOG ── */
+    .blog-entry {
+      display: flex;
+      gap: 1.2rem;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0;
+    }
+    .blog-entry:last-child { border-bottom: none; }
+
+    .blog-date {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+      min-width: 110px;
+    }
+
+    .blog-title a {
+      color: var(--link);
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    .blog-title a:hover { color: var(--accent2); }
 
     /* ── CONTACT ── */
     .contact-line {
@@ -386,7 +425,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.35;
+      opacity: 0.18;
     }
 
     .controls {
@@ -413,13 +452,13 @@
 
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
-      .intro-container { flex-direction: column; align-items: center; text-align: center; }
-      .intro-gif { width: 100%; max-width: 250px; }
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
       .profile-box { flex: 1; min-width: 200px; }
       nav a { padding: 0.5rem 0.7rem; font-size: 0.6rem; }
-      .facts { text-align: left; }
     }
+    .wx-row { display:flex; justify-content:space-between; gap:0.5rem; border-bottom: 1px solid rgba(42,42,90,0.6); padding-bottom:0.15rem; }
+    .wx-label { color: var(--text-dim); white-space:nowrap; }
+    .wx-val { color: var(--accent); text-align:right; }
   </style>
 </head>
 <body>
@@ -429,10 +468,9 @@
 
 <div class="wrapper">
 
-  <!-- HEADER -->
+  <!-- HEADER: changed to kreiiii, sub removed -->
   <header>
-    <div class="site-title">KREIIIII</div>
-    <div class="site-sub">personal corner of the internet ✦ philippines</div>
+    <div class="site-title">kreiiii</div>
   </header>
 
   <nav>
@@ -458,23 +496,20 @@
 
         <div class="mood-badge" id="status-badge"><span class="status-dot" id="status-dot"></span><span id="status-text">loading...</span> · philippines · 19</div>
 
-        <div class="intro-container">
-          <img src="9tnM8lx.gif" alt="Intro Gif" class="intro-gif">
-          <div class="intro-text">
-            <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
+        <div class="intro-text">
+          <p>hey!! welcome to my little corner of the web. i'm <em class="pixel">rianuel</em>, a 19 year old from the philippines who likes to build things and figure stuff out.</p>
 
-            <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old web — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
+          <p>this is my personal site where i put my projects, my thoughts, and whatever else i feel like sharing. it's inspired by the old web — when websites felt <em class="pixel">personal</em> and weird and alive.</p>
 
-            <ul class="facts">
-              <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
-              <li>huge fan of tower defense games — and yes, i also play <em class="pixel">valorant</em>. add me! 🎮</li>
-              <li>still figuring out what i want to build — got an idea? <a href="#contact">let's talk!</a> <span class="cursor"></span></li>
-            </ul>
-          </div>
+          <ul class="facts">
+            <li>2nd year IT student at <em class="pixel">PUP Sta. Mesa</em> 🎓 and proud <em class="pixel">DOST scholar</em></li>
+            <li>huge fan of tower defense games — and yes, i also play <em class="pixel">valorant</em>. add me! 🎮</li>
+            <li>still figuring out what i want to build — got an idea? <a href="#contact">let's talk!</a> <span class="cursor"></span></li>
+          </ul>
         </div>
       </div>
 
-      <!-- PROJECTS -->
+      <!-- PROJECTS: only "this website" remains -->
       <div class="section-head" id="projects">☾ projects</div>
       <div class="panel">
         <span class="panel-title">projects/</span>
@@ -488,14 +523,27 @@
         </div>
       </div>
 
+      <!-- BLOG -->
+      <div class="section-head" id="blog">☾ blog</div>
+      <div class="panel">
+        <span class="panel-title">posts/</span>
+
+        <div class="blog-entry">
+          <span class="blog-date">2025-05-05</span>
+          <span class="blog-title"><a href="#">hello world — my first post</a></span>
+        </div>
+      </div>
+
     </div>
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
 
-      <!-- PROFILE -->
+      <!-- PROFILE with GIF -->
       <div class="profile-box">
-        <div class="avatar-box">RM</div>
+        <div class="avatar-box">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdnZ2JsYnd1M2V2dWlnaDZ6eWw2b3R3cWp2M2xsb3R5eWZ5bGxsdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7bu3X6gXvWlOYy6Q/giphy.gif" alt="spike gif" style="width:100%;height:100%;object-fit:cover;">
+        </div>
         <div class="profile-name">rianuel macalinao</div>
         <div class="profile-role">creator · explorer · 19</div>
         <div class="profile-loc">📍 philippines</div>
@@ -511,17 +559,46 @@
           <li><a href="#home">home</a></li>
           <li><a href="#about">about me</a></li>
           <li><a href="#projects">projects</a></li>
-          <li><a href="https://twitter.com/riannn_r" target="_blank">x</a></li>
-          <li><a href="https://www.instagram.com/riangotchills" target="_blank">instagram</a></li>
-          <li><a href="https://letterboxd.com/kreiiii/" target="_blank">letterboxd</a></li>
+          <li><a href="#blog">blog</a></li>
+          <li><a href="#contact">contact</a></li>
+          <li><a href="https://github.com" target="_blank">github</a></li>
+          <li><a href="https://twitter.com/riannn_r" target="_blank">twitter / x</a></li>
           <li><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank">linkedin</a></li>
         </ul>
+      </div>
+
+      <!-- WEATHER WIDGET -->
+      <div class="panel" id="weather-widget" style="padding: 0.7rem 0.9rem; font-family:'Share Tech Mono',monospace;">
+        <span class="panel-title">weather.exe</span>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.6rem;">
+          <span style="font-size:0.6rem; color:var(--text-dim); cursor:pointer;" id="wx-plus" title="refresh" onclick="fetchWeather()">+</span>
+          <div id="wx-icon" style="font-size:2.2rem; line-height:1; text-align:center; filter: drop-shadow(0 0 6px rgba(136,136,255,0.4));">⋯</div>
+          <span style="font-size:0.6rem; color:var(--text-dim);">?</span>
+        </div>
+        <div id="wx-rows" style="display:flex; flex-direction:column; gap:0.25rem; font-size:0.75rem; line-height:1.6;">
+          <div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">loading...</span></div>
+          <div class="wx-row"><span class="wx-label">Temp:</span><span class="wx-val" id="wx-temp">--</span></div>
+          <div class="wx-row"><span class="wx-label">Feels like:</span><span class="wx-val" id="wx-feels">--</span></div>
+          <div class="wx-row"><span class="wx-label">Humidity:</span><span class="wx-val" id="wx-hum">--</span></div>
+          <div class="wx-row"><span class="wx-label">Wind:</span><span class="wx-val" id="wx-wind">--</span></div>
+          <div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val" style="color:var(--accent3);">Malabon, PH 🇵🇭</span></div>
+          <div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time" style="color:var(--text-dim);">--</span></div>
+        </div>
+      </div>
+
+      <!-- ABOUT MINI -->
+      <div class="panel" id="about">
+        <span class="panel-title">about.txt</span>
+        <p style="font-size:0.8rem; color:var(--text-dim); line-height:1.8;">
+          hey im rianuel! 19 y/o from the philippines. i build things, break things, and learn from both.<br><br>
+          this site is my little home, my little mark in the internet — my first creation so far!
+        </p>
       </div>
 
     </aside>
   </div>
 
-  <!-- CONTACT -->
+  <!-- CONTACT: updated with email, letterboxd, twitter, linkedin -->
   <div class="section-head" id="contact">☾ contact</div>
   <div class="panel" style="max-width:500px;">
     <span class="panel-title">contact.txt</span>
@@ -531,34 +608,30 @@
       <a href="mailto:rianuelmacalinaofn@gmail.com" class="contact-link">rianuelmacalinaofn@gmail.com</a>
     </div>
     <div class="contact-line">
-      <span class="contact-icon">🐦 x</span>
+      <span class="contact-icon">📽️ letterboxd</span>
+      <a href="https://letterboxd.com/kreiiii/" target="_blank" class="contact-link">letterboxd.com/kreiiii</a>
+    </div>
+    <div class="contact-line">
+      <span class="contact-icon">🐦 twitter</span>
       <a href="https://twitter.com/riannn_r" target="_blank" class="contact-link">@riannn_r</a>
     </div>
     <div class="contact-line">
-      <span class="contact-icon">📸 ig</span>
-      <a href="https://www.instagram.com/riangotchills" target="_blank" class="contact-link">@riangotchills</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">🎬 lboxd</span>
-      <a href="https://letterboxd.com/kreiiii/" target="_blank" class="contact-link">letterboxd.com/kreiiii/</a>
-    </div>
-    <div class="contact-line">
-      <span class="contact-icon">💬 discord</span>
-      <span class="contact-link" style="color:var(--text);">kreiiiizy__</span>
-    </div>
-    <div class="contact-line">
       <span class="contact-icon">💼 linkedin</span>
-      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">rianuel-macalinao</a>
+      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="contact-link">linkedin.com/in/rianuel-macalinao</a>
     </div>
   </div>
 
+  <div class="moon-div" style="margin:2rem 0 0;">★ ☽ ★</div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-buttons">
-      <a class="pixel-button" href="#">KREIIIII</a>
+      <a class="pixel-button" href="#">KREIIII</a>
       <a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a>
-      <a class="pixel-button" href="https://www.instagram.com/riangotchills" target="_blank">INSTAGRAM</a>
+      <a class="pixel-button" href="https://github.com" target="_blank">GITHUB</a>
     </div>
-    <p>© 2026 rianuel macalinao · all rights reserved · philippines</p>
+    <p>© 2025 rianuel macalinao · all rights reserved · philippines</p>
+    <p style="margin-top:0.4rem;"><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></p>
   </footer>
 
 </div>
@@ -615,13 +688,13 @@
     rainCanvas.width = window.innerWidth;
     rainCanvas.height = window.innerHeight;
     drops = [];
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < 120; i++) {
       drops.push({
         x: Math.random() * rainCanvas.width,
         y: Math.random() * rainCanvas.height,
-        len: Math.random() * 25 + 10,
-        speed: Math.random() * 6 + 4,
-        opacity: Math.random() * 0.6 + 0.3
+        len: Math.random() * 18 + 6,
+        speed: Math.random() * 4 + 3,
+        opacity: Math.random() * 0.5 + 0.2
       });
     }
   }
@@ -634,12 +707,12 @@
     drops.forEach(d => {
       rc.beginPath();
       rc.moveTo(d.x, d.y);
-      rc.lineTo(d.x - 1.5, d.y + d.len);
+      rc.lineTo(d.x - 1, d.y + d.len);
       rc.strokeStyle = `rgba(136,180,255,${d.opacity})`;
-      rc.lineWidth = 1.2;
+      rc.lineWidth = 0.8;
       rc.stroke();
       d.y += d.speed;
-      d.x -= 0.7;
+      d.x -= 0.5;
       if (d.y > rainCanvas.height) {
         d.y = -d.len;
         d.x = Math.random() * rainCanvas.width;
@@ -647,6 +720,7 @@
     });
   }
 
+  // ── LOOP
   function loop(t) {
     drawStars(t);
     drawRain();
@@ -654,6 +728,7 @@
   }
   requestAnimationFrame(loop);
 
+  // ── CONTROLS
   document.getElementById('rain-toggle').addEventListener('click', function() {
     rainOn = !rainOn;
     this.textContent = '💧 rain: ' + (rainOn ? 'on' : 'off');
@@ -663,22 +738,103 @@
     starsOn = !starsOn;
     this.textContent = '✦ stars: ' + (starsOn ? 'on' : 'off');
   });
+</script>
 
-  // ── STATUS SYSTEM (Simulated)
+<script>
+  // ── STATUS SYSTEM (same as before)
+  const GITHUB_USER = 'yourusername'; // replace with actual if needed
+  const REPO_NAME   = 'yourusername.github.io';
+  const STATUS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/status.json`;
+
   const states = {
-    online:  { label: 'online',  emoji: '🟢' },
-    offline: { label: 'offline', emoji: '⚫' }
+    online:  { label: 'online',  color: '#44ff88', cls: '',        emoji: '🟢' },
+    offline: { label: 'offline', color: '#888888', cls: 'offline', emoji: '⚫' },
+    busy:    { label: 'busy',    color: '#ffaa44', cls: 'busy',    emoji: '🟡' },
+    dnd:     { label: 'do not disturb', color: '#ff4444', cls: 'dnd', emoji: '🔴' },
+    afk:     { label: 'away',    color: '#ffaa44', cls: 'busy',    emoji: '🌙' },
   };
 
   function applyStatus(s) {
-    const state = states[s.status] || states.online;
+    const state = states[s.status] || states.offline;
+    document.querySelectorAll('.status-dot').forEach(dot => {
+      dot.className = 'status-dot ' + state.cls;
+    });
     const t1 = document.getElementById('status-text');
     const t2 = document.getElementById('status-text-2');
-    if (t1) t1.textContent = state.emoji + ' ' + state.label;
-    if (t2) t2.textContent = state.emoji + ' ' + state.label;
+    if (t1) t1.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
+    if (t2) t2.textContent = state.emoji + ' ' + state.label + (s.note ? ' — ' + s.note : '');
   }
-  applyStatus({ status: 'online' });
+
+  async function fetchStatus() {
+    try {
+      const res = await fetch(STATUS_URL + '?t=' + Date.now());
+      if (!res.ok) throw new Error('not found');
+      const data = await res.json();
+      applyStatus(data);
+    } catch (e) {
+      applyStatus({ status: 'offline', note: '' });
+    }
+  }
+  fetchStatus();
+  setInterval(fetchStatus, 60000);
 </script>
 
+<script>
+  // ── WEATHER WIDGET (same as before)
+  const WX_LAT = 14.6628, WX_LON = 120.9569;
+  const WMO = {
+    0:  ['☀️',  'Clear sky'],
+    1:  ['🌤️', 'Mostly clear'],
+    2:  ['⛅',  'Partly cloudy'],
+    3:  ['☁️',  'Overcast'],
+    45: ['🌫️', 'Foggy'],
+    48: ['🌫️', 'Icy fog'],
+    51: ['🌦️', 'Light drizzle'],
+    53: ['🌦️', 'Drizzle'],
+    55: ['🌧️', 'Heavy drizzle'],
+    61: ['🌧️', 'Light rain'],
+    63: ['🌧️', 'Rain'],
+    65: ['🌧️', 'Heavy rain'],
+    71: ['🌨️', 'Light snow'],
+    73: ['🌨️', 'Snow'],
+    75: ['❄️',  'Heavy snow'],
+    80: ['🌦️', 'Rain showers'],
+    81: ['🌧️', 'Heavy showers'],
+    82: ['⛈️',  'Violent showers'],
+    95: ['⛈️',  'Thunderstorm'],
+    96: ['⛈️',  'Thunderstorm + hail'],
+    99: ['⛈️',  'Heavy thunderstorm'],
+  };
+
+  async function fetchWeather() {
+    document.getElementById('wx-cond').textContent = 'loading...';
+    document.getElementById('wx-icon').textContent = '⋯';
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${WX_LAT}&longitude=${WX_LON}`
+        + `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code`
+        + `&wind_speed_unit=kmh&temperature_unit=celsius&timezone=Asia%2FManila`;
+      const res = await fetch(url);
+      const d = await res.json();
+      const c = d.current;
+      const [icon, label] = WMO[c.weather_code] || ['🌡️', 'Unknown'];
+
+      document.getElementById('wx-icon').textContent  = icon;
+      document.getElementById('wx-cond').textContent  = label;
+      document.getElementById('wx-temp').textContent  = c.temperature_2m + '°C';
+      document.getElementById('wx-feels').textContent = c.apparent_temperature + '°C';
+      document.getElementById('wx-hum').textContent   = c.relative_humidity_2m + '%';
+      document.getElementById('wx-wind').textContent  = c.wind_speed_10m + ' km/h';
+
+      const now = new Date();
+      document.getElementById('wx-time').textContent =
+        now.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', hour12:true });
+    } catch(e) {
+      document.getElementById('wx-cond').textContent = 'unavailable';
+      document.getElementById('wx-icon').textContent = '✖';
+    }
+  }
+  fetchWeather();
+  setInterval(fetchWeather, 10 * 60 * 1000);
+</script>
 </body>
 </html>
