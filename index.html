@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>kreiiii · personal place</title>
   <!-- CUSTOM FAVICON (BROWSER TAB ICON) -->
-  <link rel="icon" type="image/png" href="https://i.imgur.com/8rtMy5W.png">
+  <link rel="icon" type="image/png" href="https://i.imgur.com/DPRKhJH.png">
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -385,7 +385,7 @@
     }
     .ctrl-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* SPOTIFY / LAST PLAYED WIDGET - WITH LOOPING MARQUEE */
+    /* SPOTIFY / LAST PLAYED WIDGET - SMART MARQUEE */
     .spotify-widget {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -431,6 +431,7 @@
     .spotify-text-info {
       flex: 1;
       min-width: 0;
+      overflow: hidden;
     }
     .spotify-badge {
       font-size: 0.5rem;
@@ -447,7 +448,7 @@
       border-color: #ffaa44;
       background: rgba(255,170,68,0.15);
     }
-    /* LOOPING MARQUEE FOR LONG SONG TITLES */
+    /* MARQUEE CONTAINER - only when text overflows */
     .marquee-container {
       overflow: hidden;
       white-space: nowrap;
@@ -455,16 +456,12 @@
     }
     .marquee-content {
       display: inline-block;
-      animation: marqueeLoop 8s linear infinite;
+      animation: marqueeLoop 18s linear infinite;
       padding-right: 2rem;
     }
     @keyframes marqueeLoop {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
     .spotify-track {
       font-size: 0.82rem;
@@ -495,82 +492,6 @@
     .wx-label { color: var(--text-dim); }
     .wx-val { color: var(--accent); text-align: right; }
 
-    /* ENHANCED SHOOTING STAR - trail opposite direction + longer dust trail */
-    #shooting-star-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-      overflow: hidden;
-    }
-    .shooting-star {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: radial-gradient(circle, #ffffff, #ffffaa, #ffdd88);
-      border-radius: 50%;
-      box-shadow: 0 0 20px 8px rgba(255,255,200,0.9);
-      opacity: 0;
-      filter: blur(0.5px);
-    }
-    /* Trail goes BEHIND the star (opposite direction) with longer dissipation */
-    .shooting-star::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 200px;
-      height: 6px;
-      background: linear-gradient(to right, rgba(255,255,200,0.9), rgba(255,200,80,0.6), rgba(255,160,50,0.3), transparent);
-      right: 100%;
-      margin-right: 2px;
-      border-radius: 10px;
-      filter: blur(3px);
-    }
-    /* Dust particles that linger longer */
-    .shooting-star::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 300px;
-      height: 20px;
-      background: radial-gradient(ellipse, rgba(255,220,100,0.5) 0%, rgba(255,180,60,0.2) 40%, transparent 80%);
-      right: calc(100% + 2px);
-      border-radius: 50%;
-      filter: blur(8px);
-      animation: dustFade 2s ease-out forwards;
-    }
-    @keyframes dustFade {
-      0% {
-        opacity: 0.7;
-        width: 300px;
-      }
-      50% {
-        opacity: 0.4;
-        width: 400px;
-      }
-      100% {
-        opacity: 0;
-        width: 500px;
-      }
-    }
-    @keyframes shoot {
-      0% {
-        opacity: 1;
-        transform: translate(0, 0) scale(1);
-      }
-      15% {
-        opacity: 1;
-      }
-      70% {
-        opacity: 0.9;
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-500px, 500px) scale(0.6);
-      }
-    }
     @media (max-width: 680px) {
       .main-grid { grid-template-columns: 1fr; }
       .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
@@ -659,7 +580,7 @@
         <div style="margin-top:0.8rem;font-size:0.7rem;"><span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span></div>
       </div>
 
-      <!-- SPOTIFY WIDGET - WITH LOOPING MARQUEE FOR LONG TITLES -->
+      <!-- SPOTIFY WIDGET - WITH SMART MARQUEE (ONLY WHEN TEXT OVERFLOWS) -->
       <div class="spotify-widget">
         <span class="spotify-label" id="spotify-header">🎵 last played</span>
         <div id="discord-now-playing"><div style="color:var(--text-dim); text-align:center;">✨ loading...</div></div>
@@ -702,7 +623,6 @@
   <button class="ctrl-btn" id="rain-toggle">💧 rain: on</button>
   <button class="ctrl-btn" id="stars-toggle">✦ stars: on</button>
 </div>
-<div id="shooting-star-container"></div>
 
 <script>
   // STARS (glowing)
@@ -761,7 +681,7 @@
 </script>
 
 <script>
-  // PERSISTENT "LAST PLAYED" - WITH LOOPING MARQUEE FOR LONG TITLES
+  // PERSISTENT "LAST PLAYED" - SMART MARQUEE (ONLY IF TEXT OVERFLOWS)
   let lastPlayedSong = null;
   
   try {
@@ -770,6 +690,11 @@
       lastPlayedSong = JSON.parse(saved);
     }
   } catch(e) {}
+  
+  // Helper to detect if text overflows its container
+  function isTextOverflowing(element) {
+    return element.scrollWidth > element.clientWidth;
+  }
   
   function displayLastPlayedSong(song, isPlayingNow = false) {
     const container = document.getElementById('discord-now-playing');
@@ -786,26 +711,31 @@
     const badgeText = isPlayingNow ? '▶ playing now' : '⏸ last played';
     const albumArtHtml = song.albumArt ? `<img src="${song.albumArt}" class="spotify-album-art" onerror="this.style.display='none'" alt="album art">` : `<div class="spotify-album-art" style="display:flex;align-items:center;justify-content:center;background:#1a1a3a;">🎵</div>`;
     
-    // Check if song title is long (more than 25 characters)
-    const isLongTitle = song.songTitle.length > 25;
-    
-    // Create marquee effect for long titles that loops continuously
-    const trackHtml = isLongTitle ? 
-      `<div class="marquee-container">
-         <div class="marquee-content spotify-track">${escapeHtml(song.songTitle)} &nbsp;✦&nbsp; ${escapeHtml(song.songTitle)} &nbsp;✦&nbsp; ${escapeHtml(song.songTitle)}</div>
-       </div>` :
-      `<div class="spotify-track static">${escapeHtml(song.songTitle)}</div>`;
+    // Build track HTML (marquee will be applied after checking overflow)
+    const trackId = `track-${Date.now()}`;
+    const trackHtml = `<div id="${trackId}" class="spotify-track static" style="white-space: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none;">${escapeHtml(song.songTitle)}</div>`;
     
     container.innerHTML = `
       <div class="spotify-content">
         ${albumArtHtml}
         <div class="spotify-text-info">
           <div class="spotify-badge ${badgeClass}">${badgeText}</div>
-          ${trackHtml}
+          <div class="track-wrapper" style="overflow: hidden;">${trackHtml}</div>
           <div class="spotify-artist">${escapeHtml(song.artistName)}</div>
         </div>
       </div>
     `;
+    
+    // After DOM update, check if text overflows and apply marquee if needed
+    setTimeout(() => {
+      const trackElement = document.getElementById(trackId);
+      if (trackElement && isTextOverflowing(trackElement)) {
+        // Replace with marquee version
+        const parent = trackElement.parentNode;
+        const marqueeHtml = `<div class="marquee-container"><div class="marquee-content spotify-track">${escapeHtml(song.songTitle)} &nbsp;✦&nbsp; ${escapeHtml(song.songTitle)}</div></div>`;
+        parent.innerHTML = marqueeHtml;
+      }
+    }, 10);
   }
   
   function escapeHtml(str) { 
@@ -884,23 +814,5 @@
   document.getElementById('today-date').textContent = new Date().toISOString().slice(0,10);
 </script>
 
-<script>
-  // ENHANCED SHOOTING STAR - trail opposite direction with longer dust trail
-  function createEnhancedShootingStar() {
-    const container = document.getElementById('shooting-star-container');
-    const star = document.createElement('div');
-    star.className = 'shooting-star';
-    const startX = Math.random() * window.innerWidth * 0.7 + window.innerWidth * 0.15;
-    const startY = Math.random() * window.innerHeight * 0.2;
-    star.style.left = startX + 'px';
-    star.style.top = startY + 'px';
-    const duration = 1.8 + Math.random() * 1.2;
-    star.style.animation = `shoot ${duration}s ease-out forwards`;
-    container.appendChild(star);
-    setTimeout(() => { if(star && star.remove) star.remove(); }, duration * 1000 + 800);
-  }
-  setTimeout(createEnhancedShootingStar, 3000);
-  setInterval(createEnhancedShootingStar, 40000);
-</script>
 </body>
 </html>
