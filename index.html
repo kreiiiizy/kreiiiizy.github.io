@@ -636,7 +636,7 @@
       </div>
 
       <aside class="sidebar" id="sidebar-area">
-        <!-- Sidebar content is injected via JS to avoid duplication -->
+        <!-- Sidebar content is injected via JS -->
       </aside>
     </div>
   </div>
@@ -725,13 +725,11 @@
 </script>
 
 <script>
-  // --- SPOTIFY WIDGET (NOW DIRECTLY FROM SPOTIFY API via a free proxy) ---
+  // --- SPOTIFY WIDGET (NOW USING A MORE STABLE PROXY) ---
   const SPOTIFY_USER_ID = '22cvzqcswpdsx4yqojnjn64la'; // Your Spotify User ID
 
-  // Uses a free public proxy that fetches Spotify currently playing and recently played
-  // Note: This proxy returns a 302 redirect to the actual data URL, so we follow it.
-  // Fallback logic is built-in to handle "nothing playing" but return "last played".
-  const SPOTIFY_API_PROXY = 'https://api.spotify-playback.workers.dev/';
+  // Using the more stable "spotify-now-playing" proxy (hosted on Vercel)
+  const SPOTIFY_API_PROXY = 'https://spotify-now-playing-psi.vercel.app/api/now-playing?user=';
 
   async function updateSpotifyWidget() {
     const container = document.getElementById('discord-now-playing');
@@ -740,22 +738,19 @@
     if(!container || !headerEl) return;
 
     try {
-      // Fetch from proxy using redirect mode to get the actual JSON response
-      const response = await fetch(SPOTIFY_API_PROXY + SPOTIFY_USER_ID, {
-        redirect: 'follow' 
-      });
+      // Fetch from the more stable proxy
+      const response = await fetch(SPOTIFY_API_PROXY + SPOTIFY_USER_ID);
       
       if (!response.ok) throw new Error('API request failed');
       
       const data = await response.json();
       
       // Case 1: Currently Playing
-      if (data.is_playing === true && data.item) {
-        const track = data.item;
+      if (data.isPlaying && data.title) {
         const currentTrack = {
-          songTitle: track.name || 'Unknown Track',
-          artistName: track.artists ? track.artists.map(a => a.name).join(', ') : 'Unknown Artist',
-          albumArt: track.album && track.album.images && track.album.images.length > 0 ? track.album.images[0].url : '',
+          songTitle: data.title || 'Unknown Track',
+          artistName: data.artist || 'Unknown Artist',
+          albumArt: data.albumArt || '',
           timestamp: Date.now()
         };
         
