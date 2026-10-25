@@ -1,981 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>kreiiii · personal place</title>
-  <!-- CUSTOM FAVICON (BROWSER TAB ICON) -->
-  <link rel="icon" type="image/png" href="https://i.imgur.com/DPRKhJH.png">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Silkscreen:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #0d0d1a;
-      --bg2: #11111f;
-      --panel: #13132a;
-      --border: #2a2a5a;
-      --border-bright: #4040aa;
-      --text: #c8c8e8;
-      --text-dim: #7070a0;
-      --accent: #8888ff;
-      --accent2: #ff88cc;
-      --accent3: #88ffcc;
-      --star: #ffffaa;
-      --link: #aaaaff;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rianuel Macalinao | Portfolio</title>
+<meta name="description" content="Portfolio of Rianuel Macalinao, BSIT student and DOST scholar at the Polytechnic University of the Philippines, aspiring project manager and data analyst.">
+<meta name="theme-color" content="#0f1620">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1620; --surface:#161f2c; --line:#263447; --text:#e7eaef; --muted:#97a4b6; --accent:#8db4dc; --accent-ink:#0f1620;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif; --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  --w:1040px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--text);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:5;background:rgba(15,22,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.brand{font:500 1.15rem var(--serif);text-decoration:none}
+nav{display:flex;gap:22px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;font-size:.92rem}
+nav a:hover{color:var(--text)}
+section{padding:84px 0 0}
+h2{font:500 2rem/1.2 var(--serif);margin-bottom:10px}
+.sub{color:var(--muted);margin-bottom:36px;max-width:60ch}
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+/* hero */
+.hero{padding-top:72px}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
+.hero h1{font:500 clamp(2.6rem,6vw,4.2rem)/1.05 var(--serif);letter-spacing:-.01em;margin-bottom:20px}
+.hero p.lead{font:400 1.3rem/1.5 var(--serif);color:#c9d1dc;max-width:34ch;margin-bottom:28px}
+.meta{color:var(--muted);font-size:.95rem;margin-bottom:28px}
+.meta a{color:var(--text);text-decoration-color:var(--accent);text-underline-offset:4px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 22px;border-radius:4px;font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#a6c6e8}
+.btn.ghost:hover{background:var(--surface)}
+.photo{justify-self:end;width:100%;max-width:340px}
+.photo img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:#fff}
+.hero .wrap>*{animation:rise .7s both}
+.hero .wrap>*:nth-child(2){animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hero .wrap>*{animation:none}html{scroll-behavior:auto}}
 
-    html { scroll-behavior: smooth; }
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:64px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:26px 0 26px 24px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{display:block;font:500 2rem/1.1 var(--serif)}
+.stat span{color:var(--muted);font-size:.9rem}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 14px;
-      line-height: 1.7;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      cursor: default;
-    }
+/* about */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:26px}
+.card h3{font:500 1.25rem/1.3 var(--serif);margin-bottom:4px}
+.card .k{color:var(--accent);font-size:.9rem;margin-bottom:10px;display:block}
+.card p{color:#b9c3d0;font-size:.97rem}
 
-    #stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+/* timeline */
+.tl{list-style:none;border-left:1px solid var(--line);margin-left:6px}
+.tl li{position:relative;padding:0 0 38px 32px}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-6px;top:9px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.tl .when{color:var(--muted);font-size:.9rem}
+.tl h3{font:500 1.35rem/1.3 var(--serif);margin:2px 0 2px}
+.tl .org{color:var(--accent);font-size:.95rem;margin-bottom:10px}
+.tl ul{padding-left:18px;color:#b9c3d0;max-width:68ch}
+.tl li li{padding:0 0 4px;position:static}
+.tl li li::before{display:none}
 
-    /* scanline overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.08) 2px,
-        rgba(0,0,0,0.08) 4px
-      );
-      pointer-events: none;
-      z-index: 999;
-    }
+/* projects */
+.proj{display:grid;grid-template-columns:1fr;gap:20px}
+.proj .card h3{font-size:1.5rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;list-style:none}
+.tags li{border:1px solid var(--line);border-radius:3px;padding:2px 10px;font-size:.85rem;color:var(--muted)}
+.proj ul.pts{padding-left:18px;margin-top:12px;color:#b9c3d0;font-size:.97rem}
+.proj ul.pts li{margin-bottom:4px}
 
-    /* pixel clouds */
-    .pixel-cloud {
-      position: fixed;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0.15;
-      image-rendering: pixelated;
-      animation: cloud-drift linear infinite;
-    }
+/* certs */
+.certs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.certs .card{display:flex;flex-direction:column}
+.certs .card p{margin-bottom:12px}
+.certs .card a{margin-top:auto;color:var(--accent);font-size:.92rem;text-underline-offset:4px}
 
-    .pixel-cloud-1 {
-      top: 12%;
-      left: -200px;
-      width: 280px;
-      height: 80px;
-      animation-duration: 55s;
-    }
+/* expertise */
+.exp{display:grid;grid-template-columns:repeat(2,1fr);gap:36px 40px}
+.exp h3{font:500 1.15rem var(--serif);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none}
+.chips li{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:3px 12px;font-size:.92rem}
 
-    .pixel-cloud-2 {
-      top: 40%;
-      left: -150px;
-      width: 220px;
-      height: 60px;
-      animation-duration: 70s;
-      animation-delay: 15s;
-    }
+/* connect */
+.connect{display:grid;gap:0;border-top:1px solid var(--line)}
+.connect a{display:flex;justify-content:space-between;gap:16px;padding:18px 4px;border-bottom:1px solid var(--line);text-decoration:none}
+.connect a:hover{background:var(--surface)}
+.connect span{color:var(--muted)}
+footer{margin-top:96px;border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
-    .pixel-cloud-3 {
-      top: 70%;
-      left: -250px;
-      width: 260px;
-      height: 70px;
-      animation-duration: 65s;
-      animation-delay: 25s;
-    }
-
-    @keyframes cloud-drift {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(100vw + 300px)); }
-    }
-
-    .wrapper {
-      max-width: 860px;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    header {
-      text-align: center;
-      padding: 2.5rem 0 1.5rem;
-    }
-
-    .site-title {
-      font-family: 'VT323', monospace;
-      font-size: 3.2rem;
-      color: var(--accent);
-      text-shadow: 0 0 20px rgba(136,136,255,0.5), 0 0 40px rgba(136,136,255,0.2);
-      letter-spacing: 3px;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0;
-      border: 1px solid var(--border);
-      margin: 1.5rem 0;
-      background: var(--panel);
-    }
-
-    nav a {
-      color: var(--link);
-      text-decoration: none;
-      padding: 0.5rem 1.2rem;
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      border-right: 1px solid var(--border);
-      transition: background 0.15s, color 0.15s;
-      cursor: pointer;
-    }
-    nav a:last-child { border-right: none; }
-    nav a:hover { background: var(--border); color: var(--accent); }
-
-    .section-head {
-      font-family: 'VT323', monospace;
-      font-size: 1.6rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .section-head::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 1.2rem 1.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .panel-title {
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.65rem;
-      color: var(--accent2);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: var(--panel);
-      position: absolute;
-      top: -0.55rem;
-      left: 1rem;
-      padding: 0 0.5rem;
-    }
-
-    /* PHOTO ALBUM GRID (Sub-tab content) */
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    
-    .photo-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      transition: transform 0.2s, border-color 0.2s;
-      overflow: hidden;
-      backdrop-filter: blur(2px);
-    }
-    .photo-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-    }
-    .photo-image {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      background: #0a0a14;
-      border-bottom: 1px solid var(--border);
-    }
-    .photo-caption {
-      padding: 0.8rem;
-      font-size: 0.75rem;
-      color: var(--text);
-      font-family: 'Share Tech Mono', monospace;
-      word-break: break-word;
-    }
-    .photo-timestamp {
-      padding: 0 0.8rem 0.8rem;
-      font-size: 0.6rem;
-      color: var(--accent3);
-      border-top: 1px dashed var(--border);
-      margin-top: 0.2rem;
-      font-family: 'VT323', monospace;
-    }
-    .album-status {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-dim);
-    }
-    .refresh-album {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--accent);
-      padding: 0.2rem 0.8rem;
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.55rem;
-      cursor: pointer;
-      margin-left: 1rem;
-    }
-    .refresh-album:hover {
-      background: var(--border);
-    }
-    /* back to home button */
-    .back-home {
-      display: inline-block;
-      margin-bottom: 1rem;
-      font-size: 0.7rem;
-      color: var(--accent2);
-      cursor: pointer;
-      border: 1px solid var(--border);
-      padding: 0.2rem 0.8rem;
-      background: var(--panel);
-    }
-    .back-home:hover {
-      background: var(--border);
-    }
-    
-    .main-grid {
-      display: grid;
-      grid-template-columns: 1fr 240px;
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .mood-badge#status-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      color: var(--accent3);
-      border: 1px solid var(--accent3);
-      padding: 0.1rem 0.6rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .intro-text p { margin-bottom: 0.6rem; }
-    .intro-text a { color: var(--link); text-decoration: underline; }
-    em.pixel {
-      background: var(--accent);
-      color: var(--bg);
-      font-style: normal;
-      padding: 0 3px;
-    }
-    .facts {
-      margin: 0.8rem 0 0;
-      padding-left: 1.2rem;
-      list-style: none;
-    }
-    .facts li::before { content: '✦ '; color: var(--accent); }
-
-    .sidebar { display: flex; flex-direction: column; gap: 1.2rem; }
-
-    .profile-box {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 1rem;
-      text-align: center;
-    }
-    .avatar-box {
-      width: 80px; height: 80px;
-      background: #0d0d1a;
-      border: 2px solid var(--border-bright);
-      margin: 0 auto 0.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .avatar-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .profile-name {
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-    }
-    .profile-role { font-size: 0.72rem; color: var(--text-dim); }
-    .profile-loc { font-size: 0.72rem; color: var(--accent3); }
-
-    .status-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      margin-right: 5px;
-      animation: blink 2s infinite;
-    }
-    .status-dot.online { background: #44ff88; }
-    .status-dot.idle { background: #ffaa44; }
-    .status-dot.dnd { background: #ff4444; }
-    .status-dot.offline { background: #888888; animation: none; }
-
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
-
-    .star-links { list-style: none; }
-    .star-links li { border-bottom: 1px solid var(--border); }
-    .star-links a {
-      display: block;
-      padding: 0.4rem 0.5rem;
-      color: var(--link);
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-    .star-links a:hover { background: var(--border); padding-left: 1rem; }
-    .star-links a::before { content: '✩ '; color: var(--accent); }
-
-    .project-entry {
-      border-bottom: 1px solid var(--border);
-      padding: 0.9rem 0;
-    }
-    .project-entry:last-child { border-bottom: none; }
-    .project-title {
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.7rem;
-      color: var(--accent2);
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-    }
-    .project-tag {
-      font-size: 0.6rem;
-      background: rgba(136,136,255,0.15);
-      border: 1px solid var(--border-bright);
-      color: var(--accent);
-      padding: 0 0.4rem;
-    }
-    .blog-entry {
-      display: flex;
-      gap: 1.2rem;
-      border-bottom: 1px solid var(--border);
-      padding: 0.6rem 0;
-      align-items: baseline;
-    }
-    .blog-date { font-size: 0.7rem; color: var(--text-dim); min-width: 110px; }
-    .blog-title a { color: var(--link); text-decoration: none; font-size: 0.85rem; }
-    .blog-title a:hover { color: var(--accent2); }
-
-    .socmed-line {
-      display: flex;
-      gap: 1rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border);
-      align-items: center;
-    }
-    .socmed-icon { color: var(--accent); width: 80px; font-size: 0.78rem; }
-    .socmed-link { color: var(--link); text-decoration: none; font-size: 0.82rem; }
-    .socmed-link:hover { color: var(--accent2); }
-
-    footer {
-      text-align: center;
-      padding: 2rem 0 1rem;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-    .footer-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-    .pixel-button {
-      display: inline-block;
-      width: 88px; height: 31px;
-      background: linear-gradient(135deg, #222244, #1a1a3a);
-      border: 1px solid var(--border-bright);
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.45rem;
-      color: var(--accent);
-      line-height: 31px;
-      text-decoration: none;
-    }
-    .moon-div {
-      text-align: center;
-      font-size: 1.5rem;
-      margin: 1rem 0;
-      color: var(--star);
-      letter-spacing: 1rem;
-    }
-    .cursor {
-      display: inline-block;
-      width: 8px; height: 14px;
-      background: var(--accent);
-      vertical-align: middle;
-      animation: cursor-blink 1s step-end infinite;
-    }
-    @keyframes cursor-blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
-
-    #rain-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.65;
-      image-rendering: pixelated;
-    }
-    .controls {
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .ctrl-btn {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: monospace;
-      font-size: 0.65rem;
-      padding: 0.3rem 0.7rem;
-      cursor: pointer;
-    }
-    .ctrl-btn:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* SPOTIFY / LAST PLAYED WIDGET - SMART MARQUEE */
-    .spotify-widget {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      padding: 0.8rem;
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-    .spotify-label {
-      font-family: 'Silkscreen', monospace;
-      font-size: 0.55rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.4rem;
-      display: block;
-    }
-    #discord-now-playing {
-      padding: 0.5rem;
-      color: var(--text);
-      font-size: 0.8rem;
-      background: #0d0d1a;
-      border: 1px solid var(--border);
-      min-height: 85px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .spotify-content {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      width: 100%;
-      text-align: left;
-    }
-    .spotify-album-art {
-      width: 48px;
-      height: 48px;
-      border-radius: 4px;
-      border: 1px solid var(--border-bright);
-      object-fit: cover;
-      flex-shrink: 0;
-      background: #0d0d1a;
-    }
-    .spotify-text-info {
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-    }
-    .spotify-badge {
-      font-size: 0.5rem;
-      padding: 0.1rem 0.4rem;
-      border-radius: 10px;
-      display: inline-block;
-      margin-bottom: 0.25rem;
-      background: rgba(136,255,136,0.15);
-      color: #88ff88;
-      border: 1px solid #88ff88;
-    }
-    .spotify-badge.paused {
-      color: #ffaa44;
-      border-color: #ffaa44;
-      background: rgba(255,170,68,0.15);
-    }
-    /* MARQUEE CONTAINER - only when text overflows */
-    .marquee-container {
-      overflow: hidden;
-      white-space: nowrap;
-      width: 100%;
-    }
-    .marquee-content {
-      display: inline-block;
-      animation: marqueeLoop 18s linear infinite;
-      padding-right: 2rem;
-    }
-    @keyframes marqueeLoop {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-100%); }
-    }
-    .spotify-track {
-      font-size: 0.82rem;
-      color: var(--accent3);
-      font-weight: bold;
-    }
-    .spotify-track.static {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .spotify-artist {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* WEATHER */
-    .wx-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
-      border-bottom: 1px solid rgba(42,42,90,0.6);
-      padding-bottom: 0.15rem;
-    }
-    .wx-label { color: var(--text-dim); }
-    .wx-val { color: var(--accent); text-align: right; }
-
-    @media (max-width: 680px) {
-      .main-grid { grid-template-columns: 1fr; }
-      .sidebar { order: -1; flex-direction: row; flex-wrap: wrap; }
-      .profile-box { flex: 1; min-width: 200px; }
-      .album-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+@media (max-width:820px){
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .photo{justify-self:start;max-width:260px;order:-1}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0;padding-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .cards,.exp,.certs{grid-template-columns:1fr}
+  nav{gap:14px}
+  header .wrap{height:auto;padding-top:10px;padding-bottom:10px;flex-direction:column;align-items:flex-start;gap:4px}
+  html{scroll-padding-top:96px}
+}
+</style>
 </head>
 <body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top">Rianuel Macalinao</a>
+    <nav aria-label="Main">
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a>
+      <a href="#certifications">Certifications</a><a href="#expertise">Expertise</a><a href="#connect">Contact</a>
+    </nav>
+  </div>
+</header>
 
-<canvas id="stars"></canvas>
-<canvas id="rain-canvas"></canvas>
-
-<div class="pixel-cloud pixel-cloud-1">
-  <svg viewBox="0 0 280 80" style="width:100%;height:100%;">
-    <rect x="30" y="40" width="60" height="30" fill="#c8c8e8" opacity="0.4"/>
-    <rect x="90" y="25" width="70" height="45" fill="#c8c8e8" opacity="0.4"/>
-    <rect x="160" y="40" width="60" height="30" fill="#c8c8e8" opacity="0.4"/>
-  </svg>
-</div>
-<div class="pixel-cloud pixel-cloud-2">
-  <svg viewBox="0 0 220 60" style="width:100%;height:100%;">
-    <rect x="20" y="30" width="50" height="22" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="70" y="18" width="60" height="34" fill="#c8c8e8" opacity="0.35"/>
-  </svg>
-</div>
-<div class="pixel-cloud pixel-cloud-3">
-  <svg viewBox="0 0 260 70" style="width:100%;height:100%;">
-    <rect x="25" y="35" width="55" height="28" fill="#c8c8e8" opacity="0.35"/>
-    <rect x="80" y="20" width="65" height="42" fill="#c8c8e8" opacity="0.35"/>
-  </svg>
-</div>
-
-<div class="wrapper">
-  <header><div class="site-title">kreiiii</div></header>
-  
-  <nav id="main-nav">
-    <a data-page="home">/ home</a>
-    <a data-page="album">/ photo album</a>
-    <a data-page="about">/ about</a>
-    <a data-page="projects">/ projects</a>
-    <a data-page="blog">/ blog</a>
-    <a data-page="socmed">/ socmed</a>
-  </nav>
-  
-  <div class="moon-div">☽ ✦ ☾</div>
-
-  <!-- HOME PAGE (DEFAULT) -->
-  <div id="home-page">
-    <div class="main-grid">
-      <div>
-        <div class="section-head">☾ welcome</div>
-        <div class="panel">
-          <span class="panel-title">home.txt</span>
-          <div class="mood-badge" id="status-badge"><span class="status-dot" id="status-dot"></span><span id="status-text">loading...</span> · philippines · 19</div>
-          <div class="intro-text"><p>hey!! welcome to my little corner. i'm <em class="pixel">rianuel</em>, 19 years of age from the philippines!</p><ul class="facts"><li>currently a 2nd year IT student and a DOST Scholar at Polytechnic University of the Philippines - Sta. Mesa 🎓 </li><li>hella love tower defense games annndd valorant as well! 🎮</li><li>still figuring out what to build — if you have any ideas <a href="#" data-page="socmed">let's talk!</a> <span class="cursor"></span></li></ul></div>
-        </div>
-        <div class="section-head" id="projects">☾ projects</div>
-        <div class="panel"><span class="panel-title">projects/</span><div class="project-entry"><div class="project-title"><a href="#">[this website]</a><span class="project-tag">html</span></div><div class="project-desc">handcrafted with plain html/css, no frameworks, just like god intended</div></div></div>
-        <div class="section-head" id="blog">☾ blog</div>
-        <div class="panel"><span class="panel-title">posts/</span><div class="blog-entry"><span class="blog-date">2024-08-28</span><span class="blog-title"><a href="#">hello world! we're live LFGGGGG</a></span></div><div class="blog-entry"><span class="blog-date" id="today-date">2025-05-06</span><span class="blog-title"><a href="#">i forgot about this lil project LOL made some changes</a></span></div></div>
-        <div class="section-head" id="socmed">☾ socmed links</div>
-        <div class="panel"><span class="panel-title">socmed.txt</span><div class="socmed-line"><span class="socmed-icon">📧 email</span><a href="mailto:rianuelmacalinaofn@gmail.com" class="socmed-link">rianuelmacalinaofn@gmail.com</a></div><div class="socmed-line"><span class="socmed-icon">📽️ lboxd</span><a href="https://letterboxd.com/kreiiii/" target="_blank" class="socmed-link">@kreiiii</a></div><div class="socmed-line"><span class="socmed-icon">📸 ig</span><a href="https://www.instagram.com/riangotchills/" target="_blank" class="socmed-link">@riangotchills</a></div><div class="socmed-line"><span class="socmed-icon">🐦 twitter</span><a href="https://twitter.com/riannn_r" target="_blank" class="socmed-link">@riannn_r</a></div><div class="socmed-line"><span class="socmed-icon">💼 linkedin</span><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" class="socmed-link">@rianuel-macalinao</a></div></div>
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Rianuel Macalinao</h1>
+      <p class="lead">Information technology student and DOST scholar, working toward a career in project management and data analysis.</p>
+      <p class="meta">Metro Manila, Philippines. Reach me at <a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></p>
+      <div class="btns">
+        <a class="btn primary" href="#projects">View projects</a>
+        <a class="btn ghost" href="#connect">Get in touch</a>
       </div>
-
-      <aside class="sidebar" id="sidebar-area">
-        <!-- Sidebar content is injected via JS -->
-      </aside>
+    </div>
+    <div class="photo"><img src="profile.jpg" alt="Portrait of Rianuel Macalinao" width="640" height="640"></div>
+  </div>
+  <div class="wrap">
+    <div class="stats" style="grid-column:1/-1">
+      <div class="stat"><b>3rd year</b><span>BS Information Technology</span></div>
+      <div class="stat"><b>9 months</b><span>as a support specialist</span></div>
+      <div class="stat"><b>3</b><span>professional certifications</span></div>
+      <div class="stat"><b>DOST</b><span>scholarship recipient</span></div>
     </div>
   </div>
+</section>
 
-  <!-- PHOTO ALBUM SUBTAB (dynamic, same bg & style) -->
-  <div id="album-page" style="display: none;">
-    <div class="section-head" style="margin-bottom: 0.5rem;">📸 PHOTO ALBUM <button id="refresh-album-btn" class="refresh-album">⟳ refresh</button></div>
-    <div class="panel" style="margin-bottom: 0;">
-      <span class="panel-title">twitter-auto · photo feed</span>
-      <div id="album-content" class="album-grid"><div class="album-status">✨ loading photos from twitter feed... ✨</div></div>
-      <div style="margin-top: 1rem; font-size: 0.65rem; text-align: center; color: var(--text-dim);">📡 automatically syncs with specific twitter account (images + captions)</div>
+<section id="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <p class="sub">I am a third-year information technology student who combines hands-on customer support experience with a growing foundation in software and data systems.</p>
+    <div class="cards">
+      <div class="card"><span class="k">Education</span><h3>BS Information Technology</h3><p>Polytechnic University of the Philippines, Sta. Mesa, Manila. Currently in the third year of the program.</p></div>
+      <div class="card"><span class="k">Scholarship</span><h3>DOST Scholar</h3><p>Recipient of a Department of Science and Technology undergraduate scholarship, awarded for academic merit in science and technology.</p></div>
+      <div class="card"><span class="k">Work experience</span><h3>Support Specialist at Auctane</h3><p>Nine months of resolving customer issues, which built my communication, problem-solving, and documentation habits.</p></div>
+      <div class="card"><span class="k">Career goal</span><h3>Project Manager and Data Analyst</h3><p>I want to coordinate technical teams and turn raw data into clear decisions, and I am building skills in both directions.</p></div>
     </div>
   </div>
+</section>
 
-  <!-- placeholder for other pages that mirror original layout -->
-  <div id="generic-page" style="display: none;"><div class="panel"><span class="panel-title">✨ page</span><div id="generic-content"></div></div></div>
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience and education</h2>
+    <p class="sub">A summary of my work and studies to date.</p>
+    <ol class="tl">
+      <li>
+        <span class="when">Nine months</span>
+        <h3>Support Specialist</h3>
+        <div class="org">Auctane</div>
+        <ul>
+          <li>Resolved customer inquiries and technical issues through written support channels.</li>
+          <li>Documented cases and escalated complex problems to the appropriate teams.</li>
+          <li>Maintained service quality while managing a steady volume of requests.</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">Ongoing</span>
+        <h3>Bachelor of Science in Information Technology</h3>
+        <div class="org">Polytechnic University of the Philippines, Sta. Mesa</div>
+        <ul>
+          <li>Third-year student with coursework in systems integration, web development, and databases.</li>
+          <li>DOST scholar.</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</section>
 
-  <div class="moon-div" style="margin:2rem 0 0;">★ ☽ ★</div>
-  
-  <footer>
-    <div class="footer-buttons"><a class="pixel-button" href="#">KREIIII</a><a class="pixel-button" href="https://neocities.org" target="_blank">NEOCITIES</a><a class="pixel-button" href="https://github.com" target="_blank">GITHUB</a></div>
-    <p>© 2025 rianuel macalinao · philippines</p>
-  </footer>
-</div>
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <p class="sub">Selected academic and personal work.</p>
+    <div class="proj">
+      <article class="card">
+        <span class="k">Systems integration project, INTE3011, October 2026</span>
+        <h3>Attentibai</h3>
+        <p>A web-based system that monitors attendance, attention, and exam integrity in online classes held on Google Meet and in Google Forms or Microsoft Forms exams.</p>
+        <ul class="pts">
+          <li>Live teacher dashboard showing each student’s status, with Meet join, leave, and rejoin history.</li>
+          <li>Chrome extension (Manifest V3) that reports whether the class tab is in front, without reading the mouse, keyboard, or screen.</li>
+          <li>Exam module that logs tab switching and copy, paste, and cut counts, and produces a risk score for teacher review.</li>
+          <li>Privacy by design: consent prompts, minimal data collection, and hashed passwords.</li>
+          <li>CSV reports and a documented REST API with ten database tables.</li>
+        </ul>
+        <ul class="tags"><li>Node.js</li><li>Express</li><li>SQLite</li><li>REST API</li><li>Server-Sent Events</li><li>Chrome extension</li></ul>
+      </article>
+      <article class="card">
+        <span class="k">Personal project</span>
+        <h3>Personal website</h3>
+        <p>This portfolio, written in plain HTML and CSS without frameworks, and designed to be readable on any device.</p>
+        <ul class="tags"><li>HTML</li><li>CSS</li><li>GitHub Pages</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
 
-<div class="controls">
-  <button class="ctrl-btn" id="rain-toggle">💧 rain: on</button>
-  <button class="ctrl-btn" id="stars-toggle">✦ stars: on</button>
-</div>
+<section id="certifications">
+  <div class="wrap">
+    <h2>Certifications</h2>
+    <p class="sub">Completed in October 2026.</p>
+    <div class="certs">
+      <div class="card"><span class="k">Workato Academy</span><h3>Workato Foundations Level 1</h3><p>Covers the Workato platform, its core architecture, solution design practices, workspace organization, and simple recipe design.</p><p style="margin:0;color:var(--muted);font-size:.9rem">Valid until October 19, 2028</p></div>
+      <div class="card"><span class="k">Workato Academy</span><h3>Workato Foundations Level 2</h3><p>Covers integration platform fundamentals, data orchestration, API management, business process automation, and agentic orchestration.</p><p style="margin:0;color:var(--muted);font-size:.9rem">Valid until October 19, 2028</p></div>
+      <div class="card"><span class="k">IBM, via Cognitive Class</span><h3>Introduction to Cloud (CC0101EN)</h3><p>Introduces core cloud computing concepts and service models.</p><a href="https://courses.cognitiveclass.ai/certificates/e7ec6a6468d9422887df0e6e65a21299" target="_blank" rel="noopener">Verify this certificate</a></div>
+    </div>
+  </div>
+</section>
 
-<script>
-  // STARS (glowing)
-  const starCanvas = document.getElementById('stars');
-  const sc = starCanvas.getContext('2d');
-  let starsOn = true;
-  let starsList = [];
-  function resizeStars() { starCanvas.width = window.innerWidth; starCanvas.height = window.innerHeight; }
-  resizeStars(); window.addEventListener('resize', resizeStars);
-  for(let i=0;i<200;i++) starsList.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.4+0.3, speed: Math.random()*0.0003+0.0001, phase: Math.random()*Math.PI*2 });
-  function drawStars(t) {
-    sc.clearRect(0,0,starCanvas.width,starCanvas.height);
-    if(!starsOn) return;
-    starsList.forEach(s=>{
-      const twinkle = 0.5+0.5*Math.sin(t*0.001*(s.speed*3000)+s.phase);
-      const alpha = 0.3+0.7*twinkle;
-      const x=s.x*starCanvas.width, y=s.y*starCanvas.height;
-      const grad=sc.createRadialGradient(x,y,0,x,y,s.r*6);
-      grad.addColorStop(0,`rgba(255,255,200,${alpha})`);
-      grad.addColorStop(1,`rgba(255,255,200,0)`);
-      sc.beginPath(); sc.arc(x,y,s.r*6,0,Math.PI*2); sc.fillStyle=grad; sc.fill();
-      sc.beginPath(); sc.arc(x,y,s.r,0,Math.PI*2); sc.fillStyle=`rgba(255,255,200,${alpha})`; sc.fill();
-    });
-  }
-  // RAIN
-  const rainCanvas = document.getElementById('rain-canvas');
-  const rc = rainCanvas.getContext('2d');
-  let rainOn = true;
-  let drops = [];
-  function resizeRain(){ rainCanvas.width=window.innerWidth; rainCanvas.height=window.innerHeight; drops=[]; for(let i=0;i<120;i++) drops.push({ x:Math.random()*rainCanvas.width, y:Math.random()*rainCanvas.height, len:Math.random()*18+6, speed:Math.random()*4+3, opacity:Math.random()*0.4+0.3 }); }
-  resizeRain(); window.addEventListener('resize',resizeRain);
-  function drawRain(){
-    rc.clearRect(0,0,rainCanvas.width,rainCanvas.height);
-    if(!rainOn) return;
-    drops.forEach(d=>{ rc.beginPath(); rc.ellipse(d.x,d.y,2.5,5,0,0,Math.PI*2); rc.fillStyle=`rgba(180,220,255,${d.opacity+0.3})`; rc.fill(); d.y+=d.speed; d.x-=0.5; if(d.y>rainCanvas.height){ d.y=-d.len; d.x=Math.random()*rainCanvas.width; } });
-  }
-  function animate(t){ drawStars(t); drawRain(); requestAnimationFrame(animate); }
-  requestAnimationFrame(animate);
-  document.getElementById('rain-toggle').onclick=()=>{ rainOn=!rainOn; document.getElementById('rain-toggle').textContent=`💧 rain: ${rainOn?'on':'off'}`; };
-  document.getElementById('stars-toggle').onclick=()=>{ starsOn=!starsOn; document.getElementById('stars-toggle').textContent=`✦ stars: ${starsOn?'on':'off'}`; };
-</script>
+<section id="expertise">
+  <div class="wrap">
+    <h2>Expertise</h2>
+    <p class="sub">Tools and skills I use regularly.</p>
+    <div class="exp">
+      <div><h3>Technical</h3><ul class="chips"><li>JavaScript</li><li>Node.js</li><li>SQL</li><li>HTML and CSS</li><li>Python</li><li>REST APIs</li></ul></div>
+      <div><h3>Professional</h3><ul class="chips"><li>Customer support</li><li>Project coordination</li><li>Documentation</li><li>Reporting</li><li>Communication</li></ul></div>
+      <div><h3>Tools and platforms</h3><ul class="chips"><li>Git and GitHub</li><li>Workato</li><li>SQLite</li><li>Google Workspace</li><li>Microsoft Excel</li></ul></div>
+      <div><h3>Interest areas</h3><ul class="chips"><li>Data analysis</li><li>Process automation</li><li>Project management</li><li>Education technology</li></ul></div>
+    </div>
+  </div>
+</section>
 
-<script>
-  // DISCORD STATUS (Preserved)
-  const DISCORD_ID = '563789556957052929';
-  const statusConfig = { online:{label:'online',emoji:'🟢',cls:'online'}, idle:{label:'idle / afk',emoji:'🌙',cls:'idle'}, dnd:{label:'do not disturb',emoji:'🔴',cls:'dnd'}, offline:{label:'offline',emoji:'⚫',cls:'offline'} };
-  function applyDiscordStatus(data){
-    const dot1=document.getElementById('status-dot'), dot2=document.getElementById('status-dot-2'), txt1=document.getElementById('status-text'), txt2=document.getElementById('status-text-2');
-    if(!dot1) return;
-    const status=data.success?data.data.discord_status||'offline':'offline';
-    const cfg=statusConfig[status]||statusConfig.offline;
-    dot1.className='status-dot '+cfg.cls; if(dot2) dot2.className='status-dot '+cfg.cls;
-    txt1.textContent=cfg.emoji+' '+cfg.label; if(txt2) txt2.textContent=cfg.emoji+' '+cfg.label;
-  }
-  async function fetchDiscordStatus(){ try{ const res=await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`); const data=await res.json(); applyDiscordStatus(data); }catch(e){ applyDiscordStatus({success:false}); } }
-  fetchDiscordStatus(); setInterval(fetchDiscordStatus,15000);
-</script>
+<section id="connect">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p class="sub">I welcome opportunities in project coordination, data analysis, and technology support.</p>
+    <div class="connect">
+      <a href="mailto:rianuelmacalinaofn@gmail.com"><strong>Email</strong><span>rianuelmacalinaofn@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" rel="noopener"><strong>LinkedIn</strong><span>rianuel-macalinao</span></a>
+      <a href="https://github.com/kreiiiizy" target="_blank" rel="noopener"><strong>GitHub</strong><span>kreiiiizy</span></a>
+    </div>
+  </div>
+</section>
+</main>
 
-<script>
-  // --- SPOTIFY WIDGET (NOW USING A MORE STABLE PROXY) ---
-  const SPOTIFY_USER_ID = '22cvzqcswpdsx4yqojnjn64la'; // Your Spotify User ID
-
-  // Using the more stable "spotify-now-playing" proxy (hosted on Vercel)
-  const SPOTIFY_API_PROXY = 'https://spotify-now-playing-psi.vercel.app/api/now-playing?user=';
-
-  async function updateSpotifyWidget() {
-    const container = document.getElementById('discord-now-playing');
-    const headerEl = document.getElementById('spotify-header');
-    
-    if(!container || !headerEl) return;
-
-    try {
-      // Fetch from the more stable proxy
-      const response = await fetch(SPOTIFY_API_PROXY + SPOTIFY_USER_ID);
-      
-      if (!response.ok) throw new Error('API request failed');
-      
-      const data = await response.json();
-      
-      // Case 1: Currently Playing
-      if (data.isPlaying && data.title) {
-        const currentTrack = {
-          songTitle: data.title || 'Unknown Track',
-          artistName: data.artist || 'Unknown Artist',
-          albumArt: data.albumArt || '',
-          timestamp: Date.now()
-        };
-        
-        // Save to localStorage
-        localStorage.setItem('kreiiii_last_song', JSON.stringify(currentTrack));
-        
-        // Update Header
-        headerEl.textContent = '🎵 now playing';
-        
-        // Display
-        displayTrackInWidget(container, currentTrack, true);
-      }
-      // Case 2: Nothing currently playing -> Use saved "Last Played" from localStorage
-      else {
-        const saved = localStorage.getItem('kreiiii_last_song');
-        if (saved) {
-          const lastTrack = JSON.parse(saved);
-          // Update Header
-          headerEl.textContent = '🎵 last played';
-          // Display
-          displayTrackInWidget(container, lastTrack, false);
-        } else {
-          // Fallback if no saved track
-          headerEl.textContent = '🎵 last played';
-          container.innerHTML = `<div style="color:var(--text-dim); text-align:center;">✨ play a song on Spotify — it'll show up here forever ✨</div>`;
-        }
-      }
-    } catch (error) {
-      // On error, try to fallback to localStorage
-      const saved = localStorage.getItem('kreiiii_last_song');
-      if (saved) {
-        const lastTrack = JSON.parse(saved);
-        headerEl.textContent = '🎵 last played';
-        displayTrackInWidget(container, lastTrack, false);
-      } else {
-        headerEl.textContent = '🎵 last played';
-        container.innerHTML = `<div style="color:var(--text-dim); text-align:center;">✨ offline — play a song to save it ✨</div>`;
-      }
-    }
-  }
-
-  // Helper to display the track in the widget
-  function displayTrackInWidget(container, track, isPlayingNow) {
-    const badgeClass = isPlayingNow ? '' : 'paused';
-    const badgeText = isPlayingNow ? '▶ playing now' : '⏸ last played';
-    
-    // Handle missing album art
-    const albumArtHtml = track.albumArt ? 
-      `<img src="${track.albumArt}" class="spotify-album-art" onerror="this.style.display='none'" alt="album art">` : 
-      `<div class="spotify-album-art" style="display:flex;align-items:center;justify-content:center;background:#1a1a3a;">🎵</div>`;
-    
-    const trackId = `track-${Date.now()}`;
-    
-    container.innerHTML = `
-      <div class="spotify-content">
-        ${albumArtHtml}
-        <div class="spotify-text-info">
-          <div class="spotify-badge ${badgeClass}">${badgeText}</div>
-          <div class="track-wrapper" style="overflow: hidden; width: 100%;">
-            <div id="${trackId}" class="spotify-track static" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">${escapeHtml(track.songTitle)}</div>
-          </div>
-          <div class="spotify-artist">${escapeHtml(track.artistName)}</div>
-        </div>
-      </div>
-    `;
-
-    // Smart Marquee: Check if text overflows after render
-    setTimeout(() => {
-      const trackElement = document.getElementById(trackId);
-      if (trackElement && trackElement.scrollWidth > trackElement.clientWidth) {
-        // Replace with marquee version
-        const parent = trackElement.parentNode;
-        parent.innerHTML = `
-          <div class="marquee-container">
-            <div class="marquee-content spotify-track">${escapeHtml(track.songTitle)} &nbsp;✦&nbsp; ${escapeHtml(track.songTitle)}</div>
-          </div>
-        `;
-      }
-    }, 50);
-  }
-
-  function escapeHtml(str) { 
-    if(!str) return '✨ unknown ✨'; 
-    return str.replace(/[&<>]/g, function(m) {
-      if(m === '&') return '&amp;';
-      if(m === '<') return '&lt;';
-      if(m === '>') return '&gt;';
-      return m;
-    });
-  }
-
-  // Initialize and set interval to refresh every 15 seconds
-  updateSpotifyWidget();
-  setInterval(updateSpotifyWidget, 15000);
-</script>
-
-<script>
-  // PHOTO ALBUM LOGIC (Preserved)
-  const TARGET_TWITTER_USER = "riannn_r"; 
-  
-  async function fetchTwitterAlbum() {
-    const container = document.getElementById('album-content');
-    if(!container) return;
-    container.innerHTML = `<div class="album-status">🌐 fetching latest tweets with images from @${TARGET_TWITTER_USER} ...</div>`;
-    try {
-      const nitterUrl = `https://nitter.poast.org/${TARGET_TWITTER_USER}/media.json?limit=30`;
-      const response = await fetch(nitterUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-      if (!response.ok) throw new Error('Nitter fetch failed');
-      const tweets = await response.json();
-      if (!tweets || !tweets.length) {
-        container.innerHTML = `<div class="album-status">📭 no pictures yet. post a photo on twitter (@${TARGET_TWITTER_USER}) and it'll appear here! ⭐</div>`;
-        return;
-      }
-      const photoItems = [];
-      for (let tw of tweets) {
-        if (tw.images && tw.images.length > 0) {
-          for (let img of tw.images) {
-            const imgUrl = img.startsWith('http') ? img : `https://nitter.poast.org${img}`;
-            const timestamp = tw.date ? new Date(tw.date).toLocaleString() : 'recent';
-            let caption = tw.content ? tw.content.replace(/<[^>]*>/g, '') : '';
-            caption = caption.substring(0, 180) + (caption.length>180?'...':'');
-            photoItems.push({ imgUrl, caption, timestamp, tweetLink: `https://twitter.com/${TARGET_TWITTER_USER}/status/${tw.id}` });
-          }
-        }
-      }
-      if(photoItems.length === 0) {
-        container.innerHTML = `<div class="album-status">📸 No images found, post some photos with captions! ✨</div>`;
-        return;
-      }
-      renderAlbum(photoItems);
-    } catch(err) {
-      console.warn(err);
-      container.innerHTML = `<div class="album-status">⚠️ could not fetch from twitter right now (cors/network). using demo placeholder.<br><span style="font-size:0.7rem;">(note: for production use a small backend or RSS proxy. nitter instances may be blocked.)</span></div>`;
-      const fallback = [{ imgUrl: "https://picsum.photos/id/1015/300/300", caption: "Example auto-loaded pic! (test) - your real tweets will show", timestamp: new Date().toLocaleString() }];
-      renderAlbum(fallback, true);
-    }
-  }
-
-  function renderAlbum(photos, isDemo=false) {
-    const container = document.getElementById('album-content');
-    if(!container) return;
-    if(photos.length===0) { container.innerHTML = `<div class="album-status">✨ no photos yet. post images on twitter! ✨</div>`; return; }
-    let html = '';
-    for(let p of photos) {
-      html += `
-        <div class="photo-card">
-          <img class="photo-image" src="${p.imgUrl}" loading="lazy" onerror="this.src='https://placehold.co/300x300/1a1a3a/8888ff?text=image+failed'">
-          <div class="photo-caption">${escapeHtml(p.caption) || '📷 no caption'}</div>
-          <div class="photo-timestamp">🕒 ${escapeHtml(p.timestamp)}</div>
-        </div>
-      `;
-    }
-    container.innerHTML = html;
-    if(isDemo) container.innerHTML += `<div class="album-status" style="grid-column:1/-1;">✨ demo mode: actual twitter integration will fetch images+caption+timestamp from @${TARGET_TWITTER_USER}. (check console)</div>`;
-  }
-
-  document.getElementById('refresh-album-btn')?.addEventListener('click', (e) => { fetchTwitterAlbum(); });
-</script>
-
-<script>
-  // WEATHER (Preserved)
-  async function fetchWeather() {
-    try{
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=14.6628&longitude=120.9569&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Asia%2FManila`;
-      const res = await fetch(url); const d = await res.json();
-      const wmo = {0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Overcast'],45:['🌫️','Fog'],61:['🌧️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],80:['🌦️','Showers'],95:['⛈️','T-storm']};
-      const code = d.current.weather_code;
-      const [icon,label] = wmo[code] || ['🌡️','Unknown'];
-      document.getElementById('wx-icon').textContent = icon;
-      document.getElementById('wx-cond').textContent = label;
-      document.getElementById('wx-temp').textContent = d.current.temperature_2m+'°C';
-      document.getElementById('wx-feels').textContent = d.current.apparent_temperature+'°C';
-      document.getElementById('wx-hum').textContent = d.current.relative_humidity_2m+'%';
-      document.getElementById('wx-wind').textContent = d.current.wind_speed_10m+' km/h';
-      document.getElementById('wx-time').textContent = new Date().toLocaleTimeString('en-PH',{hour:'2-digit',minute:'2-digit'});
-    }catch(e){}
-  }
-  fetchWeather(); setInterval(fetchWeather,10*60*1000);
-  document.getElementById('today-date').textContent = new Date().toISOString().slice(0,10);
-</script>
-
-<script>
-  // PAGE ROUTING (Preserved)
-  const homePage = document.getElementById('home-page');
-  const albumPage = document.getElementById('album-page');
-  const genericPage = document.getElementById('generic-page');
-  const genericContent = document.getElementById('generic-content');
-
-  function showPage(pageId) {
-    homePage.style.display = 'none';
-    albumPage.style.display = 'none';
-    genericPage.style.display = 'none';
-    if(pageId === 'home') homePage.style.display = 'block';
-    else if(pageId === 'album') { albumPage.style.display = 'block'; fetchTwitterAlbum(); }
-    else if(pageId === 'about') { genericPage.style.display = 'block'; genericContent.innerHTML = `<div class="panel"><span class="panel-title">about.txt</span><p style="font-size:0.85rem;">hey im rianuel! 19 y/o from philippines. i build things, break things (mostly break), and learn. this site is my little home on the internet!<br>📌 DOST Scholar | IT student @ PUP<br>🎮 Tower defense & valorant enjoyer</p></div>`; }
-    else if(pageId === 'projects') { genericPage.style.display = 'block'; genericContent.innerHTML = `<div class="panel"><span class="panel-title">projects/</span><div class="project-entry"><div class="project-title">[this website]</div><div>handcrafted with love, plus auto photo album from twitter feed.</div></div><div class="project-entry"><div class="project-title">[auto twitter album]</div><div>syncs images + captions + timestamps from a specific twitter account instantly.</div></div></div>`; }
-    else if(pageId === 'blog') { genericPage.style.display = 'block'; genericContent.innerHTML = `<div class="panel"><span class="panel-title">blog/</span><div class="blog-entry"><span class="blog-date">2025-05-06</span><span class="blog-title">✨ photo album sub-tab live! any tweet with images will appear in the album page ✨</span></div><div class="blog-entry"><span class="blog-date">2025-04-20</span><span class="blog-title">added twitter auto-pull for my polaroids</span></div></div>`; }
-    else if(pageId === 'socmed') { genericPage.style.display = 'block'; genericContent.innerHTML = `<div class="panel"><span class="panel-title">socmed.txt</span><div class="socmed-line"><span>🐦 twitter</span><a href="https://twitter.com/riannn_r" target="_blank">@riannn_r</a></div><div class="socmed-line"><span>📸 ig</span><a href="https://www.instagram.com/riangotchills/" target="_blank">@riangotchills</a></div><div class="socmed-line"><span>💼 linkedin</span><a href="#" target="_blank">rianuel-macalinao</a></div><div class="socmed-line"><span>📧 email</span><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></div></div>`; }
-  }
-
-  // Setup Sidebar elements dynamically
-  const sidebarArea = document.getElementById('sidebar-area');
-  if(sidebarArea) {
-    sidebarArea.innerHTML = `
-      <div class="profile-box"><div class="avatar-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr-HFuCjaxdfXAoPY0TcHGvCtnJfYgwDxvdA&s" alt="profile picture"></div><div class="profile-name">rianuel macalinao</div><div class="profile-role">creator · explorer · 19</div><div class="profile-loc">📍 philippines</div><div style="margin-top:0.8rem;font-size:0.7rem;"><span class="status-dot" id="status-dot-2"></span><span id="status-text-2">loading...</span></div></div>
-      <div class="spotify-widget"><span class="spotify-label" id="spotify-header">🎵 last played</span><div id="discord-now-playing"><div style="color:var(--text-dim);">✨ loading...</div></div><div style="margin-top:0.3rem; font-size:0.55rem;"><a href="https://open.spotify.com/user/22cvzqcswpdsx4yqojnjn64la" target="_blank" style="color:var(--accent);">open in spotify →</a></div></div>
-      <div class="panel" style="padding:0.5rem 0;"><span class="panel-title">links</span><ul class="star-links"><li><a data-page="home">home</a></li><li><a data-page="album">📸 photo album</a></li><li><a data-page="about">about me</a></li><li><a data-page="projects">projects</a></li><li><a data-page="blog">blog</a></li></ul></div>
-      <div class="panel" id="weather-widget"><span class="panel-title">weather.exe</span><div style="display:flex;justify-content:space-between;"><span style="font-size:0.6rem;cursor:pointer;" id="wx-plus" onclick="fetchWeather()">+</span><div id="wx-icon" style="font-size:2rem;">⋯</div><span style="font-size:0.6rem;">?</span></div><div id="wx-rows" style="font-size:0.75rem;"><div class="wx-row"><span class="wx-label">Condition:</span><span class="wx-val" id="wx-cond">--</span></div><div class="wx-row"><span class="wx-label">Temp:</span><span class="wx-val" id="wx-temp">--</span></div><div class="wx-row"><span class="wx-label">Feels like:</span><span class="wx-val" id="wx-feels">--</span></div><div class="wx-row"><span class="wx-label">Humidity:</span><span class="wx-val" id="wx-hum">--</span></div><div class="wx-row"><span class="wx-label">Wind:</span><span class="wx-val" id="wx-wind">--</span></div><div class="wx-row"><span class="wx-label">Location:</span><span class="wx-val">Malabon, PH</span></div><div class="wx-row"><span class="wx-label">Updated:</span><span class="wx-val" id="wx-time">--</span></div></div></div>
-      <div class="panel" id="about"><span class="panel-title">about.txt</span><p style="font-size:0.8rem; color:var(--text-dim);">hey im rianuel! 19 y/o from philippines. i build things, break things (mostly break), and learn. this site is my little home on the internet!</p></div>
-    `;
-    // Reattach weather refresh click handler for the newly created element
-    document.getElementById('wx-plus')?.addEventListener('click', fetchWeather);
-  }
-
-  // Routing event listeners
-  document.querySelectorAll('#main-nav a, [data-page]').forEach(el => {
-    el.addEventListener('click', (e) => { 
-      const page = el.getAttribute('data-page'); 
-      if(page) { e.preventDefault(); showPage(page); }
-      else if(el.getAttribute('href')?.startsWith('#')) e.preventDefault(); 
-    });
-  });
-  
-  showPage('home');
-</script>
-
+<footer>
+  <div class="wrap"><span>© 2026 Rianuel Macalinao</span><span>Metro Manila, Philippines</span></div>
+</footer>
 </body>
 </html>
