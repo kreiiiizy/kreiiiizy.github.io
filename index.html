@@ -31,6 +31,8 @@ section{padding:84px 0 0}
 h2{font:500 2rem/1.2 var(--serif);margin-bottom:10px}
 .sub{color:var(--muted);margin-bottom:36px;max-width:60ch}
 
+#dots{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,footer{position:relative;z-index:1}
 /* business card */
 .bc-sec{padding:56px 0 0}
 .bc-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
@@ -73,8 +75,8 @@ h2{font:500 2rem/1.2 var(--serif);margin-bottom:10px}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.primary:hover{background:#a6c6e8}
 .btn.ghost:hover{background:var(--surface)}
-.photo{justify-self:end;width:100%;max-width:340px}
-.photo img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;border:1px solid var(--line);background:#fff}
+.photo{justify-self:end;width:100%;max-width:360px;background:radial-gradient(ellipse at 50% 42%,rgba(141,180,220,.16),transparent 68%)}
+.photo img{display:block;width:100%;height:auto;-webkit-mask-image:linear-gradient(#000 84%,transparent);mask-image:linear-gradient(#000 84%,transparent)}
 .hero .wrap>*{animation:rise .7s both}
 .hero .wrap>*:nth-child(2){animation-delay:.12s}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -148,6 +150,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
+<canvas id="dots" aria-hidden="true"></canvas>
 <header>
   <div class="wrap">
     <a class="brand" href="#top">Rianuel Macalinao</a>
@@ -199,7 +202,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
         <a class="btn ghost" href="#connect">Get in touch</a>
       </div>
     </div>
-    <div class="photo"><img src="profile.jpg" alt="Portrait of Rianuel Macalinao" width="640" height="640"></div>
+    <div class="photo"><img src="profile.png" alt="Portrait of Rianuel Macalinao" width="760" height="713"></div>
   </div>
   <div class="wrap">
     <div class="stats" style="grid-column:1/-1">
@@ -327,6 +330,47 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   function flip(){var f=c.classList.toggle('flipped');c.setAttribute('aria-pressed',f);h.textContent=f?'Select the card to see the front.':'Select the card to see my contact details.';}
   c.addEventListener('click',function(e){if(e.target.closest('a'))return;flip();});
   c.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();flip();}});
+})();
+</script>
+<script>
+(function(){
+  var cv=document.getElementById('dots'),ctx=cv.getContext('2d');
+  var GAP=34,R=130,reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dots=[],W=0,H=0,dpr=1,mx=-9999,my=-9999,raf=0;
+  function build(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth;H=window.innerHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    dots=[];
+    var cols=Math.ceil(W/GAP)+1,rows=Math.ceil(H/GAP)+1,ox=(W-(cols-1)*GAP)/2,oy=(H-(rows-1)*GAP)/2;
+    for(var r=0;r<rows;r++)for(var c=0;c<cols;c++){var x=ox+c*GAP,y=oy+r*GAP;dots.push({hx:x,hy:y,x:x,y:y,vx:0,vy:0});}
+    draw();
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<dots.length;i++){
+      var d=dots[i],dx=d.x-mx,dy=d.y-my,dist=Math.sqrt(dx*dx+dy*dy),near=0;
+      if(!reduce){
+        if(dist<R&&dist>0.1){var f=(1-dist/R);d.vx+=dx/dist*f*2.2;d.vy+=dy/dist*f*2.2;near=f;}
+        d.vx+=(d.hx-d.x)*0.06;d.vy+=(d.hy-d.y)*0.06;
+        d.vx*=0.82;d.vy*=0.82;d.x+=d.vx;d.y+=d.vy;
+      }
+      ctx.globalAlpha=0.16+near*0.7;
+      ctx.fillStyle='#8db4dc';
+      ctx.beginPath();ctx.arc(d.x,d.y,1.2+near*1.8,0,6.2832);ctx.fill();
+    }
+    ctx.globalAlpha=1;
+  }
+  function loop(){draw();raf=requestAnimationFrame(loop);}
+  function start(){if(!reduce&&!raf)raf=requestAnimationFrame(loop);}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=0;}}
+  window.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;},{passive:true});
+  window.addEventListener('pointerleave',function(){mx=my=-9999;});
+  document.addEventListener('mouseleave',function(){mx=my=-9999;});
+  window.addEventListener('touchend',function(){mx=my=-9999;},{passive:true});
+  window.addEventListener('resize',build);
+  document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
+  build();start();
 })();
 </script>
 </body>
