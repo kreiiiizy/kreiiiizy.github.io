@@ -31,8 +31,38 @@ section{padding:84px 0 0}
 h2{font:500 2rem/1.2 var(--serif);margin-bottom:10px}
 .sub{color:var(--muted);margin-bottom:36px;max-width:60ch}
 
+/* business card */
+.bc-sec{padding:56px 0 0}
+.bc-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.bc{container-type:inline-size;width:100%;max-width:480px;aspect-ratio:7/4;perspective:1200px;cursor:pointer;border-radius:10px}
+.bc-in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,.1,.2,1);transform-style:preserve-3d}
+.bc.flipped .bc-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:10px;padding:7cqw 8cqw;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.front{background:#1b2838;border:1px solid #34475f;color:var(--text)}
+.front::after{content:"";position:absolute;inset:3.2cqw;border:1px solid rgba(141,180,220,.35);border-radius:6px;pointer-events:none}
+.front .nm{font:500 9.2cqw/1.05 var(--serif);letter-spacing:-.01em}
+.front .role{font-size:3.7cqw;line-height:1.5;color:#c9d1dc}
+.front .role b{display:block;font-weight:500;color:var(--accent)}
+.front .rule{width:12cqw;height:2px;background:var(--accent);margin:4cqw 0 0}
+.qr{position:absolute;top:8.6cqw;right:9.6cqw;width:19cqw;display:block;line-height:0;opacity:.95}
+.qr:hover{opacity:1}
+.qr-svg{display:block;width:100%;height:auto}
+.back{background:#eef1f5;color:#15202e;transform:rotateY(180deg);border:1px solid #cdd5df}
+.back .bn{font:500 5.4cqw/1.1 var(--serif)}
+.back .bs{font-size:3.1cqw;color:#4a5a6e;margin-top:1cqw}
+.back ul{list-style:none;display:grid;gap:2.2cqw;font-size:3.5cqw}
+.back li{display:flex;gap:3cqw}
+.back li span{color:#4a5a6e;min-width:15cqw}
+.back a{color:#15202e;text-underline-offset:3px;text-decoration-color:#6d8fb5;overflow-wrap:anywhere}
+.front,.back{transition:visibility 0s .35s}
+.bc.flipped .front{visibility:hidden}
+.bc:not(.flipped) .back{visibility:hidden}
+.bc.flipped .back{transition-delay:0s}
+.bc-hint{color:var(--muted);font-size:.88rem}
+@media (prefers-reduced-motion:reduce){.bc-in,.front,.back{transition:none}}
+
 /* hero */
-.hero{padding-top:72px}
+.hero{padding-top:64px}
 .hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center}
 .hero h1{font:500 clamp(2.6rem,6vw,4.2rem)/1.05 var(--serif);letter-spacing:-.01em;margin-bottom:20px}
 .hero p.lead{font:400 1.3rem/1.5 var(--serif);color:#c9d1dc;max-width:34ch;margin-bottom:28px}
@@ -129,6 +159,35 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </header>
 
 <main id="top">
+<section class="bc-sec" aria-label="Business card">
+  <div class="wrap bc-wrap">
+    <div class="bc" id="bc" role="button" tabindex="0" aria-pressed="false" aria-label="Business card. Press to flip between front and back.">
+      <div class="bc-in">
+        <div class="face front">
+          <div>
+            <div class="nm">Rianuel<br>Macalinao</div>
+            <div class="rule"></div>
+          </div>
+          <a class="qr" href="https://kreiiiizy.github.io" target="_blank" rel="noopener" aria-label="Visit kreiiiizy.github.io"><svg class="qr-svg" role="img" aria-label="QR code linking to kreiiiizy.github.io" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29"><path class="qrline" stroke="#e7eaef" d="M0 0.5h7m1 0h1m1 0h1m1 0h1m1 0h2m2 0h1m3 0h7m-29 1h1m5 0h1m2 0h5m2 0h1m3 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m3 0h1m3 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h3m2 0h1m1 0h1m1 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h4m1 0h1m4 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h4m2 0h1m3 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-11 1h2m-19 1h7m2 0h2m4 0h1m1 0h1m4 0h2m3 0h1m-26 1h1m1 0h1m2 0h3m6 0h4m1 0h5m1 0h1m-29 1h4m1 0h4m1 0h6m2 0h1m1 0h3m1 0h1m1 0h1m-27 1h3m2 0h1m1 0h2m1 0h4m1 0h2m4 0h2m2 0h1m1 0h1m-28 1h2m3 0h2m5 0h2m2 0h2m1 0h3m1 0h1m2 0h3m-29 1h1m2 0h1m3 0h2m1 0h1m1 0h3m1 0h7m1 0h2m1 0h2m-29 1h1m4 0h2m1 0h2m2 0h2m1 0h1m1 0h1m2 0h1m2 0h1m3 0h1m-27 1h2m4 0h4m1 0h1m1 0h6m4 0h2m-25 1h1m1 0h2m1 0h1m5 0h1m1 0h1m1 0h1m2 0h1m5 0h4m-29 1h1m6 0h2m3 0h1m1 0h2m1 0h9m1 0h2m-29 1h1m2 0h5m2 0h1m1 0h1m1 0h3m1 0h1m3 0h1m1 0h3m-27 1h1m1 0h2m7 0h1m3 0h1m3 0h2m1 0h4m2 0h1m-29 1h1m1 0h1m1 0h5m1 0h8m1 0h6m1 0h3m-21 1h1m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m3 0h2m2 0h1m-29 1h7m1 0h1m1 0h2m1 0h4m1 0h3m1 0h1m1 0h1m-25 1h1m5 0h1m1 0h4m1 0h3m3 0h2m3 0h2m1 0h2m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h2m4 0h1m1 0h9m-29 1h1m1 0h3m1 0h1m1 0h2m5 0h3m1 0h3m1 0h1m2 0h1m-27 1h1m1 0h3m1 0h1m1 0h1m1 0h2m1 0h1m4 0h8m1 0h1m-28 1h1m5 0h1m1 0h1m1 0h5m1 0h1m3 0h2m2 0h2m1 0h1m-28 1h7m3 0h1m6 0h1m3 0h2m1 0h3"/></svg></a>
+          <div class="role"><b>Information Technology Student</b>DOST Scholar<br>Polytechnic University of the Philippines</div>
+        </div>
+        <div class="face back">
+          <div>
+            <div class="bn">Rianuel Macalinao</div>
+            <div class="bs">Aspiring Project Manager and Data Analyst</div>
+          </div>
+          <ul>
+            <li><span>Email</span><a href="mailto:rianuelmacalinaofn@gmail.com">rianuelmacalinaofn@gmail.com</a></li>
+            <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/rianuel-macalinao-a84946328/" target="_blank" rel="noopener">rianuel-macalinao</a></li>
+            <li><span>GitHub</span><a href="https://github.com/kreiiiizy" target="_blank" rel="noopener">kreiiiizy</a></li>
+            <li><span>Location</span>Metro Manila, Philippines</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="bc-hint">Select the card to see my contact details.</p>
+  </div>
+</section>
 <section class="hero">
   <div class="wrap">
     <div>
@@ -262,5 +321,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 <footer>
   <div class="wrap"><span>© 2026 Rianuel Macalinao</span><span>Metro Manila, Philippines</span></div>
 </footer>
+<script>
+(function(){
+  var c=document.getElementById('bc'),h=document.querySelector('.bc-hint');
+  function flip(){var f=c.classList.toggle('flipped');c.setAttribute('aria-pressed',f);h.textContent=f?'Select the card to see the front.':'Select the card to see my contact details.';}
+  c.addEventListener('click',function(e){if(e.target.closest('a'))return;flip();});
+  c.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target===c){e.preventDefault();flip();}});
+})();
+</script>
 </body>
 </html>
